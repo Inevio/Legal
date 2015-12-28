@@ -1,23 +1,12 @@
 
 {
-
-    "welcome" : "Welcome to Contacts",
-    "noContact" : "It seems you have no contacts added",
-    "firstContact" : "Add your first contact",
-    "contacts" : "Contacts",
-    "newContact" : "New contact",
-    "editContact" : "Edit contact",
-    "company" : "Company",
-    "save" : "Save",
-    "cancel" : "Cancel",
-    "delete" : "Delete",
-    "phone" : "Phone",
-    "mobile" : "Mobile",
-    "home" : "Home",
-    "work" : "Work",
-    "email" : "Email",
-    "personal" : "Personal",
-    "other" : "Other",
-    "address" : "Address",
-    "note" : "Note"
+    "legal"     : "Legal",
+    "editExp"   : "Edit exp",
+    "info"      : "Information",
+    "doc"       : "Documents",
+    "expStatus" : "Exp status",
+    "expDesc"   : "Exp description",
+    "client"    : "Client",
+    "asigns"    : "Asigns",
+    "people"    : "People of interest"
 }

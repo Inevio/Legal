@@ -18,7 +18,7 @@
   height: 100%;
 }
 
-.ui-view .ui-window.contacts{
+.ui-view .ui-window.legal{
   width: 100%;
   height: 100%;
 }
@@ -29,55 +29,25 @@
   width: 60px;
 }
 
-.ui-btn.new-contact-button{
-  margin-left: 106px;
-  margin-top: 3px;
-  height: 32px;
-  width: 126px;
-  float: left;
-  display: none;
-}
-
-.ui-btn.new-contact-button span{
-  float: left;
-  color: #889399;
-  margin-top: 10px;
-  font-size: 13px;
-  max-width: 95px;
-}
-
-.new-contact-button i {
-  background: url("@static/new_contact.png") no-repeat;
-  background-size: cover;
-  width: 16px;
-  height: 16px;
-  float: left;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 8px;
-  margin-right: 7px;
-}
-
 /* navbar */
-.ui-view .ui-navbar.contact-list{
+.ui-view .ui-navbar.exp-list{
   width: 310px;
   height: ~'calc(100% - 41px)';
   color: #545f65;
-  display: none;
 }
 
-.contact {
+.exp {
   height: 64px;
   width: 239px;
   float: right;
   border-bottom: 1px solid rgba(204, 211, 213, 0.5);
 }
 
-.dark .contact {
+.dark .exp {
   border-color: #2c3238;
 }
 
-.contact .highlight-area{
+.exp .highlight-area{
   position: absolute;
   left: 0px;
   margin-top: -1px;
@@ -85,19 +55,19 @@
   width: 310px;
 }
 
-.contact:hover .highlight-area{
-  background-color: #d4e5f5;
+.exp:hover .highlight-area{
+  background-color: #d9eadb;
 }
 
-.dark .contact:hover .highlight-area{
-  background-color: #d4e5f5;
+.dark .exp:hover .highlight-area{
+  background-color: #d9eadb;
 }
 
-.contact.active .highlight-area{
-  background-color: #4698e0;
+.exp.active .highlight-area{
+  background-color: #60b25e;
 }
 
-.contact .avatar {
+.exp .avatar {
   width: 43px;
   height: 43px;
   float: left;
@@ -108,7 +78,7 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-.contact .avatar-letters{
+.exp .avatar-letters{
   font-size: 21px;
   font-weight: bold;
   margin-left: 0px;
@@ -119,11 +89,11 @@
   padding-bottom: 11px;
 }
 
-.contact i{
+.exp i{
   background-size: cover;
 }
 
-.contact span {
+.exp span {
   float: left;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -131,7 +101,7 @@
   width: 229px;
 }
 
-.contact .name-contact {
+.exp .name-exp {
   font-size: 15px;
   margin-top: 9px;
   padding-bottom: 7px;
@@ -142,11 +112,11 @@
   width: 239px;
 }
 
-.dark .contact .name-contact {
+.dark .exp .name-exp {
   color: #bdc4c6;
 }
 
-.contact .company-contact {
+.exp .id-exp {
   font-size: 13px;
   color: #889399;
   padding-top: 0px;
@@ -155,141 +125,79 @@
   width: 239px;
 }
 
-.dark .contact .company-contact {
+.dark .exp .id-exp {
   color: #bdc4c6;
 }
 
-.contact.active .name-contact, .contact.active .company-contact{
+.exp.active .name-exp, .exp.active .id-exp{
   color: #fff;
 }
 
 /* window */
-.ui-view .contacts .ui-window-content{
+.ui-view .legal .ui-window-content{
   width: ~'calc(100% - 311px)';
   height: ~'calc(100% - 41px)';
   position: relative;
 }
 
 /* Contact info */
-.contact-info {
+.exp-info {
   float: left;
-  height: 88px;
+  height: 65px;
   width: 100%;
   background-color: #f7f8fa;
   border-bottom: 1px solid #ccd3d5;
 }
 
-.dark .contact-info {
+.dark .exp-info {
   background-color: #363d46;
   border-color: #2c3238;
 }
 
-.contact-info .avatar {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
+.exp-info .name {
+  margin-left: 11px;
+  margin-top: 13px;
   float: left;
-  margin-left: 20px;
-  margin-top: 15px;
-  background-size: cover;
-  border: 2px dashed #fff;
+  width: ~'calc(100% - 160px)';
+  font-size: 19px;
+  color: #545f65;
+  font-weight: bold;
 }
 
-
-.contact-info .avatar-letters{
+.exp-info .exp-ids{
   float: left;
-  font-size: 26px;
-  text-align: center;
-  margin-left: 0px;
-  width: 54px;
-  padding-bottom: 14px;
-  padding-top: 14px;
+  margin-left: 11px;
+  margin-top: 10px;
+  width: ~'calc(100% - 160px)';
 }
 
-
-.company-office{
-  float: left;
-  width: ~'calc(100% - 217px)';
+.exp-info .exp-ids span{
+  font-size: 13px;
+  color: #545f65;
 }
 
-.position-department{
-  float: left;
-  width: ~'calc(100% - 217px)';
+.exp-info .exp-ids .intern, .exp-info .exp-ids .extern{
+  font-size: 13px;
+  color: #868c8e;
 }
 
-.contact-info .name {
-    margin-left: 11px;
-    margin-top: 13px;
-    float: left;
-    width: 320px;
-    font-size: 19px;
-    color: #545f65;
-    font-weight: bold;
+.exp-info .exp-ids .intern-id{
+  margin-right: 20px;
 }
 
-.dark .name{
-  color: #bdc4c6;
-}
-
-.contact-info .company {
-    margin-left: 11px;
-    margin-top: 7px;
-    float: left;
-    font-size: 13px;
-    color: #545f65;
-}
-
-.dark .company{
-  color: #bdc4c6;
-}
-
-.contact-info .office {
-    margin-top: 7px;
-    float: left;
-    font-size: 13px;
-    color: #545f65;
-}
-
-.dark .office{
-  color: #bdc4c6;
-}
-
-.contact-info .position {
-    margin-left: 11px;
-    margin-top: 9px;
-    float: left;
-    font-size: 13px;
-    color: #545f65;
-}
-
-.dark .position{
-  color: #bdc4c6;
-}
-
-.contact-info .department {
-    margin-top: 9px;
-    float: left;
-    font-size: 13px;
-    color: #545f65;
-}
-
-.dark .department{
-  color: #bdc4c6;
-}
-
-.contacts .ui-input{
+.legal .ui-input{
   float: left;
   display: none;
   color: #545f65;
 }
 
-.contacts .ui-input:focus{
+.legal .ui-input:focus{
   float: left;
   display: none;
   border-color: #4698e0;
 }
 
-.contact-info .name-input{
+.exp-info .name-input{
   height: 20px;
   width: 114px;
   margin-left: 10px;
@@ -297,7 +205,7 @@
   margin-top: 8px;
 }
 
-.contact-info .lastname-input{
+.exp-info .intern-id-input{
   height: 20px;
   width: ~'calc(100% - 353px)';
   margin-left: 2px;
@@ -305,78 +213,39 @@
   margin-top: 8px;
 }
 
-.contact-info .company-input{
+.exp-info .extern-id-input{
   height: 20px;
   width: 185px;
   margin-left: 10px;
   margin-bottom: 3px;
 }
 
-.contact-info .office-input.ui-input{
-  height: 20px;
-  width: ~'calc(100% - 424px)';
-  margin-left: 2px;
-  margin-bottom: 3px;
-}
-
-.contact-info .position-input{
-  height: 20px;
-  width: 185px;
-  margin-left: 10px;
-}
-
-.contact-info .department-input{
-  height: 20px;
-  width: ~'calc(100% - 424px)';
-  margin-left: 2px;
-}
-
-.is-company{
-  float: right;
-  display: none;
-  margin-right: 22px;
-  position: absolute;
-  right: 1px;
-  top: 37px;
-}
-
-.is-company .company-check {
-  float: left;
-  margin-right: 8px;
-}
-
-.is-company span {
-  float: left;
-  font-size: 13px;
-  color: #889399;
-}
-
-.contact-info input:-ms-input-placeholder {
+.exp-info input:-ms-input-placeholder {
    color:#889399;
 }
 
-.contact-info input::-webkit-input-placeholder {
+.exp-info input::-webkit-input-placeholder {
    color:#889399;
 }
 
-.contact-info input:-moz-placeholder {
+.exp-info input:-moz-placeholder {
    color:#889399;
 }
 
-.contact-info input::-moz-placeholder {
+.exp-info input::-moz-placeholder {
    color:#889399;
 }
 
-.edit-contact-button.ui-btn {
+.edit-exp-button.ui-btn {
   float: right;
   right: 7px;
-  margin-top: 7px;
+  margin-top: -7px;
   margin-right: 7px;
-  width: 126px;
+  width: 140px;
   height: 32px;
 }
 
-.edit-contact-button.ui-btn i{
+.edit-exp-button.ui-btn i{
   background: url("@static/edit.png") ;
   background-size: cover;
   width: 16px;
@@ -387,13 +256,13 @@
   margin-left: 8px;
 }
 
-.edit-contact-button.ui-btn span{
+.edit-exp-button.ui-btn span{
   font-size: 13px;
   float: left;
-  margin-top: 10px;
+  margin-top: 8px;
   margin-left: 7px;
   color: #545f65;
-  max-width: 94px;
+  max-width: 105px;
 }
 
 .edit-mode-popup{
@@ -453,641 +322,40 @@
     margin-right: 5px;
 }
 
-
-/* INFO */
-.tab {
+.legal .ui-tab.close{
   float: left;
-  width: 100%;
-  height: ~'calc(100% - 89px)';
-}
-
-.info-tab .phone-section, .info-tab .mail-section, .info-tab .address-section, .info-tab .notes-section {
-  width: ~'calc(100% - 28px)';
-  float: left;
-  border-bottom: 1px solid #e8eeef;
-  padding-bottom: 5px;
-  margin-right: 14px;
-  margin-left: 14px;
-}
-
-.dark .info-tab .phone-section, .dark .info-tab .mail-section, .dark .info-tab .address-section, .dark .info-tab .notes-section {
-  border-color: #2c3238;
-}
-
-.street-input.ui-input.address-input{
-  margin-right: ~'calc(100% - 369px)';
-}
-
-.postal-input.ui-input.address-input{
-  margin-left: 146px;
-  margin-top: 3px;
-  width: 79px;
-  margin-right: 2px;
-}
-
-.city-input.ui-input.address-input{
-  margin-top: 3px;
-  width: 105px;
-  margin-right: ~'calc(100% - 369px)';
-}
-
-.state-input.ui-input.address-input{
-  margin-left: 146px;
-  margin-top: 3px;
-  width: 79px;
-  margin-right: 2px;
-}
-
-.country-input.ui-input.address-input{
-  margin-top: 3px;
-  width: 105px;
-}
-
-.info-tab .title {
-  margin-top: 14px;
-  color: #889399;
-  font-size: 13px;
-  float: left;
-  width: 135px;
-  text-align: right;
-  font-weight: bold;
-}
-
-.info-tab .add {
-  float: left;
-  width: 14px;
-  height: 15px;
-  margin-top: 14px;
-  background: url("@static/sprite-contacts.png") no-repeat;
-  background-size: 123px 16px;
-  background-position: -48px 0;
-  margin-left: 10px;
-  margin-bottom: 11px;
-}
-
-
-.info-tab .add:hover {
-  background: url("@static/sprite-contacts.png") no-repeat;
-  background-size: 123px 16px;
-  background-position: -62px 0;
-}
-
-.info-tab .add:active {
-  background: url("@static/sprite-contacts.png") no-repeat;
-  background-size: 123px 16px;
-  background-position: -76px 0;
-}
-
-.info-tab .remove {
-  background: url("@static/sprite-contacts.png") no-repeat;
-  background-size: 123px 16px;
-  left: 200px;
-  margin: 0;
-  float: left;
-  width: 14px;
-  height: 14px;
-  margin-left: 5px;
-  margin-top: 5px;
-  display: none;
-  background-position: -90px 0;
-}
-
-.info-tab .remove:hover {
-  background: url("@static/sprite-contacts.png") no-repeat;
-  background-position: -104px 0;
-}
-
-.phone-dropdown.ui-context-menu {
-  float: left;
-  margin-left: 162px;
-  margin-top: 3px;
-  position: absolute;
-  background-color: #fff;
-  height: 83px;
-  display: none;
-  z-index: 1;
-}
-
-.mail-dropdown.ui-context-menu {
-  float: left;
-  margin-left: 162px;
-  margin-top: 3px;
-  position: absolute;
-  background-color: #fff;
-  height: 83px;
-  display: none;
-  z-index: 1;
-}
-
-.address-dropdown.ui-context-menu {
-  float: left;
-  margin-left: 162px;
-  margin-top: 3px;
-  position: absolute;
-  background-color: #fff;
-  height: 83px;
-  display: none;
-  z-index: 1;
-}
-
-.contacts .ui-context-menu .item:hover{
-  background-color: #4698e0;
-}
-
-.phone-list, .mail-list, .address-list{
-  width: 100%;
-  float: left;
-}
-
-.phoneDom, .mailDom, .addressDom{
-  float: left;
-  margin-bottom: 5px;
-}
-
-.phone-list .type, .mail-list .type, .address-list .type{
-  float: left;
-  width: 135px;
-  text-align: right;
-  font-size: 13px;
-  color: #545f65;
-  margin-right: 11px;
-  margin-top: 5px;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.dark .phone-list .type, .dark .mail-list .type, .dark .address-list .type{
-  color: #bdc4c6;
-}
-
-.phone-list .content, .mail-list .content, .address-list .content{
-  float: left;
-  width: ~'calc(100% - 159px)';
-  font-size: 13px;
-  color: #545f65;
-  margin-top: 5px;
-  margin-bottom: 6px;
-}
-
-.dark .phone-list .content, .dark .mail-list .content, .dark .address-list .content{
-  color: #bdc4c6;
-}
-
-.phone-list .content, .mail-list .content, .address-list .content{
-  float: left;
-}
-
-.ui-input.phone-input{
-  float: left;
-  width: 91px;
-  height: 22px;
-}
-
-.ui-input.mail-input, .ui-input.address-input{
-  float: left;
-  width: 205px;
-  height: 22px;
-}
-
-.phone-list .phone, .mail-list .mail, .address-list .address, .personal-list .personal{
-  position: relative;
-  width: 100%;
-}
-
-.phone-list .focus, .mail-list .focus, .address-list .focus, .personal-list .focus{
-  background: #fff;
-  border: 1px solid #e8eeef;
-}
-
-.phone-list input:first-child{
-  width: 84px;
-  text-align: right;
-  cursor: auto;
-  border: 0;
-}
-
-.phone .content {
-  width: 128px;
-}
-
-.mail .content {
-  width: 300px;
-}
-
-.mail-list input:first-child{
-  width: 84px;
-  cursor: auto;
-  border: 0;
-  text-align: right;
-}
-
-.address-list input:first-child{
-  width: 84px;
-  cursor: auto;
-  border: 0;
-  text-align: right;
-}
-
-.personal-list input:first-child{
-  width: 85px;
-  cursor: auto;
-  border: 0;
-}
-
-.info-tab input:-ms-input-placeholder {
-   color:#889399;
-}
-
-.info-tab input::-webkit-input-placeholder {
-   color:#889399;
-}
-
-.info-tab input:-moz-placeholder {
-   color:#889399;
-}
-
-.info-tab input::-moz-placeholder {
-   color:#889399;
-}
-
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
-  background-color: transparent;
-}
-
-.notes-section .notes{
-  font-size: 13px;
-  line-height: 24px;
-  color: #545f65;
-  float: left;
-  width: ~'calc(100% - 155px)';
-  margin-bottom: 16px;
-  border-radius: 4px;
-  margin-left: 10px;
-  margin-top: 9px;
-  margin-right: 10px;
-}
-
-.notes-section .notes-input{
-  font-size: 13px;
-  line-height: 24px;
-  color: #545f65;
-  float: left;
-  width: ~'calc(100% - 177px)';
-  margin-bottom: 16px;
-  border: 1px solid #ccd3d5;
-  border-radius: 4px;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-left: 10px;
-  margin-top: 7px;
-  margin-right: 10px;
-  display: none;
-}
-
-
-.notes-section .notes-input:focus{
-  border-color: #4698e0;
-}
-
-.welcome-page {
-    float: left;
-    position: absolute;
-    z-index: 2;
-    background-color: #f7f8fa;
-    width: 100%;
-    height: ~'calc(100% - 41px)';
-    top: 42px;
-    display: none;
-    opacity: 0;
-    animation: welcome-page-in 0.5s forwards;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-out;
-}
-
-@keyframes welcome-page-in{
-    0%{  opacity: 0;}
-    100%{ opacity: 1; }
-}
-
-.welcome-page .welcome-first{
-    float: left;
-    color: #545f65;
-    font-size: 61px;
-    margin-top: 180px;
-    font-weight: lighter;
-    margin-top: 180px;
-    text-align: center;
-    width: 100%;
-}
-
-.welcome-page i{
-  float: left;
-  height: 1px;
-  width: 500px;
-  background-color: #e1e5e7;
-  margin-left: ~'calc(50% - 500px/2)';
-  margin-bottom: 25px;
-  margin-top: 30px;
-}
-
-.welcome-page .welcome-second{
-  float: left;
-  color: #889399;
-  font-size: 19px;
-  text-align: center;
-  width: 100%;
-}
-
-.welcome-page .ui-btn.big{
-  margin-left: ~'calc(50% - 225px/2)';
-  width: 225px;
-  margin-top: 90px;
-}
-
-.welcome-page .ui-btn.big span{
-  max-width: 200px;
-}
-
-.company-mode{
-  background-image: url('@static/maletin.png');
-  background-size: 17px 16px;
-  width: 17px;
-  height: 16px;
-  float: left;
-  position: absolute;
-  bottom: 9px;
-  left: 42px;
-  display: none;
-}
-
-/* Calendar tab*/
-article.event.domEvent {
-  padding-left: 8px;
-  padding-top: 8px;
-  margin-left: 4px;
-  margin-right: 14px;
-  border-radius: 3px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  height: 40px;
-}
-
-.domEvent span:first-child {
-  font-weight: bold;
-  display: block;
-}
-
-.domEvent span:last-child {
-  margin-top: 5px;
-  display: block;
-}
-
-.calendar-tab .day {
-  width: 553px;
-  height: 27px;
-  border-top: 1px solid #ccd3d5;
-  border-bottom: 1px solid #ccd3d5;
-  background-color: #f6f8f8;
-  text-align: center;
-  padding-top: 14px;
-  color: #465057;
-}
-
-/* Mail tab */
-.mail-tab .mail {
-  float: left;
-  width: 524px;
-  height: 44px;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 3px;
-}
-
-.mail-tab .mail:hover{
-  background-color: #d5ebfa;
-}
-
-.mail-tab .mail.active {
-  background-color: #5cacdf;
-  color: #fff;
-}
-
-.mail-tab .mail.active .body, .mail-tab .mail.active .time{
-  color: #fff;
-}
-
-.mail-tab .message-top{
-  width: 100%;
-  height: 15px;
-}
-
-.mail-tab .message-bottom{
-  width: 100%;
-  padding-top: 5px;
-  height: 24px;
-}
-
-.mmail-tab .message-top .topic{
-  float: left;
-  color: #545f65;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-.mail-tab .message-top .time{
-  float: right;
-  font-size: 11px;
-  color: #889399;
-}
-
-.mail-tab .message-bottom .body{
-  color: #889399;
-  font-size: 11px;
-}
-
-.mail-tab .search-section{
-  width: 545px;
-  /*float: left;*/
-  height: 39px;
-  margin-left: 8px;
-  margin-right: 8px;
-}
-
-.mail-tab  .search-section .search-icon{
-  width: 20px;
-  height: 20px;
-  margin: 10px 10px 10px 0px;
-  background-size: 20px 20px;
-  background: url("@static/search.png") no-repeat;
-  background-position: center;
-  float: left;
-}
-
-.mail-tab .search-section .search-input{
-  width: 494px;
-  float: left;
-  margin: 10px 10px 10px 0px;
-  height: 20px;
-  border-left: 1px solid #e9edee;
-  padding-left: 10px;
-  font-size: 15px;
-}
-
-.mail-tab .day{
-  display: inline-block;
   background-color: #f7f8fa;
   width: 100%;
-  height: 28px;
-  border-top: 1px solid #ccd3d5;
-  border-bottom: 1px solid #ccd3d5;
 }
 
-.mail-tab .day div{
- text-align: center;
- color: #545f65;
- font-weight: bold;
- margin-top: 8px;
+.legal .ui-tab .ui-tab-element.active{
+  border-top: none;
+  border-left: none;
+  border-bottom: 2px solid #fff;
 }
 
-/* Files tab */
-
-.files-tab-header{
+.info-tab-section{
   width: 100%;
-  height: 40px;
-  border-top: 1px solid #ccd3d5;
-  border-bottom: 1px solid #ccd3d5;
-}
-
-.files-tab .search-section{
-  width: 329px;
-  border-right: 1px solid #ccd3d5;
-  float: left;
-  height: 100%;
-  margin-left: 8px;
-}
-
-.files-tab .search-section .search-icon{
-  width: 20px;
-  height: 20px;
-  margin: 10px 10px 10px 0px;
-  background-size: 20px 20px;
-  background: url("@static/search.png") no-repeat;
-  background-position: center;
+  height: ~'calc(100% - 97px)';
   float: left;
 }
 
-.files-tab .search-section .search-input{
-  width: 277px;
+.exp-status, .exp-desc, .exp-client, .exp-asigns, .exp-people{
   float: left;
-  margin: 10px 10px 10px 0px;
-  height: 20px;
-  border-left: 1px solid #e9edee;
-  padding-left: 10px;
-  font-size: 15px;
-  /*color: #889399;*/
+  width: ~'calc(100% - 40px)';
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px solid  #e5e9ea;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 20px;
 }
 
-.files-tab .unsync-button{
-  width: 214px;
-  height: 100%;
-  float: left;
+.exp-status{
+  height: 49px;
 }
 
-.files-tab .unsync-button .unsync-text{
+.info-tab-section .title{
+  font-size: 13px;
   color: #889399;
-  margin: 15px 10px 15px 10px;
-  text-align: center;
-}
-
-.files-tab .files-header{
-  width: 538px;
-  height: 38px;
-  margin: 0px 8px 0px 8px;
-  border-bottom: 2px solid #e9edee;
-  color: #889399;
-}
-
-.files-tab .files-header .name-header{
-  width: 275px;
-  float: left;
-  margin: 14px 10px;
-}
-
-.files-tab .files-header .modified-header{
-  width: 148px;
-  float: left;
-  margin: 14px 10px 14px 0px;
-}
-
-.files-tab .files-header .shared-header{
-  width: 75px;
-  float: left;
-  margin: 14px 10px 14px 0px;
-}
-
-.files-tab .file{
-  width: 528px;
-  height: 34px;
-  margin: 5px 8px 5px 18px
-}
-
-.files-tab .file .file-icon{
-  /*background-image: url('https://download.inevio.com/962248/icon/normal');*/
-  width: 35px;
-  height: 35px;
-  background-size: 30px 30px;
-  vertical-align: middle;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-  float: left;
-}
-
-.files-tab .file .file-name{
-  width:  230px;
-  margin: 11px 10px 0px 10px;
-  float: left;
-}
-
-.files-tab .file .modified-date{
-  width: 148px;
-  margin: 11px 10px 0px 0px;
-  float: left;
-}
-
-.files-tab .file .shared-with{
-  width: 75px;
-  margin: 11px 10px 0px 0px;
-  float: left;
-}
-
-.files-tab.unsynced .files-tab-header{
-  display: none;
-}
-
-.files-tab.unsynced .files-view{
-  display: none;
-}
-
-.files-tab.unsynced .sync-button{
-  display: inline-block;
-}
-
-.files-tab .sync-button{
-  display: none;
-  margin: 65px 0px 0px 200px;
-  height: 26px;
-  width: 120px;
-  padding-top: 7px;
-}
-
-.fileChildren{
-  margin-left: 35px !important;
-}
-
-
-.dirClosed, .dirOpened, .dirClosed i, .dirClosed div, .dirOpened i, .dirOpened div{
-  cursor: pointer;
 }

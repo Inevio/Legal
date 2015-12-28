@@ -1,608 +1,98 @@
 <section class="ui-view">
-  <section class="ui-window contacts">
+  <section class="ui-window legal">
 
-    <section class="welcome-page">
-      <span class="welcome-first"></span><i></i>
-      <span class="welcome-second"></span>
-      <button class="ui-btn big gray"><span class="ellipsis"></span></button>
-    </section>
-
-    <section class="contacts-top-bar wz-ui-header wz-dragger ui-header">
-      <section class="contacts-menu wz-dragger wz-fit-x ui-header-brand">
+    <section class="legal-top-bar wz-ui-header wz-dragger ui-header">
+      <section class="legal-menu wz-dragger wz-fit-x ui-header-brand">
         <span class="app-title wz-dragger"></span>
       </section>
-      <section class="new-contact-button ui-btn">
-        <i></i>
-        <span></span>
-      </section>
-      <section class="contacts-buttons right wz-dragger ui-header-buttons">
+      <section class="legal-buttons right wz-dragger ui-header-buttons">
         <figure class="ui-minimize"><i></i></figure>
         <figure class="ui-maximize"><i></i></figure>
         <figure class="ui-close"><i></i></figure>
       </section>
     </section>
 
-    <section class="contact-list wz-scroll ui-navbar">
-      <section class="ui-navgroup">
-        <section class="contact wz-prototype">
+    <section class="exp-list wz-scroll ui-navbar">
+        <section class="exp wz-prototype">
           <section class="highlight-area">
-            <i class="avatar"><span class="avatar-letters"></span><i class="company-mode"></i></i>
-            <span class="name-contact wz-selectable"></span>
-            <span class="company-contact wz-selectable"></span>
+            <i class="avatar"><span class="avatar-letters"></span></i>
+            <span class="name-exp wz-selectable"></span>
+            <span class="id-exp wz-selectable"></span>
           </section>
         </section>
-      </section>
+
+        <section class="exp">
+          <section class="highlight-area">
+            <i class="avatar"><span class="avatar-letters">TG</span></i>
+            <span class="name-exp wz-selectable">Agresion en via publica</span>
+            <span class="id-exp wz-selectable">23321232 - Tania Gonzalez</span>
+          </section>
+        </section>
+        <section class="exp active">
+          <section class="highlight-area">
+            <i class="avatar"><span class="avatar-letters">FL</span></i>
+            <span class="name-exp wz-selectable">Fraude de bienes</span>
+            <span class="id-exp wz-selectable">255546232 - Fernando Lopez</span>
+          </section>
+        </section>
+
     </section>
 
     <section class="ui-window-content">
-      <section class="contact-info">
-        <i class="avatar">
-          <span class="avatar-letters"></span>
-        </i>
+      <section class="exp-info">
 
-        <span class="name wz-selectable"></span>
-        <section class="edit-contact-button ui-btn">
+        <span class="name wz-selectable">Fraude de bienes</span>
+        <div class="exp-ids">
+          <span class="intern wz-selectable">ID Legal:</span>
+          <span class="intern-id wz-selectable">2321322</span>
+          <span class="extern wz-selectable">ID Personalizado:</span>
+          <span class="extern-id wz-selectable">00000002</span>
+        </div>
+        <section class="edit-exp-button ui-btn">
           <i></i>
           <span></span>
         </section>
-        <div class="company-office">
-          <span class="company wz-selectable"></span>
-          <span class="office wz-selectable"></span>
-        </div>
-        <div class="position-department">
-          <span class="position wz-selectable"></span>
-          <span class="department wz-selectable"></span>
-        </div>
-        <input class="name-input ui-input" placeholder="Nombre"/>
-        <input class="lastname-input ui-input" placeholder="Apellidos"/>
-        <input class="company-input ui-input" placeholder="Compañía"/>
-        <input class="office-input ui-input" placeholder="Oficina"/>
-        <input class="position-input ellipsis ui-input" placeholder="Cargo"/>
-        <input class="department-input ellipsis ui-input" placeholder="Departamento"/>
-        <section class="is-company">
-        <figure class="company-check ui-checkbox"><i></i></figure><span></span>
-        </section>
+
+        <input class="name-input ui-input" placeholder="Titulo del expediente"/>
+        <input class="intern-id-input ui-input" placeholder="Id interno"/>
+        <input class="extern-id-input ui-input" placeholder="Id externo"/>
+
         <section class="edit-mode-popup">
           <button class="right edit-mode save-contact-button ui-btn accept"><span></span></button>
           <button class="right edit-mode cancel-contact-button ui-btn gray"><span></span></button>
           <button class="edit-mode delete-contact-button ui-btn cancel"><span></span></button>
         </section>
-
       </section>
 
-    <section class="info-tab tab wz-scroll">
+      <nav class="ui-tab close">
+        <li class="ui-tab-element info-tab active"><span></span></li>
+        <li class="ui-tab-element doc-tab"><span></span></li>
+      </nav>
 
-      <section class="phone-section">
-        <span class="title"></span><i class="add"></i>
-
-        <section class="ui-context-menu phone-dropdown">
-          <article class="item"></article>
-          <article class="item"></article>
-          <article class="item"></article>
+      <section class="info-tab-section">
+        <section class="exp-status">
+          <span class="title"></span>
+          <i class="status-img"></i>
+          <span class="status"></span>
         </section>
-
-        <section class="phone-list">
-          <article class="phone wz-prototype">
-            <span class="type" value="phone"></span>
-            <span class="content wz-selectable"></span>
-            <input class="phone-input ui-input" placeholder="Teléfono" value="">
-            <i class="remove"></i>
-          </article>
+        <section class="exp-desc">
+          <span class="title"></span>
+          <span class="desc"></span>
         </section>
-      </section>
-
-
-      <section class="mail-section">
-        <span class="title"></span><i class="add"></i>
-
-        <section class="ui-context-menu mail-dropdown">
-          <article class="item"></article>
-          <article class="item"></article>
-          <article class="item"></article>
+        <section class="exp-client">
+          <span class="title"></span>
+          <!-- to do -->
         </section>
-
-        <section class="mail-list">
-          <article class="mail wz-prototype">
-            <span class="type" value="mail"></span>
-            <span class="content wz-selectable"></span>
-            <input class="mail-input ui-input" placeholder="Email" value="">
-            <i class="remove"></i>
-          </article>
+        <section class="exp-asigns">
+          <span class="title"></span>
+          <!-- to do -->
+        </section>
+        <section class="exp-people">
+          <span class="title"></span>
+          <!-- to do -->
         </section>
       </section>
 
-      <section class="address-section">
-        <span class="title"></span><i class="add"></i>
-
-        <section class="ui-context-menu address-dropdown">
-          <article class="item"></article>
-          <article class="item"></article>
-          <article class="item"></article>
-        </section>
-
-        <section class="address-list">
-          <article class="address wz-prototype">
-            <span class="type" value="address"></span>
-            <span class="content wz-selectable"></span>
-            <input class="address-input street-input ui-input" placeholder="Calle" value="">
-            <input class="address-input  postal-input ui-input" placeholder="Código Postal" value="">
-            <input class="address-input city-input ui-input" placeholder="Ciudad" value="">
-            <input class="address-input state-input ui-input" placeholder="Provincia" value="">
-            <input class="address-input country-input ui-input" placeholder="Pais" value="">
-            <i class="remove"></i>
-          </article>
-        </section>
-      </section>
-
-      <section class="notes-section">
-        <span class="title"></span>
-        <span class="notes wz-selectable"></span>
-        <textarea class="notes-input"></textarea>
-      </section>
-
-
-</section>
-</section>
-
-<!-- THIS IS FOR LEGAL
-
-<section class="calendar-tab tab wz-scroll">
-  <article class="day wz-prototype"></article>
-  <article class="event wz-prototype">
-    <span class="ellipsis"></span><span></span>
-  </article>
-</section>
-
-<section class="mail-tab tab wz-scroll m1">
-  <article class="day wz-prototype">
-    <div></div>
-  </article>
-  <section class="mail wz-prototype">
-    <span class="topic"></span>
-    <span class="time"></span>
-    <span class="body"></span>
-  </section>
-  <article class="search-section">
-    <i class="search-icon"></i>
-    <input class="search-input" placeholder="Buscar emails...">
-  </article>
-  <article class="day">
-    <div>Wednesday 8th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Reunión Intranet Cazorla Asociados</span>
-      <span class="time">22:30</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Buenos días, La runión finalmente se celebrará en las oficinas de la calle Jacometrezo a las 11 horas. Un saludo, Francisco De Pablo</span>
     </section>
   </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Catálogo Febrero 2015 </span>
-      <span class="time">19:33</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Le adjuntamos el catálogo actualizado de los productos de nuestra tienda para su oficina. Para cualquier gestión contacte con nosotros en el 910587433. Departamento de Compras, Oficinet S.L.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Cuentas</span>
-      <span class="time">16:24</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Ya están disponibles las tablas financieras de la empresa en el disco local, en la carpeta Finanzas. Saludos</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Oferta 28454</span>
-      <span class="time">14:41</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Le adjunto la oferta relativa a su interés. Para continuar con el proceso de compra, rellene las casillas pertinentes y háganosla llegar a este mismo correo electrónico. Atentamente, María del Carmen Sáenz</span>
-    </section>
-  </section>
-  <article class="day">
-    <div>Tuesday 7th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Reunión Departamental</span>
-      <span class="time">19:06</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Buenos días a todos. En la reunión se tratará una gran parte del tiempo el tema de los nuevos contratos que se están cerrando a lo largo de esta semana. Se ruega llevar toda la información relativa a este aspecto. Un saludo</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Duda referente a contrato 32878</span>
-      <span class="time">10:54</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Buenas. ¿Recuperaste ayer por la tarde el NIF de la empresa? Muchas Gracias</span>
-    </section>
-  </section>
-</section>
-<section class="mail-tab tab wz-scroll m2">
-  <article class="day wz-prototype">
-    <div></div>
-  </article>
-  <section class="mail wz-prototype">
-    <span class="topic"></span>
-    <span class="time"></span>
-    <span class="body"></span>
-  </section>
-  <article class="search-section">
-    <i class="search-icon"></i>
-    <input class="search-input" placeholder="Buscar emails...">
-  </article>
-  <article class="day">
-    <div>Thursday 23st of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">GARANTÍA JUVENIL - Plan Integral de Cualificación y Empleo</span>
-      <span class="time">23:13</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">En este programa diseñaremos un itinerario formativo y un plan de inserción laboral a tu medida, considerando tu nivel académico, perfil profesional...</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Tu Cuenta Origin pronto será una Cuenta EA</span>
-      <span class="time">21:53</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">En las próximas semanas, tu Cuenta Origin pasará a llamarse Cuenta EA para representar mejor todos los juegos y servicios de EA. La identidad, preferencias e historial de pedidos de la cuenta permanecerán intactos.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">La película más taquillera, los estrenos de esta semana</span>
-      <span class="time">20:43</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Hacerse mayor puede ser un camino lleno de obstáculos. También para Riley, que debe dejar su vida en el Medio Oeste cuando su padre consigue un nuevo trabajo en San Francisco. Como todos nosotros, Riley...</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Visita a IIT de Delegado del Rector de UPM en Real Colegio Complutense en Harvard</span>
-      <span class="time">18:12</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Estimados alumnos y ex-alumnos de la UPM, Mi nombre es José M Páez, anterior Vicerrector de RRII  y actual delegado de la UPM en RCC-Harvard.</span>
-    </section>
-  </section>
-  <article class="day">
-    <div>Wednesday 22th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Groupon Madrid</span>
-      <span class="time">16:45</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">La Cocina de María Luisa en el B.º de Salamanca La Cocina de María Luisa Principal a elegir entre solomillo de ternera blanca, manitas de cerdo con trufa, chuletitas de lechal, venado, trucha,...</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">A Roadmap for Beginners</span>
-      <span class="time">13:32</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Sometimes knowing where to start is the hardest part. So to help with that, here’s a selection of courses that will get you up and running on your coding journey....</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Bienvenido a AtresPlayer, Disfruta ya de los contenidos de ATRESMEDIA</span>
-      <span class="time">10:53</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Una calidad de imagen impecable. Vive una experiencia de alta fidelidad con o sin auriculares. Portátil, sobremesa, smartphone, tableta, Smart TV… Tú eliges. En un avión, en el coche, en el desierto...</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Urlaub für die Ohren: 3 Hörbücher für nur je 2,95 Euro</span>
-      <span class="time">06:24</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Sie wollten schon immer wissen, wie der Sommer klingt? Dann probieren Sie das Audible-Abo für nur 2,95 Euro (statt 9,95 Euro) monatlich aus...</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Get it Done - New IFTTT Integration, Productivity Tips, And More</span>
-      <span class="time">04:45</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">The Five Uncommon Habits of Highly Productive People. Can you be as effective in 35 hours as you are in 80? One expert says yes...</span>
-    </section>
-  </section>
-</section>
-<section class="mail-tab tab wz-scroll m3">
-  <article class="day wz-prototype">
-    <div></div>
-  </article>
-  <section class="mail wz-prototype">
-    <span class="topic"></span>
-    <span class="time"></span>
-    <span class="body"></span>
-  </section>
-  <article class="search-section">
-    <i class="search-icon"></i>
-    <input class="search-input" placeholder="Buscar emails...">
-  </article>
-  <article class="day">
-    <div>Thursday 23rd of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">InfoJobs</span>
-      <span class="time">23:33</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Estas son las ofertas de empleo que hemos encontrado basadas en tu alerta "Mi alerta de empleo"</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Kinguin</span>
-      <span class="time">21:49</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Earn money and get amazing games! Start selling now</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Este viernes en Cadiz: fiesta oficial de presentación Dreambeach</span>
-      <span class="time">19:23</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Porque queremos calentar motores y porque tenemos ganas de disfrutar ¡FIESTA PRESENTACIÓN #Dreambeach en SALA MOMART (Cádiz)!</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Notificación de caducidad de Xbox Live Gold</span>
-      <span class="time">18:12</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">La suscripción Xbox Live Gold caducará el miércoles, 19 de agosto de 2015. Para evitar posibles interrupciones en el servicio, renueve la suscripción antes del miércoles, 19 de agosto de 2015.</span>
-    </section>
-  </section>
-  <article class="day">
-    <div>Wednesday 22rd of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Bienvenidos a Dubsmash</span>
-      <span class="time">23:55</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Gracias por unirte a Dubsmash, la comunidad mundial para los amantes de las frases. Como usuario ya registrado, tienes la posibilidad de utilizar nuevas e increíbles </span>
-    </section>
-  </section>
-</section>
-<section class="mail-tab tab wz-scroll m4">
-  <article class="day wz-prototype">
-    <div></div>
-  </article>
-  <section class="mail wz-prototype">
-    <span class="topic"></span>
-    <span class="time"></span>
-    <span class="body"></span>
-  </section>
-  <article class="search-section">
-    <i class="search-icon"></i>
-    <input class="search-input" placeholder="Buscar emails...">
-  </article>
-  <article class="day">
-    <div>Monday 6th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Recibo de su pago de PayPal a FoxOffer Ltd</span>
-      <span class="time">22:33</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Ha enviado un pago por valor de $15,99 USD a FoxOffer Ltd (payment@foxoffer.com) Gracias por utilizar PayPal. Para ver todos los detalles de la transacción, inicie sesión en su cuenta PayPal.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Para los amantes del baloncesto</span>
-      <span class="time">20:49</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Este código es exclusivo para ti, con él podrás contratar online una de nuestras tarifas de móvil beneficiándote de un 30% de descuento.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Calling All Ye Duelists: The Grand Tournament(TM) Comes to Hearthstone(R)</span>
-      <span class="time">20:31</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Starting next week, prepare for battle by pre-purchasing a bundle of 50 card packs at a special one-time price of $49.99 and receive a unique themed card back.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Electrónica e Informática en Premium day: ofertas exclusivas para miembros Premium</span>
-      <span class="time">16:23</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Si prefieres no recibir más comunicaciones de este tipo, puedes comunicárnoslo a través del siguiente enlace. Es posible que tu solicitud tarde varios días en tramitarse.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">¡Nuevos Idiomas en Duolingo!</span>
-      <span class="time">15:58</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Este niño aprendió inglés con Duolingo. ¡Lo que hizo a continuación te sorprenderá! Míralo y pon tu inglés en práctica.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Tu espacio de almacenamiento en iCloud está casi lleno.</span>
-      <span class="time">13:12</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Tu espacio de almacenamiento en iCloud está casi lleno. Actualmente estás usando 4,9 GB del total de 5 GB de espacio de almacenamiento.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">elainelin agregó música nueva a la playlist EDM 2015.</span>
-      <span class="time">9:31</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">elainelin acaba de agregar Treasure y 15 otras canciones a la playlistEDM 2015 by Zoedic - FB/Twitter: Zoedic | House Music | Party | Electronic.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Miles de invitaciones a tu alcance con la Operación Kinecode. ¿Participas? .</span>
-      <span class="time">6:26</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Kinépolis te invita a participar en la Operación Kinecode! Tu misión: Encontrar los códigos premiados que hay en cada una de tus entradas de cine y conseguir una de las miles de invitaciones que sorteamos.</span>
-    </section>
-  </section>
-  <article class="day">
-    <div>Sunday 5th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Re: Immunization Verification Form</span>
-      <span class="time">22:55</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">En este formulario piden una prueba de la Tuberculosis, por lo que me hice la que se hace en España (prueba del Mantoux), adjuntando un informe de que el resultado fue negativo (en español, porque según mi méd</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">24 hours only | 90% off in Summer Sale Encore</span>
-      <span class="time">20:23</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">This is it, there are only 24 hours left to go in our massive Summer Sale encore. Nearly every single deal we've run over the past fortnight is back with a bang, and this is the last chance to save big on hundreds.</span>
-    </section>
-  </section>
-</section>
-<section class="mail-tab tab wz-scroll m5">
-  <article class="day wz-prototype">
-    <div></div>
-  </article>
-  <section class="mail wz-prototype">
-    <span class="topic"></span>
-    <span class="time"></span>
-    <span class="body"></span>
-  </section>
-  <article class="search-section">
-    <i class="search-icon"></i>
-    <input class="search-input" placeholder="Buscar emails...">
-  </article>
-  <article class="day">
-    <div>Monday 13rd of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Última llamada: Convocatoria de Mentores 2015-16</span>
-      <span class="time">22:33</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Estimado alumno, el pasado día 25 de julio finalizó el plazo para apuntarse como mentor para el curso que viene. Os agradezco a todos los que lo habéis hecho vuestro interés.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Practicasexternas alumnos</span>
-      <span class="time">19:53</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">i ya ha completado las 300h de prácticas podrá entregar la documentación a través del Campus Virtual sin problema alguno. Le adjuntamos el manual donde podrá encontrar información más detallada</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">Thank you for your purchase</span>
-      <span class="time">15:23</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">We've finished creating an electronic tax invoice for your recent purchase: To review your transaction history and access links to your electronic invoices.</span>
-    </section>
-  </section>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">12 Little-Known CSS Facts</span>
-      <span class="time">13:12</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">Over a year ago I published the original 12 Little-known CSS Facts and, to this day, it has been one of SitePoint’s most popular articles ever.</span>
-    </section>
-  </section>
-  <article class="day">
-    <div>Saturday 11th of july, 2015</div>
-  </article>
-  <section class="mail">
-    <section class="message-top">
-      <span class="topic">HTML5 Mega Cheat Sheet</span>
-      <span class="time">16:55</span>
-    </section>
-    <section class="message-bottom">
-      <span class="body">I love them as they offer me a simple way to recall a software program or help me to learn a new skill. Plus there’s always a useful keyboard shortcut to forget.</span>
-    </section>
-  </section>
-</section>
-
-
-
-<section class="files-tab unsynced tab wz-scroll">
-  <article class="wz-ui-button accept sync-button">Sync folder</article>
-  <section class="files-tab-header">
-    <article class="search-section">
-      <i class="search-icon"></i>
-      <input class="search-input" placeholder="Búsqueda de archivos...">
-    </article>
-    <article class="unsync-button">
-      <div class="unsync-text">Desvincular carpeta del contacto</div>
-    </article>
-  </section>
-  <section class="files-view">
-    <section class="files-header">
-      <article class="name-header">
-        <div class="text">Name</div>
-      </article>
-      <article class="modified-header">
-        <div class="text">Modified</div>
-      </article>
-      <article class="shared-header">
-        <div class="text">Shared with</div>
-      </article>
-    </section>
-    <section class="files-list">
-      <article class="file wz-prototype">
-        <i class="file-icon"></i>
-        <div class="file-name ellipsis"></div>
-        <div class="modified-date"></div>
-        <div class="shared-with"></div>
-      </article>
-    </section>
-  </section>
-</section>
-</section>
 </section>
