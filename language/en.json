@@ -1,0 +1,23 @@
+
+{
+
+    "welcome" : "Welcome to Contacts",
+    "noContact" : "It seems you have no contacts added",
+    "firstContact" : "Add your first contact",
+    "contacts" : "Contacts",
+    "newContact" : "New contact",
+    "editContact" : "Edit contact",
+    "company" : "Company",
+    "save" : "Save",
+    "cancel" : "Cancel",
+    "delete" : "Delete",
+    "phone" : "Phone",
+    "mobile" : "Mobile",
+    "home" : "Home",
+    "work" : "Work",
+    "email" : "Email",
+    "personal" : "Personal",
+    "other" : "Other",
+    "address" : "Address",
+    "note" : "Note"
+}
