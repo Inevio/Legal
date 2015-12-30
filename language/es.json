@@ -8,5 +8,12 @@
     "expDesc"   : "Descripción del expediente",
     "client"    : "Cliente",
     "asigns"    : "Asignados",
-    "people"    : "Personas de interés"
+    "people"    : "Personas de interés",
+    "more"      : "ver más",
+    "title"     : "Título",
+    "internId"  : "ID Legal",
+    "externId"  : "ID Personalizado",
+    "save"      : "Guardar",
+    "cancel"    : "Cancelar",
+    "delete"    : "Borrar"
 }

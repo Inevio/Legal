@@ -141,9 +141,19 @@
 }
 
 /* Contact info */
+.look-mode{
+  display: block;
+  float: left;
+}
+
+.edit-mode{
+  display: none;
+  float: left;
+}
+
 .exp-info {
   float: left;
-  height: 65px;
+  height: 78px;
   width: 100%;
   background-color: #f7f8fa;
   border-bottom: 1px solid #ccd3d5;
@@ -187,37 +197,12 @@
 
 .legal .ui-input{
   float: left;
-  display: none;
   color: #545f65;
 }
 
 .legal .ui-input:focus{
   float: left;
-  display: none;
-  border-color: #4698e0;
-}
-
-.exp-info .name-input{
-  height: 20px;
-  width: 114px;
-  margin-left: 10px;
-  margin-bottom: 3px;
-  margin-top: 8px;
-}
-
-.exp-info .intern-id-input{
-  height: 20px;
-  width: ~'calc(100% - 353px)';
-  margin-left: 2px;
-  margin-bottom: 3px;
-  margin-top: 8px;
-}
-
-.exp-info .extern-id-input{
-  height: 20px;
-  width: 185px;
-  margin-left: 10px;
-  margin-bottom: 3px;
+  border-color: #60b25e;
 }
 
 .exp-info input:-ms-input-placeholder {
@@ -246,14 +231,18 @@
 }
 
 .edit-exp-button.ui-btn i{
-  background: url("@static/edit.png") ;
-  background-size: cover;
+  background: url("@static/sprite.png") ;
+  background-size: 207px 16px;
   width: 16px;
   height: 16px;
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 8px;
+}
+
+.edit-exp-button.ui-btn:hover i{
+  background-position: -16px 0;
 }
 
 .edit-exp-button.ui-btn span{
@@ -265,10 +254,61 @@
   max-width: 105px;
 }
 
+.edit-mode .intern{
+  float: left;
+  color: #889399;
+  font-size: 13px;
+  margin-left: 7px;
+  margin-top: 14px;
+  width: 61px;
+  margin-right: 2px;
+}
+
+.edit-mode .extern{
+  float: left;
+  color: #889399;
+  font-size: 13px;
+  margin-top: 14px;
+  width: 119px;
+  margin-right: 2px;
+}
+
+.edit-mode .title{
+  float: left;
+  color: #889399;
+  font-size: 13px;
+  margin-top: 14px;
+  width: ~'calc(100% - 191px)';
+}
+
+.intern-id-input{
+  float: left;
+  margin-left: 7px;
+  width: 43px;
+  height: 30px;
+  margin-top: 5px;
+}
+
+.extern-id-input{
+  float: left;
+  margin-left: 2px;
+  width: 101px;
+  height: 30px;
+  margin-top: 5px;
+}
+
+.name-input{
+  float: left;
+  margin-left: 2px;
+  width: ~'calc(100% - 215px)';
+  height: 30px;
+  margin-top: 5px;
+}
+
 .edit-mode-popup{
-  display: none;
   position: absolute;
-  width: 100%;
+  right: 0;
+  width: ~'calc(100% - 311px)';
   height: 48px;
   bottom: 0;
   -webkit-border-radius: 0 0 6px;
@@ -290,7 +330,6 @@
     animation-timing-function: ease-out;
 }
 
-
 .dark .edit-mode-popup{
   background-color: #363d46;
   border-color: #2c3238;
@@ -307,17 +346,17 @@
     100%{ height: 0;}
 }
 
-.edit-mode.delete-contact-button.ui-btn.cancel {
+.edit-mode.delete-exp-button.ui-btn.cancel {
     margin-top: 7px;
     margin-left: 7px;
 }
 
-.right.edit-mode.save-contact-button.ui-btn.accept {
+.right.edit-mode.save-exp-button.ui-btn.accept {
     margin-right: 7px;
     margin-top: 7px;
 }
 
-.right.edit-mode.cancel-contact-button.ui-btn.gray {
+.right.edit-mode.cancel-exp-button.ui-btn.gray {
     margin-top: 7px;
     margin-right: 5px;
 }
@@ -336,7 +375,7 @@
 
 .info-tab-section{
   width: 100%;
-  height: ~'calc(100% - 97px)';
+  height: ~'calc(100% - 110px)';
   float: left;
 }
 
@@ -351,11 +390,139 @@
   padding-left: 20px;
 }
 
-.exp-status{
-  height: 49px;
-}
-
 .info-tab-section .title{
   font-size: 13px;
   color: #889399;
+  float: left;
+  width: 100%;
+}
+
+.exp-status .status-img{
+  float: left;
+  width: 14px;
+  height: 14px;
+  background-image: url('@static/sprite.png');
+  background-size: 207px 16px;
+  background-position: -109px 0;
+  margin-top: 14px;
+  margin-right: 7px;
+}
+
+.exp-status .status{
+  float: left;
+  font-size: 19px;
+  font-weight: bold;
+  margin-top: 12px;
+  color: #545f65;
+}
+
+.exp-status .ui-select{
+  margin-top: 14px;
+}
+
+.exp-status .ui-select-input > i{
+  float: left;
+  width: 14px;
+  height: 14px;
+  background-image: url('@static/sprite.png');
+  background-size: 207px 16px;
+  background-position: -109px 0;
+  margin: 7px;
+}
+
+.legal .ui-select-input article{
+  padding-left: 0px;
+  width: 115px;
+}
+
+.exp-status .ui-select .open i{
+  float: left;
+  width: 14px;
+  height: 14px;
+  background-image: url('@static/sprite.png');
+  background-size: 207px 16px;
+  background-position: -109px 0;
+  margin-right: 7px;
+  margin-left: -3px;
+  margin-top: -2px;
+}
+
+.exp-status .ui-select .open:hover i{
+  background-position: -137px 0;
+}
+
+.exp-status .ui-select .closed i{
+  float: left;
+  width: 14px;
+  height: 14px;
+  background-image: url('@static/sprite.png');
+  background-size: 207px 16px;
+  background-position: -123px 0;
+  margin-right: 7px;
+  margin-left: -3px;
+  margin-top: -2px;}
+
+.exp-desc .desc{
+  font-size: 13px;
+  color: #545f65;
+  float: left;
+  margin-top: 14px;
+  line-height: 20px;
+}
+
+.client, .asign, .person{
+  float: left;
+}
+
+.info-tab-section .avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  float: left;
+  margin-top: 14px;
+  margin-right: 10px;
+  background-size: cover;
+  border: 2px dashed black;
+}
+
+.info-tab-section .avatar-letters {
+  float: left;
+  font-size: 26px;
+  text-align: center;
+  margin-left: 0px;
+  width: 54px;
+  padding-bottom: 14px;
+  padding-top: 14px;
+}
+
+.info-tab-section .client-title{
+  width: ~'calc(100% - 78px)';
+  margin-top: 14px;
+  float: left;
+  font-size: 19px;
+  color: #545f65;
+}
+
+.info-tab-section .client-subtitle{
+  width: ~'calc(100% - 78px)';
+  float: left;
+  font-size: 13px;
+  color: #545f65;
+  margin-top: 5px;
+}
+
+.info-tab-section .client-moreinfo{
+  float: left;
+  font-size: 13px;
+  color: #545f65;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+
+.info-tab-section .more{
+  float: left;
+  font-size: 13px;
+  color: #60b25e;
+  margin-top: 5px;
 }

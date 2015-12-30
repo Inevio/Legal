@@ -8,5 +8,12 @@
     "expDesc"   : "Exp description",
     "client"    : "Client",
     "asigns"    : "Asigns",
-    "people"    : "People of interest"
+    "people"    : "People of interest",
+    "more"      : "more info",
+    "title"     : "Title",
+    "internId"  : "Legal ID",
+    "externId"  : "Custom ID",
+    "save"      : "Save",
+    "cancel"    : "Cancel",
+    "delete"    : "Delete"
 }

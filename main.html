@@ -1,6 +1,12 @@
 <section class="ui-view">
   <section class="ui-window legal">
 
+    <section class="edit-mode-popup">
+      <button class="right edit-mode save-exp-button ui-btn accept"><span></span></button>
+      <button class="right edit-mode cancel-exp-button ui-btn gray"><span></span></button>
+      <button class="edit-mode delete-exp-button ui-btn cancel"><span></span></button>
+    </section>
+
     <section class="legal-top-bar wz-ui-header wz-dragger ui-header">
       <section class="legal-menu wz-dragger wz-fit-x ui-header-brand">
         <span class="app-title wz-dragger"></span>
@@ -38,29 +44,30 @@
 
     </section>
 
-    <section class="ui-window-content">
+    <section class="ui-window-content wz-scroll">
       <section class="exp-info">
 
-        <span class="name wz-selectable">Fraude de bienes</span>
-        <div class="exp-ids">
-          <span class="intern wz-selectable">ID Legal:</span>
-          <span class="intern-id wz-selectable">2321322</span>
-          <span class="extern wz-selectable">ID Personalizado:</span>
-          <span class="extern-id wz-selectable">00000002</span>
-        </div>
-        <section class="edit-exp-button ui-btn">
-          <i></i>
-          <span></span>
+        <section class="look-mode">
+          <span class="name wz-selectable">Fraude de bienes</span>
+          <div class="exp-ids">
+            <span class="intern wz-selectable"></span>
+            <span class="intern-id wz-selectable">2321322</span>
+            <span class="extern wz-selectable"></span>
+            <span class="extern-id wz-selectable">00000002</span>
+          </div>
+          <section class="edit-exp-button ui-btn">
+            <i></i>
+            <span></span>
+          </section>
         </section>
 
-        <input class="name-input ui-input" placeholder="Titulo del expediente"/>
-        <input class="intern-id-input ui-input" placeholder="Id interno"/>
-        <input class="extern-id-input ui-input" placeholder="Id externo"/>
-
-        <section class="edit-mode-popup">
-          <button class="right edit-mode save-contact-button ui-btn accept"><span></span></button>
-          <button class="right edit-mode cancel-contact-button ui-btn gray"><span></span></button>
-          <button class="edit-mode delete-contact-button ui-btn cancel"><span></span></button>
+        <section class="edit-mode">
+          <span class="intern"></span>
+          <span class="extern"></span>
+          <span class="title"></span>
+          <input class="intern-id-input ui-input" placeholder="Id interno"/>
+          <input class="extern-id-input ui-input" placeholder="Id externo"/>
+          <input class="name-input ui-input" placeholder="Titulo del expediente"/>
         </section>
       </section>
 
@@ -72,27 +79,70 @@
       <section class="info-tab-section">
         <section class="exp-status">
           <span class="title"></span>
-          <i class="status-img"></i>
-          <span class="status"></span>
+            <section class="look-mode">
+              <i class="status-img"></i>
+              <span class="status">Abierto</span>
+            </section>
+            <section class="edit-mode">
+              <section class="ui-select">
+                <section class="ui-select-input">
+                  <i></i><article>Abierto</article>
+                    <figure>
+                      <i></i>
+                    </figure>
+                  </section>
+                  <section class="ui-select-dropdown">
+                    <article class="open"><i></i><span>Abierto</span></article>
+                    <article class="closed"><i></i><span>Cerrado</span></article>
+                </section>
+              </section>
+            </section>
         </section>
         <section class="exp-desc">
           <span class="title"></span>
-          <span class="desc"></span>
+          <span class="desc look-mode">First itself night divide. Every i his male own green said years there our meat our, seas make. Fifth. The shall. Heaven it, multiply fill divide fly. Cattle made it, fly all doesn't forth place had all sea herb firmament subdue.</span>
+          <textarea class="edit-mode"></textarea>
         </section>
         <section class="exp-client">
           <span class="title"></span>
+          <section class="client">
+            <i class="avatar">
+              <span class="avatar-letters"></span>
+            </i>
+            <span class="client-title">Bankia</span>
+            <span class="client-subtitle">Niky Romero</span>
+            <span class="client-moreinfo">601 18 98 12 / nromero@inevio.com</span>
+            <span class="more"></span>
+          </section>
           <!-- to do -->
         </section>
         <section class="exp-asigns">
           <span class="title"></span>
+          <section class="asign">
+            <i class="avatar">
+              <span class="avatar-letters"></span>
+            </i>
+            <span class="client-title">Bankia</span>
+            <span class="client-subtitle">Niky Romero</span>
+            <span class="client-moreinfo">601 18 98 12 / nromero@inevio.com</span>
+            <span class="more"></span>
+          </section>
           <!-- to do -->
         </section>
         <section class="exp-people">
           <span class="title"></span>
+          <section class="person">
+            <i class="avatar">
+              <span class="avatar-letters"></span>
+            </i>
+            <span class="client-title">Bankia</span>
+            <span class="client-subtitle">Niky Romero</span>
+            <span class="client-moreinfo">601 18 98 12 / nromero@inevio.com</span>
+            <span class="more"></span>
+          </section>
           <!-- to do -->
         </section>
       </section>
-
     </section>
   </section>
 </section>
