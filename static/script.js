@@ -10,11 +10,14 @@ var editState = false;
 
 // DOM VARS
 var app = $(this);
+
 //Text
 var appTitle             = $('.app-title');
 var editExpButtonText    = $('.edit-exp-button span');
 var infoTabText          = $('.ui-tab-element.info-tab span');
 var docTabText           = $('.ui-tab-element.doc-tab span');
+var sidebar              = $('.exp-list');
+var sidebarExpPrototype  = $('.exp.wz-prototype', sidebar);
 var expStatusTitle       = $('.exp-status .title');
 var expDescTitle         = $('.exp-desc .title');
 var expClientTitle       = $('.exp-client .title');
@@ -67,10 +70,74 @@ expStatusButton.on('click', function(){
   $(this).hasClass('open') ? expStatusIcon.css('background-position', '-109px 0') : expStatusIcon.css('background-position', '-123px 0');
 });
 
+// OBJECTS
+var Record = function( params ){};
+var Action = function( params ){};
+
 // APP functionality
-var initContacts = function(){
+var initLegal = function(){
+
   setInitialTexts();
+
+  getRecords( function( error, list ){
+
+    console.log('getRecords',error,list)
+
+    if( error ){ return; }
+
+    for( var i = 0; i < list.length; i++ ){
+      appendRecord( list[ i ] );
+    }
+
+  });
+
 }
+
+var appendRecord = function( record ){
+
+  console.log( record );
+  var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
+
+  $( '.name-exp', newRecord ).text( record.name );
+  $( '.id-exp', newRecord ).text( record.id_internal + ' - ' + 'NOT IMPLEMENTED' );
+
+  sidebar.append( newRecord );
+  
+};
+
+var getRecords = function( callback ){
+
+  wz.project.getCategories( function( error, list ){
+
+    console.log('categories',list)
+
+    if( error ){ return callback( error ); }
+
+    var found = false;
+
+    for( var i = 0; i < list.length; i++ ){
+
+      if( list[ i ].name === 'inevioLegalApp' ){
+        found = list[ i ];
+        break;
+      }
+
+    }
+
+    if( !found ){ return callback( null, [] ); }
+
+    found.getProjects( function( error, list ){
+
+      console.log('projects',list)
+
+      if( error ){ return callback( error ); }
+      callback( null, list );
+
+    });
+
+  });
+
+};
 
 var setInitialTexts = function(){
   appTitle.text(lang.legal);
@@ -114,4 +181,4 @@ var undrawPopup = function(){
 }
 
 // Program run
-initContacts();
+initLegal();
