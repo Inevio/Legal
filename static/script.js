@@ -39,6 +39,8 @@ var expStatusButton      = $('.exp-status .ui-select-dropdown article');
 var editPopup            = $('.edit-mode-popup');
 var uiWindowContent      = $('.ui-window-content');
 var expStatusIcon        = $('.exp-status .ui-select-input > i');
+var expDescription       = $('.exp-desc .look-mode');
+var expDescriptionInput  = $('.exp-desc .edit-mode');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -64,7 +66,7 @@ cancelExpButton.on('click', function(){
 });
 
 expStatusButton.on('click', function(){
-  $(this).hasClass('open') ? expStatusIcon.css('background-position', '-109px 0') : expStatusIcon.css('background-position', '-123px 0');
+  $(this).hasClass('open') ? expStatusIcon.removeClass('closed')  :  expStatusIcon.addClass('closed');
 });
 
 // APP functionality
@@ -95,6 +97,7 @@ var editMode = function(mode){
   if(mode){
     $('.look-mode').hide();
     $('.edit-mode').show();
+    expDescriptionInput.val(expDescription.text());
     drawPopup();
   }else{
     $('.edit-mode').hide();
@@ -105,12 +108,12 @@ var editMode = function(mode){
 
 var drawPopup = function(){
   editPopup.addClass('active');
-  uiWindowContent.css('height', 'calc(100% - 89px)');
+  uiWindowContent.addClass('edit');
 }
 
 var undrawPopup = function(){
   editPopup.removeClass('active');
-  uiWindowContent.css('height', 'calc(100% - 41px)');
+  uiWindowContent.removeClass('edit');
 }
 
 // Program run

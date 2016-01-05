@@ -23,7 +23,6 @@
   height: 100%;
 }
 
-
 /* Header */
 .ui-header-brand{
   width: 60px;
@@ -138,6 +137,10 @@
   width: ~'calc(100% - 311px)';
   height: ~'calc(100% - 41px)';
   position: relative;
+}
+
+.ui-view .legal .ui-window-content.edit{
+  height: ~'calc(100% - 89px)';
 }
 
 /* Contact info */
@@ -430,6 +433,10 @@
   margin: 7px;
 }
 
+.exp-status .ui-select-input > .closed{
+  background-position: -123px 0;
+}
+
 .legal .ui-select-input article{
   padding-left: 0px;
   width: 115px;
@@ -470,8 +477,39 @@
   line-height: 20px;
 }
 
+.exp-desc .edit-mode {
+    border: solid 1px #ccd3d5;
+    border-radius: 4px;
+    height: 60px;
+    width: 472px;
+    margin-top: 14px;
+    padding: 14px;
+    color: #545f65;
+    line-height: 20px;
+}
+
+.exp-desc .edit-mode:focus {
+  border-color: #60b25e;
+}
+
 .client, .asign, .person{
   float: left;
+  position: relative;
+}
+
+.client .remove, .asign .remove, .person .remove{
+  width: 14px;
+  height: 14px;
+  background: url("@static/sprite.png") ;
+  background-size: 207px 16px;
+  position: absolute;
+  bottom: 22px;
+  margin-left: -21px;
+  background-position: 131px 0;
+}
+
+.client .remove:hover, .asign .remove:hover, .person .remove:hover{
+  background-position: 117px 0;
 }
 
 .info-tab-section .avatar {
@@ -525,4 +563,40 @@
   font-size: 13px;
   color: #60b25e;
   margin-top: 5px;
+}
+
+.no-entry .avatar{
+  border: none;
+  background-image: url('@static/bolas-vacio.png');
+  background-size: 57px 57px;
+  width: 57px;
+  height: 57px;
+}
+
+.no-entry .first{
+  width: 130px;
+  height: 14px;
+  background-color: #f7f8fa;
+  float: left;
+  margin-top: 16px;
+  margin-right: ~'calc(100% - 197px)';
+}
+
+.no-entry .second{
+  width: 78px;
+  height: 10px;
+  background-color: #f7f8fa;
+  float: left;
+  margin-top: 10px;
+  margin-right: ~'calc(100% - 145px)';
+}
+
+
+.no-entry .third{
+  width: 206px;
+  height: 10px;
+  background-color: #f7f8fa;
+  float: left;
+  margin-top: 10px;
+  margin-right: ~'calc(100% - 273px)';
 }
