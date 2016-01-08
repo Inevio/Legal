@@ -12,6 +12,8 @@ var editState = false;
 var app = $(this);
 //Text
 var appTitle             = $('.app-title');
+var filtersText          = $('.filters-text');
+var newExpButtonText     = $('.new-exp-button span');
 var editExpButtonText    = $('.edit-exp-button span');
 var infoTabText          = $('.ui-tab-element.info-tab span');
 var docTabText           = $('.ui-tab-element.doc-tab span');
@@ -76,6 +78,8 @@ var initContacts = function(){
 
 var setInitialTexts = function(){
   appTitle.text(lang.legal);
+  filtersText.text(lang.filters);
+  newExpButtonText.text(lang.newExp);
   editExpButtonText.text(lang.editExp);
   infoTabText.text(lang.info);
   docTabText.text(lang.doc);

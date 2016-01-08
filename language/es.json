@@ -15,5 +15,7 @@
     "externId"  : "ID Personalizado",
     "save"      : "Guardar",
     "cancel"    : "Cancelar",
-    "delete"    : "Borrar"
+    "delete"    : "Borrar",
+    "filters"   : "Filtros",
+    "newExp"    : "Nuevo Expediente"
 }

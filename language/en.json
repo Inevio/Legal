@@ -15,5 +15,7 @@
     "externId"  : "Custom ID",
     "save"      : "Save",
     "cancel"    : "Cancel",
-    "delete"    : "Delete"
+    "delete"    : "Delete",
+    "filters"   : "Filters",
+    "newExp"    : "New Exp"
 }
