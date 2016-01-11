@@ -13,6 +13,8 @@ var app = $(this);
 
 //Text
 var appTitle             = $('.app-title');
+var filtersText          = $('.filters-text');
+var newExpButtonText     = $('.new-exp-button span');
 var editExpButtonText    = $('.edit-exp-button span');
 var infoTabText          = $('.ui-tab-element.info-tab span');
 var docTabText           = $('.ui-tab-element.doc-tab span');
@@ -42,6 +44,8 @@ var expStatusButton      = $('.exp-status .ui-select-dropdown article');
 var editPopup            = $('.edit-mode-popup');
 var uiWindowContent      = $('.ui-window-content');
 var expStatusIcon        = $('.exp-status .ui-select-input > i');
+var expDescription       = $('.exp-desc .look-mode');
+var expDescriptionInput  = $('.exp-desc .edit-mode');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -67,7 +71,7 @@ cancelExpButton.on('click', function(){
 });
 
 expStatusButton.on('click', function(){
-  $(this).hasClass('open') ? expStatusIcon.css('background-position', '-109px 0') : expStatusIcon.css('background-position', '-123px 0');
+  $(this).hasClass('open') ? expStatusIcon.removeClass('closed')  :  expStatusIcon.addClass('closed');
 });
 
 // OBJECTS
@@ -141,6 +145,8 @@ var getRecords = function( callback ){
 
 var setInitialTexts = function(){
   appTitle.text(lang.legal);
+  filtersText.text(lang.filters);
+  newExpButtonText.text(lang.newExp);
   editExpButtonText.text(lang.editExp);
   infoTabText.text(lang.info);
   docTabText.text(lang.doc);
@@ -162,6 +168,7 @@ var editMode = function(mode){
   if(mode){
     $('.look-mode').hide();
     $('.edit-mode').show();
+    expDescriptionInput.val(expDescription.text());
     drawPopup();
   }else{
     $('.edit-mode').hide();
@@ -172,12 +179,12 @@ var editMode = function(mode){
 
 var drawPopup = function(){
   editPopup.addClass('active');
-  uiWindowContent.css('height', 'calc(100% - 89px)');
+  uiWindowContent.addClass('edit');
 }
 
 var undrawPopup = function(){
   editPopup.removeClass('active');
-  uiWindowContent.css('height', 'calc(100% - 41px)');
+  uiWindowContent.removeClass('edit');
 }
 
 // Program run
