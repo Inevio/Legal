@@ -17,5 +17,6 @@
     "cancel"    : "Cancelar",
     "delete"    : "Borrar",
     "filters"   : "Filtros",
-    "newExp"    : "Nuevo Expediente"
+    "newExp"    : "Nuevo Expediente",
+    "timeline"  : "Historico"
 }

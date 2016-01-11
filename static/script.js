@@ -17,6 +17,7 @@ var newExpButtonText     = $('.new-exp-button span');
 var editExpButtonText    = $('.edit-exp-button span');
 var infoTabText          = $('.ui-tab-element.info-tab span');
 var docTabText           = $('.ui-tab-element.doc-tab span');
+var timelineTabText      = $('.ui-tab-element.timeline-tab span');
 var expStatusTitle       = $('.exp-status .title');
 var expDescTitle         = $('.exp-desc .title');
 var expClientTitle       = $('.exp-client .title');
@@ -29,6 +30,7 @@ var externText           = $('.extern');
 var saveText             = $('.save-exp-button span');
 var cancelText           = $('.cancel-exp-button span');
 var deleteText           = $('.delete-exp-button span');
+var timelineTitleText    = $('.timeline-title');
 
 //Events
 var editExpButton        = $('.edit-exp-button');
@@ -36,6 +38,8 @@ var saveExpButton        = $('.save-exp-button');
 var cancelExpButton      = $('.cancel-exp-button');
 var deleteExpButton      = $('.delete-exp-button');
 var expStatusButton      = $('.exp-status .ui-select-dropdown article');
+var tabs                 = $('.ui-window-content .ui-tab .ui-tab-element');
+var newEventSelect       = $('.top-timeline .select');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -43,6 +47,8 @@ var uiWindowContent      = $('.ui-window-content');
 var expStatusIcon        = $('.exp-status .ui-select-input > i');
 var expDescription       = $('.exp-desc .look-mode');
 var expDescriptionInput  = $('.exp-desc .edit-mode');
+var tabSections          = $('.tab-section');
+var eventTypeSelect      = $('.top-timeline .select-dropdown');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -71,6 +77,14 @@ expStatusButton.on('click', function(){
   $(this).hasClass('open') ? expStatusIcon.removeClass('closed')  :  expStatusIcon.addClass('closed');
 });
 
+tabs.on('click', function(){
+  changeTab($(this));
+});
+
+newEventSelect.on('click', function(){
+  selectNewEvent($(this));
+});
+
 // APP functionality
 var initContacts = function(){
   setInitialTexts();
@@ -83,6 +97,7 @@ var setInitialTexts = function(){
   editExpButtonText.text(lang.editExp);
   infoTabText.text(lang.info);
   docTabText.text(lang.doc);
+  timelineTabText.text(lang.timeline);
   expStatusTitle.text(lang.expStatus);
   expDescTitle.text(lang.expDesc);
   expClientTitle.text(lang.client);
@@ -95,6 +110,7 @@ var setInitialTexts = function(){
   saveText.text(lang.save);
   cancelText.text(lang.cancel);
   deleteText.text(lang.delete);
+  timelineTitleText.text(lang.timeline);
 }
 
 var editMode = function(mode){
@@ -118,6 +134,18 @@ var drawPopup = function(){
 var undrawPopup = function(){
   editPopup.removeClass('active');
   uiWindowContent.removeClass('edit');
+}
+
+var changeTab = function(object){
+  var index = object.index();
+  tabs.removeClass('active');
+  object.addClass('active');
+  tabSections.hide();
+  tabSections.eq(index).show();
+}
+
+var selectNewEvent = function(){
+  eventTypeSelect.show();
 }
 
 // Program run

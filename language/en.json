@@ -17,5 +17,6 @@
     "cancel"    : "Cancel",
     "delete"    : "Delete",
     "filters"   : "Filters",
-    "newExp"    : "New Exp"
+    "newExp"    : "New Exp",
+    "timeline"  : "Timeline"
 }
