@@ -51,7 +51,8 @@ var expStatusIcon        = $('.exp-status .ui-select-input > i');
 var expDescription       = $('.exp-desc .look-mode');
 var expDescriptionInput  = $('.exp-desc .edit-mode');
 var tabSections          = $('.tab-section');
-var eventTypeSelect      = $('.top-timeline .select-dropdown');
+var eventTypeSelect      = $('.event-select-dropdown');
+var eventTimeInput       = $('.event-time-input input');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -178,6 +179,14 @@ var setInitialTexts = function(){
   cancelText.text(lang.cancel);
   deleteText.text(lang.delete);
   timelineTitleText.text(lang.timeline);
+  /*
+  var date = new Date();
+  var month = date.getMonth()+1;
+  var day = date.getDate();
+  var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' + date.getFullYear() ;
+
+  eventTimeInput.val(output);
+  */
 }
 
 var editMode = function(mode){

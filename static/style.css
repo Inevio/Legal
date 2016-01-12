@@ -166,6 +166,7 @@
   margin-top: 14px;
   margin-left: 10px;
   margin-right: 6px;
+  background-color: transparent;
 }
 
 .closed .avatar-status{
@@ -763,9 +764,16 @@
 
 .timeline-tab-section{
   display: none;
-  width: 100%;
   height: ~'calc(100% - 110px)';
+  width: 100%;
   float: left;
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0px, rgba(247,248,250,1) 240px, rgba(247,248,250,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0px, rgba(255,255,255,1)), color-stop(240px, rgba(247,248,250,1)), color-stop(100%, rgba(247,248,250,1)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0px, rgba(247,248,250,1) 240px, rgba(247,248,250,1) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0px, rgba(247,248,250,1) 240px, rgba(247,248,250,1) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0px, rgba(247,248,250,1) 240px, rgba(247,248,250,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0px, rgba(247,248,250,1) 240px, rgba(247,248,250,1) 100%);
 }
 
 .top-timeline{
@@ -842,7 +850,7 @@
   float: left;
 }
 
-.top-timeline .select-dropdown{
+.event-select-dropdown{
   display: none;
   background-color: white;
   border-radius: 4px;
@@ -850,21 +858,22 @@
   position: absolute;
   right: 27px;
   width: 124px;
-  top: 160px;
+  top: 50px;
   color: #6f7578;
+  z-index: 2;
 }
 
-.top-timeline .select-dropdown article{
+.event-select-dropdown article{
   padding: 9px 0 0 9px;
   height: 21px;
 }
 
-.top-timeline .select-dropdown article:hover {
+.event-select-dropdown article:hover {
   background-color: #60b25e;
   color: white;
 }
 
-.top-timeline .select-dropdown article i{
+.event-select-dropdown article i{
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -872,30 +881,31 @@
   margin-right: 10px;
 }
 
-.event-doc i{
+.event-doc .avatar-status{
   border: 2px solid #60b25e;
 }
 
-.event-met i{
+.event-met .avatar-status{
   border: 2px solid #4698e0;
 }
 
-.event-wor i{
+.event-wor .avatar-status{
   border: 2px solid #e85c5c;
 }
 
-.event-oth i{
+.event-oth .avatar-status{
   border: 2px solid #889399;
 }
 
 .timeline{
   float: left;
   width: 100%;
-  height: ~'calc(100% - 67px)';
+  min-height: ~'calc(100% - 67px)';
+  position: relative;
 }
 
 .timeline .line{
-  height: ~'calc(100% - 27px)';
+  height: ~'calc(100% - 26px)';
   width: 5px;
   background-color: #e3e7e8;
   margin-left: 30px;
@@ -905,22 +915,215 @@
 
 .event{
   width: 100%;
-  height: 246px;
+  height: 300px;
   float: left;
+  position: relative;
 }
 
 .event-top{
   float: left;
-  padding-left: 26px;
+  padding-left: 25px;
   padding-top: 25px;
   z-index: 9999;
   position: absolute;
+  width: ~'calc(100% - 25px)';
 }
 
 .avatar-status{
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   float: left;
   margin-right: 10px;
+  background-color: #fff;
+}
+
+.event-title{
+  float: left;
+  font-size: 15px;
+  font-weight: bold;
+  color: #545f65;
+}
+
+.event-time{
+  float: left;
+  color: #889399;
+  font-size: 13px;
+  margin-top: 2px;
+  margin-left: 15px;
+}
+
+.event-top .event-doc i{
+  border: 3px solid #60b25e;
+}
+
+.event-top .event-met i{
+  border: 3px solid #4698e0;
+}
+
+.event-top .event-wor i{
+  border: 3px solid #e85c5c;
+}
+
+.event-top .event-oth i{
+  border: 3px solid #889399;
+}
+
+.event-desc{
+  float: left;
+  position: absolute;
+  top: 40px;
+  width: ~'calc(100% - 92px)';
+  height: 203px;
+  margin-top: 25px;
+  margin-left: 66px;
+  margin-right: 26px;
+  -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #fff;
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2);
+	box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+
+.event-desc-title{
+  float: left;
+  height: 41px;
+  border-bottom: 1px solid rgba(204, 211, 213, 0.5);
+  margin-left: 10px;
+  margin-right: 10px;
+  width: ~'calc(100% - 20px)';
+}
+
+.event-desc-title span{
+  float: left;
+  font-size: 15px;
+  font-weight: bold;
+  color: #545f65;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: ~'calc(100% - 20px)';
+  padding-top: 15px;
+}
+
+.event-desc-info{
+  float: left;
+  margin-top: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: ~'calc(100% - 40px)';
+  line-height: 25px;
+  color: #545f65;
+  font-size: 13px;
+  height: 106px;
+}
+
+.event-bottom{
+  float: left;
+  height: 40px;
+  background-color: #fbfbfc;
+  width: 100%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.event-min{
+  float: left;
+  margin-left: 21px;
+  margin-top: 11px;
+}
+
+.event-min .icon{
+  float: left;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background-image: url('@static/watch.png');
+  background-size: 18px 18px;
+}
+
+.event-min span{
+  float: left;
+  font-size: 11px;
+  font-weight: bold;
+  color: #889399;
+  margin-top: 4px;
+  margin-left: 6px;
+}
+
+.event-price{
+  float: left;
+  margin-top: 11px;
+  margin-left: 26px;
+}
+
+.event-price .icon{
+  float: left;
+  width: 18px;
+  height: 18px;
+  border: none;
+}
+
+.green .icon{
+  background-image: url('@static/income.png');
+  background-size: 18px 18px;
+}
+
+.red .icon{
+  background-image: url('@static/expenses.png');
+  background-size: 18px 18px;
+}
+
+.event-price span{
+  float: left;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-left: 6px;
+}
+
+.green span{
+  color: #60b25e;
+}
+
+.red span{
+  color: #e85c5c;
+}
+
+.event-top .event-time-input{
+  float: left;
+  width: 89px;
+  margin-left: 13px;
+  margin-top: -6px;
+  height: 24px;
+}
+
+.event-top .event-time-select{
+  float: left;
+  width: 58px;
+  margin-left: 13px;
+  margin-top: -6px;
+}
+
+.event-top .event-time-select .ui-select-input{
+  height: 24px;
+}
+
+.event-top .event-time-select .ui-select-input .ellipsis{
+  width: 35px;
+  padding: 7px 0px 5px 7px;
+}
+
+.event-top .event-time-select .ui-select-dropdown{
+  height: 100px;
+}
+
+.event-top .event-time-select figure{
+  height: 25px;
+}
+
+.event-top .event-time-select figure i{
+  margin: 7px 4px 7px 4px;
 }
