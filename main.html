@@ -176,11 +176,11 @@
         <!-- to Do -->
       </section>
       <section class="timeline-tab-section tab-section wz-scroll">
-        <section class="event-select-dropdown">
-          <article class="event-doc"><i class="avatar-status"></i><span>Documentos</span></article>
-          <article class="event-met"><i class="avatar-status"></i><span>Reunion</span></article>
-          <article class="event-wor"><i class="avatar-status"></i><span>Trabajo</span></article>
-          <article class="event-oth"><i class="avatar-status"></i><span>Otros</span></article>
+        <section class="event-select-dropdown dropdown">
+          <article class="item event-doc"><i class="avatar-status"></i><span>Documentos</span></article>
+          <article class="item event-met"><i class="avatar-status"></i><span>Reunion</span></article>
+          <article class="item event-wor"><i class="avatar-status"></i><span>Trabajo</span></article>
+          <article class="item event-oth"><i class="avatar-status"></i><span>Otros</span></article>
         </section>
         <section class="top-timeline">
           <span class="timeline-title"></span>
@@ -264,40 +264,26 @@
             </article>
             <section class="event-desc">
               <section class="event-desc-title">
-                <span>Resolución del caso por el juzgado</span>
+                <span class="look-mode">Resolución del caso por el juzgado</span>
+                <input class="edit-mode" placeholder="Título del evento">
               </section>
-              <span class="event-desc-info">The other site (we tried Zendesk & Helpscout), didn't ever really look like, ours. Now, our Help center, completely looks ours and that's really huge to the whole magic of it.</span>
+              <span class="event-desc-info look-mode">The other site (we tried Zendesk & Helpscout), didn't ever really look like, ours. Now, our Help center, completely looks ours and that's really huge to the whole magic of it.</span>
+              <textarea class="event-desc-info-input edit-mode" placeholder="Escribe aquí la descripción del evento..."></textarea>
               <section class="event-bottom">
                 <article class="event-min">
                   <i class="icon"></i>
-                  <span>30 minutos</span>
+                  <span class="look-mode">30 minutos</span>
+                  <input placeholder="Tiempo" class="edit-mode">
                 </article>
-                <article class="event-price green">
+                <article class="event-price income">
                   <i class="icon"></i>
-                  <span>+ 23,00 €</span>
+                  <span class="look-mode">+ 23,00 €</span>
+                  <input placeholder="Ingresos" class="edit-mode">
                 </article>
-              </section>
-            </section>
-          </section>
-          <section class="event event-wor">
-            <article class="event-top">
-              <i class="avatar-status"></i>
-              <span class="event-title">Reunión</span>
-              <span class="event-time">24 Enero 2016 16:33</span>
-            </article>
-            <section class="event-desc">
-              <section class="event-desc-title">
-                <span>Resolución del caso por el juzgado</span>
-              </section>
-              <span class="event-desc-info">The other site (we tried Zendesk & Helpscout), didn't ever really look like, ours. Now, our Help center, completely looks ours and that's really huge to the whole magic of it.</span>
-              <section class="event-bottom">
-                <article class="event-min">
+                <article class="event-price expenses">
                   <i class="icon"></i>
-                  <span>30 minutos</span>
-                </article>
-                <article class="event-price red">
-                  <i class="icon"></i>
-                  <span>- 23,00 €</span>
+                  <span class="look-mode">- 23,00 €</span>
+                  <input placeholder="Gastos" class="edit-mode">
                 </article>
               </section>
             </section>

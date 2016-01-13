@@ -52,7 +52,6 @@ var expDescription       = $('.exp-desc .look-mode');
 var expDescriptionInput  = $('.exp-desc .edit-mode');
 var tabSections          = $('.tab-section');
 var eventTypeSelect      = $('.event-select-dropdown');
-var eventTimeInput       = $('.event-time-input input');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -67,6 +66,9 @@ var colorPalette = [
   {name: 'grey' , light: '#97a1a9', text:'#353b43' , border:'#384a59'},
   {name: 'yellow' , light: '#fbe27d', text:'#84740b' , border:'#ffb400'},
 ];
+
+// MONTH NAMES
+var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 // EVENTS
 editExpButton.on('click', function(){
@@ -87,6 +89,10 @@ tabs.on('click', function(){
 
 newEventSelect.on('click', function(){
   selectNewEvent($(this));
+});
+
+app.on('click', function(e){
+  hideDropdowns(e);
 });
 
 // OBJECTS
@@ -179,25 +185,19 @@ var setInitialTexts = function(){
   cancelText.text(lang.cancel);
   deleteText.text(lang.delete);
   timelineTitleText.text(lang.timeline);
-  /*
-  var date = new Date();
-  var month = date.getMonth()+1;
-  var day = date.getDate();
-  var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' + date.getFullYear() ;
-
-  eventTimeInput.val(output);
-  */
 }
 
 var editMode = function(mode){
   if(mode){
     $('.look-mode').hide();
     $('.edit-mode').show();
-    expDescriptionInput.val(expDescription.text());
+    $('.event').addClass('edit');
+    recoverInputsInfo();
     drawPopup();
   }else{
     $('.edit-mode').hide();
     $('.look-mode').show();
+    $('.event').removeClass('edit');
     undrawPopup();
   }
 }
@@ -222,6 +222,33 @@ var changeTab = function(object){
 
 var selectNewEvent = function(){
   eventTypeSelect.show();
+}
+
+var recoverInputsInfo = function(){
+  expDescriptionInput.val(expDescription.text());
+  var events = $('.event');
+  for (var i = 0; i < events.length; i++) {
+    var date = events.eq(i).find('.event-time').text().split(' ');
+    var month = monthNames.indexOf( date[1] ) +1;
+    var hour = date[3];
+    var date = date[0]+'/'+month+'/'+date[2];
+    var eventI = events.eq(i);
+    eventI.find('.event-time-input > input').val(date);
+    eventI.find('.event-time-select .ui-select-input .ellipsis').text(hour);
+    eventI.find('.event-desc-title input').val(eventI.find('.event-desc-title span').text())
+    eventI.find('.event-desc-info-input').val(eventI.find('.event-desc-info').text())
+    eventI.find('.event-min input').val(eventI.find('.event-min span').text());
+    eventI.find('.event-price.income input').val(eventI.find('.event-price.income span').text());
+    eventI.find('.event-price.expenses input').val(eventI.find('.event-price.expenses span').text());
+  }
+}
+
+// falla arrreglr
+var hideDropdowns = function(e){
+  var target = $(e.target);
+  if ((!target.hasClass('item') && !target.hasClass('select-input')) || (target.hasClass('select-input') && !($('.dropdown').css('display') == 'none'))) {
+    $('.dropdown').hide();
+  }
 }
 
 // Program run

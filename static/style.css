@@ -920,11 +920,12 @@
   position: relative;
 }
 
+
 .event-top{
   float: left;
   padding-left: 25px;
   padding-top: 25px;
-  z-index: 9999;
+  z-index: 1;
   position: absolute;
   width: ~'calc(100% - 25px)';
 }
@@ -976,7 +977,7 @@
   width: ~'calc(100% - 92px)';
   height: 203px;
   margin-top: 25px;
-  margin-left: 66px;
+  margin-left: 62px;
   margin-right: 26px;
   -webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -985,6 +986,14 @@
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  border: solid 2px transparent;
+}
+
+.edit .event-desc{
+  -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.4);
+	-moz-box-shadow: 0 2px 8px rgba(0,0,0,.4);
+	box-shadow: 0 2px 8px rgba(0,0,0,.4);
+	border: solid 2px #60b25e;
 }
 
 .event-desc-title{
@@ -1066,12 +1075,12 @@
   border: none;
 }
 
-.green .icon{
+.income .icon{
   background-image: url('@static/income.png');
   background-size: 18px 18px;
 }
 
-.red .icon{
+.expenses .icon{
   background-image: url('@static/expenses.png');
   background-size: 18px 18px;
 }
@@ -1084,11 +1093,11 @@
   margin-left: 6px;
 }
 
-.green span{
+.income span, .income input{
   color: #60b25e;
 }
 
-.red span{
+.expenses span, .expenses input{
   color: #e85c5c;
 }
 
@@ -1098,6 +1107,10 @@
   margin-left: 13px;
   margin-top: -6px;
   height: 24px;
+}
+
+.event-time-input > input{
+  color: #545f65;
 }
 
 .event-top .event-time-select{
@@ -1126,4 +1139,48 @@
 
 .event-top .event-time-select figure i{
   margin: 7px 4px 7px 4px;
+}
+
+.event-desc-title input{
+  float: left;
+  font-size: 15px;
+  font-weight: bold;
+  color: #545f65;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: ~'calc(100% - 20px)';
+  padding-top: 15px;
+}
+
+.event-desc-info-input{
+  float: left;
+  margin-top: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: ~'calc(100% - 40px)';
+  line-height: 25px;
+  color: #545f65;
+  font-size: 13px;
+  height: 106px;
+}
+
+.event-min input{
+  float: left;
+  font-size: 11px;
+  font-weight: bold;
+  color: #889399;
+  margin-top: 4px;
+  margin-left: 6px;
+  background-color: transparent;
+  width: 60px;
+}
+
+.event-price input{
+  float: left;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-left: 6px;
+  background-color: transparent;
+  width: 60px;
 }
