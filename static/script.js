@@ -88,6 +88,7 @@ tabs.on('click', function(){
 });
 
 newEventSelect.on('click', function(){
+  $(this).addClass('opened');
   selectNewEvent($(this));
 });
 
@@ -243,11 +244,15 @@ var recoverInputsInfo = function(){
   }
 }
 
-// falla arrreglr
 var hideDropdowns = function(e){
   var target = $(e.target);
-  if ((!target.hasClass('item') && !target.hasClass('select-input')) || (target.hasClass('select-input') && !($('.dropdown').css('display') == 'none'))) {
+  if(newEventSelect.hasClass('opened') && !target.hasClass('item') && newEventSelect.hasClass('prepared')){
     $('.dropdown').hide();
+    newEventSelect.removeClass('prepared');
+    newEventSelect.removeClass('opened');
+  }
+  if(newEventSelect.hasClass('opened')){
+    newEventSelect.addClass('prepared');
   }
 }
 
