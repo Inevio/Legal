@@ -19,6 +19,7 @@ var editExpButtonText    = $('.edit-exp-button span');
 var infoTabText          = $('.ui-tab-element.info-tab span');
 var docTabText           = $('.ui-tab-element.doc-tab span');
 var timelineTabText      = $('.ui-tab-element.timeline-tab span');
+var budgetTabText        = $('.ui-tab-element.budget-tab span');
 var sidebar              = $('.exp-list');
 var sidebarExpPrototype  = $('.exp.wz-prototype', sidebar);
 var expStatusTitle       = $('.exp-status .title');
@@ -34,6 +35,18 @@ var saveText             = $('.save-exp-button span');
 var cancelText           = $('.cancel-exp-button span');
 var deleteText           = $('.delete-exp-button span');
 var timelineTitleText    = $('.timeline-title');
+var openExpText          = $('.ui-select-dropdown .open span');
+var closedExpText        = $('.ui-select-dropdown .closed span');
+var noFolderText         = $('.no-folder');
+var newLinkFolderText    = $('.new-link-folder span');
+var linkFolderText       = $('.link-folder span');
+var eventDocText         = $('.event-select-dropdown .event-doc span');
+var eventMetText         = $('.event-select-dropdown .event-met span');
+var eventWorText         = $('.event-select-dropdown .event-wor span');
+var eventOthText         = $('.event-select-dropdown .event-oth span');
+var newEventText         = $('.new-event-text');
+var budgetText           = $('.budget-text');
+var budgetPaywayText     = $('.pay-way-text');
 
 //Events
 var editExpButton        = $('.edit-exp-button');
@@ -66,6 +79,7 @@ var colorPalette = [
   {name: 'grey' , light: '#97a1a9', text:'#353b43' , border:'#384a59'},
   {name: 'yellow' , light: '#fbe27d', text:'#84740b' , border:'#ffb400'},
 ];
+
 
 // MONTH NAMES
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -173,6 +187,7 @@ var setInitialTexts = function(){
   infoTabText.text(lang.info);
   docTabText.text(lang.doc);
   timelineTabText.text(lang.timeline);
+  budgetTabText.text(lang.budget);
   expStatusTitle.text(lang.expStatus);
   expDescTitle.text(lang.expDesc);
   expClientTitle.text(lang.client);
@@ -186,6 +201,18 @@ var setInitialTexts = function(){
   cancelText.text(lang.cancel);
   deleteText.text(lang.delete);
   timelineTitleText.text(lang.timeline);
+  openExpText.text(lang.open);
+  closedExpText.text(lang.closed);
+  noFolderText.text(lang.noFolder);
+  newLinkFolderText.text(lang.newFolder);
+  linkFolderText.text(lang.selectFolder);
+  eventDocText.text(lang.documents);
+  eventMetText.text(lang.meeting);
+  eventWorText.text(lang.work);
+  eventOthText.text(lang.others);
+  newEventText.text(lang.newEvent);
+  budgetText.text(lang.budget);
+  budgetPaywayText.text(lang.payway);
 }
 
 var editMode = function(mode){

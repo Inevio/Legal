@@ -101,6 +101,7 @@
         <li class="ui-tab-element info-tab active"><span></span></li>
         <li class="ui-tab-element doc-tab"><span></span></li>
         <li class="ui-tab-element timeline-tab"><span></span></li>
+        <li class="ui-tab-element budget-tab"><span></span></li>
       </nav>
 
       <section class="info-tab-section tab-section wz-scroll">
@@ -119,8 +120,8 @@
                 </figure>
               </section>
               <section class="ui-select-dropdown">
-                <article class="open"><i></i><span>Abierto</span></article>
-                <article class="closed"><i></i><span>Cerrado</span></article>
+                <article class="open"><i></i><span></span></article>
+                <article class="closed"><i></i><span></span></article>
               </section>
             </section>
           </section>
@@ -174,27 +175,27 @@
       </section>
       <section class="doc-tab-section tab-section">
         <section class="async">
-            <span class="no-folder">No hay ninguna carpeta asociada a este espediente</span>
+            <span class="no-folder"></span>
             <button class="ui-btn huge new-link-folder">
-              <span>Crear nueva carpeta</span>
+              <span></span>
             </button>
             <button class="ui-btn huge link-folder">
-              <span>Seleccionar carpeta existente</span>
+              <span></span>
             </button>
         </section>
       </section>
       <section class="timeline-tab-section tab-section wz-scroll">
         <section class="event-select-dropdown dropdown">
-          <article class="item event-doc"><i class="avatar-status"></i><span>Documentos</span></article>
-          <article class="item event-met"><i class="avatar-status"></i><span>Reunion</span></article>
-          <article class="item event-wor"><i class="avatar-status"></i><span>Trabajo</span></article>
-          <article class="item event-oth"><i class="avatar-status"></i><span>Otros</span></article>
+          <article class="item event-doc"><i class="avatar-status"></i><span></span></article>
+          <article class="item event-met"><i class="avatar-status"></i><span></span></article>
+          <article class="item event-wor"><i class="avatar-status"></i><span></span></article>
+          <article class="item event-oth"><i class="avatar-status"></i><span></span></article>
         </section>
         <section class="top-timeline">
           <span class="timeline-title"></span>
           <section class="select">
             <section class="select-input">
-              <i class="new-event"></i><article>Crear evento</article>
+              <i class="new-event"></i><article class="new-event-text"></article>
                 <figure>
                   <i></i>
                 </figure>
@@ -298,6 +299,20 @@
           </section>
         </section>
       </section>
+      <section class="budget-tab-section tab-section wz-scroll">
+        <section class="budget">
+            <span class="budget-text"></span>
+            <span class="budget-money">3500€</span>
+            <section class="budget-status pendent">
+              <i></i>
+              <span>Pendiente de pago</span>
+            </section>
+        </section>
+        <section class="budget-pay">
+          <span class="pay-way-text"></span>
+          <span class="pay-way">20% al inicio - 80% después</span>
+        </section>
+      </secion>
     </section>
   </section>
 </section>
