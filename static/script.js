@@ -47,6 +47,8 @@ var eventOthText         = $('.event-select-dropdown .event-oth span');
 var newEventText         = $('.new-event-text');
 var budgetText           = $('.budget-text');
 var budgetPaywayText     = $('.pay-way-text');
+var paymentsText         = $('.payments-text');
+var paymentsValueText     = $('.payments-value');
 
 //Events
 var editExpButton        = $('.edit-exp-button');
@@ -213,6 +215,8 @@ var setInitialTexts = function(){
   newEventText.text(lang.newEvent);
   budgetText.text(lang.budget);
   budgetPaywayText.text(lang.payway);
+  paymentsText.text(lang.payments);
+  paymentsValueText.text(lang.value);
 }
 
 var editMode = function(mode){
@@ -220,12 +224,14 @@ var editMode = function(mode){
     $('.look-mode').hide();
     $('.edit-mode').show();
     $('.event').addClass('edit');
+    $('.budget-tab-section').addClass('edit');
     recoverInputsInfo();
     drawPopup();
   }else{
     $('.edit-mode').hide();
     $('.look-mode').show();
     $('.event').removeClass('edit');
+    $('.budget-tab-section').removeClass('edit');
     undrawPopup();
   }
 }

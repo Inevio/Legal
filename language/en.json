@@ -30,5 +30,7 @@
     "work"        : "Work",
     "others"      : "Others",
     "newEvent"    : "New event",
-    "payWay"      : "Pay form"
+    "payway"      : "Pay form",
+    "payments"    : "Payments",
+    "value"       : "Value"
 }

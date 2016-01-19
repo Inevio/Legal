@@ -302,15 +302,38 @@
       <section class="budget-tab-section tab-section wz-scroll">
         <section class="budget">
             <span class="budget-text"></span>
-            <span class="budget-money">3500€</span>
-            <section class="budget-status pendent">
+            <span class="look-mode budget-money">3500€</span>
+            <input class="edit-mode budget-money-input">
+            <section class="budget-status pendent look-mode">
               <i></i>
               <span>Pendiente de pago</span>
+            </section>
+            <section class="edit-mode budget-status-input">
+              <figure class="ui-checkbox"><i></i></figure>
+              <span>Pagado</span>
             </section>
         </section>
         <section class="budget-pay">
           <span class="pay-way-text"></span>
-          <span class="pay-way">20% al inicio - 80% después</span>
+          <span class="look-mode pay-way">20% al inicio - 80% después</span>
+          <textarea class="edit-mode pay-way-input"></textarea>
+        </section>
+        <section class="payments">
+          <section class="top-payments">
+            <span class="payments-text"></span>
+            <i class="add-payment"></i>
+            <span class="payments-value"></span>
+          </section>
+          <section class="payment-list wz-scroll">
+            <section class="payment">
+              <section class="payment-info">
+                <span class="title">Pago final 80%</span>
+                <span class="date">22 Junio 2015</span>
+              </section>
+              <i class="remove edit-mode"></i>
+              <span class="payment-value">+ 2.800,00 €</span>
+            </section>
+          </section>
         </section>
       </secion>
     </section>

@@ -30,5 +30,7 @@
     "work"        : "Trabajo",
     "others"      : "Otros",
     "newEvent"    : "Crear evento",
-    "payWay"      : "Forma de pago"
+    "payway"      : "Forma de pago",
+    "payments"    : "Pagos",
+    "value"       : "Cantidad"
 }
