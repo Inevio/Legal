@@ -32,5 +32,8 @@
     "newEvent"    : "New event",
     "payway"      : "Pay form",
     "payments"    : "Payments",
-    "value"       : "Value"
+    "value"       : "Value",
+    "noBudget"    : "You have no budget",
+    "newBudget"   : "Add a budget",
+    "selectContact" : "Select contact"
 }

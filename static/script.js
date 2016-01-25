@@ -48,7 +48,10 @@ var newEventText         = $('.new-event-text');
 var budgetText           = $('.budget-text');
 var budgetPaywayText     = $('.pay-way-text');
 var paymentsText         = $('.payments-text');
-var paymentsValueText     = $('.payments-value');
+var paymentsValueText    = $('.payments-value');
+var noBudgetText         = $('.no-budget-text');
+var newBudgetButton      = $('.new-budget-button span');
+var selectContactText    = $('.select-contact-text');
 
 //Events
 var editExpButton        = $('.edit-exp-button');
@@ -190,7 +193,6 @@ var setInitialTexts = function(){
   docTabText.text(lang.doc);
   timelineTabText.text(lang.timeline);
   budgetTabText.text(lang.budget);
-  expStatusTitle.text(lang.expStatus);
   expDescTitle.text(lang.expDesc);
   expClientTitle.text(lang.client);
   expAsignsTitle.text(lang.asigns);
@@ -203,6 +205,7 @@ var setInitialTexts = function(){
   cancelText.text(lang.cancel);
   deleteText.text(lang.delete);
   timelineTitleText.text(lang.timeline);
+  expStatusTitle.text(lang.expStatus);
   openExpText.text(lang.open);
   closedExpText.text(lang.closed);
   noFolderText.text(lang.noFolder);
@@ -217,6 +220,9 @@ var setInitialTexts = function(){
   budgetPaywayText.text(lang.payway);
   paymentsText.text(lang.payments);
   paymentsValueText.text(lang.value);
+  noBudgetText.text(lang.noBudget);
+  newBudgetButton.text(lang.newBudget);
+  selectContactText.text(lang.selectContact);
 }
 
 var editMode = function(mode){
@@ -287,6 +293,62 @@ var hideDropdowns = function(e){
   if(newEventSelect.hasClass('opened')){
     newEventSelect.addClass('prepared');
   }
+}
+
+var getContacts = function(){
+  wz.contacts.getAccounts(function(err, list){
+    list[0].getGroups(function(e, o){
+      o[0].getContacts(function(e, o){
+        var list = [];
+        for (var i = 0; i < o.length; i++) {
+          list.push(o[i]);
+        }
+        list = list.sort(function(a,b){return a.name.first.localeCompare( b.name.first );});
+        console.log(list);
+        return list;
+      });
+    });
+  });
+}
+
+var proyectBuilder = function(){
+  var exp = {
+    title    : '',
+    idInt    : 0,
+    idExt    : 0,
+    status   : false,
+    desc     : '',
+    client   : {},
+    asigns   : [],
+    interest : [],
+    folder   : '',
+    events   : [],
+    budget   : {}
+  };
+  return exp;
+}
+
+var eventBuilder = function(){
+  var event = {
+    type     : '',
+    title    : '',
+    desc     : '',
+    duration : '',
+    income   : 0,
+    expenses : 0,
+    date     : {}
+  };
+  return event;
+}
+
+var budgetBuilder = function(){
+  var budget = {
+    price    : 0,
+    status   : false,
+    payform  : '',
+    pays     : []
+  };
+  return budget;
 }
 
 // Program run

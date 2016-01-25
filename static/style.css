@@ -1577,3 +1577,215 @@
 .payment .remove:hover{
   background-position: 117px 0;
 }
+
+.budget-yes{
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+.budget-no{
+  display: none;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+.no-budget-img{
+  float: left;
+  background-image: url('@static/empty-budget.png');
+  background-size: 188px 222px;
+  width: 188px;
+  height: 222px;
+  margin-left: ~'calc(50% - 188px/2)';
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.no-budget-text{
+  float: left;
+  font-size: 19px;
+  color: #889399;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.new-budget-button{
+  float: left;
+  width: 225px;
+  margin-left: ~'calc(50% - 225px/2)';
+}
+
+.payment-info input{
+  float: left;
+  margin-top: 9px;
+}
+
+.payment-value-input{
+  float: right;
+  width: 76px;
+  height: 18px;
+  border: 1px solid #ccd3d5;
+  border-radius: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 8px;
+}
+
+.payment-value-input i{
+  background-image: url('@static/income.png');
+  background-size: 18px 18px;
+  float: left;
+  width: 18px;
+  height: 18px;
+  border: none;
+}
+
+.payment-value-input input{
+  width: 45px;
+  margin-top: 1px;
+  margin-left: 5px;
+  color: #60b25e;
+}
+
+.select-contact-back{
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: ~'calc(100% - 41px)';
+  border-radius: 0 0 6px 6px;
+  top: 41px;
+  background-color: #000;
+  z-index: 3;
+  left: 0;
+  opacity: 0.3;
+}
+
+.select-contact-popup{
+  display: none;
+  width: 317px;
+	height: 407px;
+  margin-left: ~'calc(50% - 317px/2)';
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #f7f8fa;
+	-webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+	-moz-box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+	box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+  position: absolute;
+  z-index: 3;
+  opacity: 1;
+  top: 41px;
+  margin-top: 77px;
+}
+
+.select-contact-text {
+  float: left;
+  font-size: 17px;
+  font-weight: bold;
+  color: #545f65;
+  margin-left: 20px;
+  margin-top: 18px;
+  width: ~'calc(100% - 56px)';
+}
+
+.close-popup {
+  float: right;
+  width: 10px;
+  height: 10px;
+  margin-top: 11px;
+  margin-right: 12px;
+  padding: 7px;
+}
+
+.close-popup i {
+  float: left;
+  width: 10px;
+  height: 10px;
+  background: url('@static/sprite-icons-white.png');
+  background-position: 10px 0;
+  background-size: 40px 10px;
+}
+
+.client-selectable {
+  float: right;
+  height: 64px;
+  width: 239px;
+  border-bottom: 1px solid rgba(204, 211, 213, 0.5);
+}
+
+.select-contact-popup .client-selectable:first-child {
+  margin-top: 20px;
+}
+
+.client-selectable:hover .highlight-area{
+  background-color: #d9eadb;
+}
+
+.client-selectable .highlight-area {
+  position: absolute;
+  left: 0;
+  margin-top: -1px;
+  height: 65px;
+  width: 317px;
+}
+
+.client-selectable .avatar {
+  width: 43px;
+  height: 43px;
+  float: left;
+  border-radius: 50%;
+  margin-left: 12px;
+  margin-top: 9px;
+  border: 2px dashed #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.client-selectable .avatar-letters{
+  font-size: 21px;
+  font-weight: bold;
+  margin-left: 0px;
+  padding-left: 0px;
+  width: 43px;
+  text-align: center;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.client-selectable  i{
+  background-size: cover;
+}
+
+.client-selectable  span {
+  float: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 11px;
+  width: 229px;
+}
+
+.client-selectable  .name-client-selectable {
+  font-size: 15px;
+  margin-top: 9px;
+  padding-bottom: 7px;
+  color: #545f65;
+  font-weight: bold;
+  float: left;
+  padding-left: 0;
+  width: 215px;
+  margin-left: 10px;
+}
+
+.client-selectable .info-client-selectable {
+  font-size: 13px;
+  color: #889399;
+  padding-top: 0px;
+  float: left;
+  padding-left: 0;
+  width: 239px;
+  margin-left: 10px;
+}

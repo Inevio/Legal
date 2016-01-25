@@ -32,5 +32,8 @@
     "newEvent"    : "Crear evento",
     "payway"      : "Forma de pago",
     "payments"    : "Pagos",
-    "value"       : "Cantidad"
+    "value"       : "Cantidad",
+    "noBudget"    : "No tienes ningún presupuesto asignado",
+    "newBudget"   : "Crear presupuesto",
+    "selectContact" : "Seleccionar persona"
 }

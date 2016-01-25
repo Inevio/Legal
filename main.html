@@ -7,6 +7,19 @@
       <button class="edit-mode delete-exp-button ui-btn cancel"><span></span></button>
     </section>
 
+    <section class="select-contact-back"></section>
+    <section class="select-contact-popup">
+      <span class="select-contact-text"></span>
+      <figure class="close-popup"><i></i></figure>
+      <section class="client-selectable wz-prototype">
+        <section class="highlight-area">
+          <i class="avatar"><span class="avatar-letters"></span></i>
+          <span class="name-client-selectable wz-selectable"></span>
+          <span class="info-client-selectable wz-selectable"></span>
+        </section>
+      </section>
+    </section>
+
     <section class="legal-top-bar wz-ui-header wz-dragger ui-header">
       <section class="legal-menu wz-dragger wz-fit-x ui-header-brand">
         <span class="app-title wz-dragger"></span>
@@ -175,13 +188,13 @@
       </section>
       <section class="doc-tab-section tab-section">
         <section class="async">
-            <span class="no-folder"></span>
-            <button class="ui-btn huge new-link-folder">
-              <span></span>
-            </button>
-            <button class="ui-btn huge link-folder">
-              <span></span>
-            </button>
+          <span class="no-folder"></span>
+          <button class="ui-btn huge new-link-folder">
+            <span></span>
+          </button>
+          <button class="ui-btn huge link-folder">
+            <span></span>
+          </button>
         </section>
       </section>
       <section class="timeline-tab-section tab-section wz-scroll">
@@ -196,10 +209,10 @@
           <section class="select">
             <section class="select-input">
               <i class="new-event"></i><article class="new-event-text"></article>
-                <figure>
-                  <i></i>
-                </figure>
-              </section>
+              <figure>
+                <i></i>
+              </figure>
+            </section>
           </section>
         </section>
         <section class="timeline">
@@ -300,7 +313,8 @@
         </section>
       </section>
       <section class="budget-tab-section tab-section wz-scroll">
-        <section class="budget">
+        <section class="budget-yes">
+          <section class="budget">
             <span class="budget-text"></span>
             <span class="look-mode budget-money">3500€</span>
             <input class="edit-mode budget-money-input">
@@ -312,30 +326,46 @@
               <figure class="ui-checkbox"><i></i></figure>
               <span>Pagado</span>
             </section>
-        </section>
-        <section class="budget-pay">
-          <span class="pay-way-text"></span>
-          <span class="look-mode pay-way">20% al inicio - 80% después</span>
-          <textarea class="edit-mode pay-way-input"></textarea>
-        </section>
-        <section class="payments">
-          <section class="top-payments">
-            <span class="payments-text"></span>
-            <i class="add-payment"></i>
-            <span class="payments-value"></span>
           </section>
-          <section class="payment-list wz-scroll">
-            <section class="payment">
-              <section class="payment-info">
-                <span class="title">Pago final 80%</span>
-                <span class="date">22 Junio 2015</span>
+          <section class="budget-pay">
+            <span class="pay-way-text"></span>
+            <span class="look-mode pay-way">20% al inicio - 80% después</span>
+            <textarea class="edit-mode pay-way-input"></textarea>
+          </section>
+          <section class="payments">
+            <section class="top-payments">
+              <span class="payments-text"></span>
+              <i class="add-payment"></i>
+              <span class="payments-value"></span>
+            </section>
+            <section class="payment-list wz-scroll">
+              <section class="payment">
+                <section class="payment-info">
+                  <section class="look-mode">
+                    <span class="title">Pago final 80%</span>
+                    <span class="date">22 Junio 2015</span>
+                  </section>
+                  <input class="edit-mode ui-input" placeholder="Título del pago"/>
+                </section>
+                <i class="remove edit-mode"></i>
+                <article class="edit-mode payment-value-input">
+                  <i class="icon"></i>
+                  <input placeholder="Ingreso">
+                </article>
+                <span class="look-mode payment-value">+ 2.800,00 €</span>
               </section>
-              <i class="remove edit-mode"></i>
-              <span class="payment-value">+ 2.800,00 €</span>
             </section>
           </section>
         </section>
-      </secion>
+        <section class="budget-no">
+          <i class="no-budget-img"></i>
+          <span class="no-budget-text"></span>
+          <button class="new-budget-button ui-btn huge gray">
+            <i></i>
+            <span class="ellipsis"></span>
+          </button>
+        </section>
+      </section>
     </section>
   </section>
 </section>
