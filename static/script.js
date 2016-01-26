@@ -66,10 +66,12 @@ var newEventSelect       = $('.top-timeline .select');
 var editPopup            = $('.edit-mode-popup');
 var uiWindowContent      = $('.ui-window-content');
 var expStatusIcon        = $('.exp-status .ui-select-input > i');
+var expStatus            = $('.exp-status .look-mode');
 var expDescription       = $('.exp-desc .look-mode');
 var expDescriptionInput  = $('.exp-desc .edit-mode');
 var tabSections          = $('.tab-section');
 var eventTypeSelect      = $('.event-select-dropdown');
+var noEntryPrototype     = $('.no-entry.wz-prototype');
 
 // COLOR PALETTE
 var colorPalette = [
@@ -99,7 +101,13 @@ cancelExpButton.on('click', function(){
 });
 
 expStatusButton.on('click', function(){
-  $(this).hasClass('open') ? expStatusIcon.removeClass('closed')  :  expStatusIcon.addClass('closed');
+  if($(this).hasClass('open')){
+    expStatusIcon.removeClass('closed');
+    expStatus.removeClass('closed');
+  }else{
+    expStatusIcon.addClass('closed');
+    expStatus.addClass('closed')
+  }
 });
 
 tabs.on('click', function(){
@@ -126,35 +134,39 @@ var initLegal = function(){
 
   getRecords( function( error, list ){
 
-    console.log('getRecords',error,list)
-
     if( error ){ return; }
+
+    console.log('EXPEDIENTES:', error, list);
 
     for( var i = 0; i < list.length; i++ ){
       appendRecord( list[ i ] );
     }
 
   });
-
 }
 
 var appendRecord = function( record ){
 
-  console.log( record );
   var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
 
   $( '.name-exp', newRecord ).text( record.name );
-  $( '.id-exp', newRecord ).text( record.id_internal + ' - ' + 'NOT IMPLEMENTED' );
+  setAvatarExp(record, newRecord);
+  $( '.id-exp', newRecord ).text( record.idInternal );
+  if(record.custom.status){
+    newRecord.find('.highlight-area').addClass('closed');
+  }
 
   sidebar.append( newRecord );
+  newRecord.data('record', record);
+
+  newRecord.on('click', function(){
+    selectRecord($(this));
+  })
 
 };
 
 var getRecords = function( callback ){
-
   wz.project.getCategories( function( error, list ){
-
-    console.log('categories',list)
 
     if( error ){ return callback( error ); }
 
@@ -173,9 +185,11 @@ var getRecords = function( callback ){
 
     found.getProjects( function( error, list ){
 
-      console.log('projects',list)
-
       if( error ){ return callback( error ); }
+      list.forEach(function(i){
+        console.log('CUSTOM', i.custom);
+        i.custom = JSON.parse(i.custom);
+      });
       callback( null, list );
 
     });
@@ -295,7 +309,140 @@ var hideDropdowns = function(e){
   }
 }
 
-var getContacts = function(){
+var proyectBuilder = function(){
+  var exp = {
+    "name"         : "",
+    "idInternal"   : 0,
+    "description"  : "",
+    "custom"       : {
+      "client"   : {},
+      "asigns"   : [],
+      "interest" : [],
+      "folder"   : "",
+      "status"   : false,
+      "events"   : [],
+      "budget"   : {}
+                    }
+  };
+  return exp;
+}
+
+var eventBuilder = function(){
+  var event = {
+    "type"     : "",
+    "title"    : "",
+    "desc"     : "",
+    "duration" : "",
+    "income"   : 0,
+    "expenses" : 0,
+    "date"     : {}
+  };
+  return event;
+}
+
+var budgetBuilder = function(){
+  var budget = {
+    "price"    : 0,
+    "status"   : false,
+    "payform"  : "",
+    "pays"     : []
+  };
+  return budget;
+}
+
+var setAvatarExp = function(expApi, expDom){
+
+  var expNameWords = expApi.name.split(' ');
+  expDom.find('.avatar-letters').text( expNameWords[0][0].toUpperCase() + expNameWords[1][0].toUpperCase());
+
+  var colorId = selectColor(expApi.idInternal || '');
+  expDom.data('color', colorId);
+  expDom.find('.avatar').css('background-image', 'none');
+  expDom.find('.avatar').css('background-color', colorPalette[colorId].light);
+  expDom.find('.avatar').css('border-color', colorPalette[colorId].border);
+  expDom.find('.avatar').css('border-style', 'solid');
+  expDom.find('.avatar-letters').css('color', colorPalette[colorId].text);
+}
+
+var setAvatarCon = function(o, contact){
+  if(o.isCompany){
+    contact.find('.avatar-letters').text( ( o.org.company[0] || '' ).toUpperCase() + ( o.org.company[1] || '' ).toUpperCase());
+  }else{
+    contact.find('.avatar-letters').text( ( o.name.first[0] || '' ).toUpperCase() + ( o.name.last[0] || '' ).toUpperCase());
+  }
+  var colorId = selectColor(o.id || '');
+  contact.data('color', colorId);
+  contact.find('.avatar').css('background-image', 'none');
+  contact.find('.avatar').css('background-color', colorPalette[colorId].light);
+  contact.find('.avatar').css('border-color', colorPalette[colorId].border);
+  contact.find('.avatar').css('border-style', 'solid');
+  contact.find('.avatar-letters').css('color', colorPalette[colorId].text);
+}
+
+var selectColor = function(string){
+  var id = 0;
+  for (var i = 0; i < string.length; i++) {
+    id += string.charCodeAt(i);
+    id++;
+  }
+  return id = id%colorPalette.length;
+}
+
+var selectRecord = function(record){
+  cleanWindow();
+  var expApi = record.data('record');
+  $('.ui-window-content .name').text(expApi.name);
+  $('.ui-window-content .intern-id').text(expApi.idInternal);
+  $('.ui-window-content .extern-id').text(expApi.id || 'id aun no disponible');
+  if(expApi.custom.status){
+    expStatus.addClass('closed');
+    expStatus.find('.status').text('Cerrado');
+  }else{
+    expStatus.removeClass('closed');
+    expStatus.find('.status').text('Abierto');
+  }
+  $('.ui-window-content .desc').text(expApi.description);
+  setClient(expApi);
+  setAsigns(expApi);
+  setInterest(expApi);
+}
+
+var setClient = function(expApi){
+  var client = expApi.custom.client;
+  if (client) {
+
+  }else{
+    setEmptyContact($('.exp-client .add'));
+  }
+}
+
+var setAsigns = function(expApi){
+  var asigns = expApi.custom.asigns;
+  if(asigns.length == 0){
+    setEmptyContact($('.exp-asigns .add'));
+  }
+}
+
+var setInterest = function(expApi){
+  var asigns = expApi.custom.asigns;
+  if(asigns.length == 0){
+    setEmptyContact($('.exp-people .add'));
+  }
+}
+
+var setEmptyContact = function(place){
+  var noEntry = noEntryPrototype.clone();
+  noEntry.removeClass('wz-prototype');
+  noEntry.addClass('cleanable');
+  noEntry.on('click', function(){
+    selectContact(place);
+  });
+  place.before(noEntry);
+}
+
+var selectContact = function(place){
+  $('.select-contact-back').show();
+  $('.select-contact-popup').show();
   wz.contacts.getAccounts(function(err, list){
     list[0].getGroups(function(e, o){
       o[0].getContacts(function(e, o){
@@ -304,51 +451,31 @@ var getContacts = function(){
           list.push(o[i]);
         }
         list = list.sort(function(a,b){return a.name.first.localeCompare( b.name.first );});
-        console.log(list);
-        return list;
+        console.log('lista de contactos', list);
+        list.forEach(function(i){
+          var contact = $('.client-selectable.wz-prototype').clone();
+          contact.removeClass('wz-prototype');
+          contact.addClass('cleanable');
+          setAvatarCon(i, contact);
+          if(i.isCompany){
+            contact.find('.info-client-selectable').text(i.name.first+' '+i.name.last);
+            contact.find('.name-client-selectable').text(i.org.company);
+            contact.find('.company-mode').show();
+          }else{
+            contact.find('.name-client-selectable').text(i.name.first+' '+i.name.last);
+            contact.find('.info-client-selectable').text(i.org.company);
+            contact.find('.company-mode').hide();
+          }
+          $('.client-selectable.wz-prototype').before(contact);
+          contact.data('contact', i)
+        });
       });
     });
   });
 }
 
-var proyectBuilder = function(){
-  var exp = {
-    title    : '',
-    idInt    : 0,
-    idExt    : 0,
-    status   : false,
-    desc     : '',
-    client   : {},
-    asigns   : [],
-    interest : [],
-    folder   : '',
-    events   : [],
-    budget   : {}
-  };
-  return exp;
-}
-
-var eventBuilder = function(){
-  var event = {
-    type     : '',
-    title    : '',
-    desc     : '',
-    duration : '',
-    income   : 0,
-    expenses : 0,
-    date     : {}
-  };
-  return event;
-}
-
-var budgetBuilder = function(){
-  var budget = {
-    price    : 0,
-    status   : false,
-    payform  : '',
-    pays     : []
-  };
-  return budget;
+var cleanWindow = function(){
+  $('.cleanable').remove();
 }
 
 // Program run

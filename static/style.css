@@ -562,6 +562,10 @@
   margin-right: 7px;
 }
 
+.exp-status .closed .status-img{
+  background-position: -123px 0;
+}
+
 .exp-status .status{
   float: left;
   font-size: 19px;
@@ -643,12 +647,12 @@
   border-color: #60b25e;
 }
 
-.client, .asign, .person{
+.contact{
   float: left;
   position: relative;
 }
 
-.client .remove, .asign .remove, .person .remove{
+.contact .remove{
   width: 14px;
   height: 14px;
   background: url("@static/sprite.png") ;
@@ -659,7 +663,7 @@
   background-position: 131px 0;
 }
 
-.client .remove:hover, .asign .remove:hover, .person .remove:hover{
+.contact .remove:hover{
   background-position: 117px 0;
 }
 
@@ -1691,6 +1695,7 @@
   margin-left: 20px;
   margin-top: 18px;
   width: ~'calc(100% - 56px)';
+  margin-bottom: 15px;
 }
 
 .close-popup {
@@ -1716,10 +1721,6 @@
   height: 64px;
   width: 239px;
   border-bottom: 1px solid rgba(204, 211, 213, 0.5);
-}
-
-.select-contact-popup .client-selectable:first-child {
-  margin-top: 20px;
 }
 
 .client-selectable:hover .highlight-area{
@@ -1788,4 +1789,16 @@
   padding-left: 0;
   width: 239px;
   margin-left: 10px;
+}
+
+.company-mode{
+  background-image: url('@static/maletin.png');
+  background-size: 17px 16px;
+  width: 17px;
+  height: 16px;
+  float: left;
+  position: absolute;
+  bottom: 9px;
+  left: 42px;
+  display: none;
 }
