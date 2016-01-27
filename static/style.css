@@ -677,6 +677,10 @@
   background-position: 159px 0;
 }
 
+.exp-people .add{
+  left: 138px;
+}
+
 .add:hover{
   background-position: 145px 0;
 }
@@ -1801,4 +1805,10 @@
   bottom: 9px;
   left: 42px;
   display: none;
+}
+
+.client-selectable-list{
+  float: left;
+  width: 100%;
+  height: ~'calc(100% - 50px)';
 }

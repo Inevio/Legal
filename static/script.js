@@ -10,6 +10,7 @@ var editState = false;
 
 // DOM VARS
 var app = $(this);
+var recordActive = '';
 
 //Text
 var appTitle             = $('.app-title');
@@ -61,6 +62,8 @@ var deleteExpButton      = $('.delete-exp-button');
 var expStatusButton      = $('.exp-status .ui-select-dropdown article');
 var tabs                 = $('.ui-window-content .ui-tab .ui-tab-element');
 var newEventSelect       = $('.top-timeline .select');
+var closeSelectContact   = $('.select-contact-popup .close-popup');
+var addContact           = $('.info-tab-section .add');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -97,7 +100,7 @@ editExpButton.on('click', function(){
 });
 
 cancelExpButton.on('click', function(){
-  editMode(false);
+  cancelRecord();
 });
 
 expStatusButton.on('click', function(){
@@ -121,6 +124,18 @@ newEventSelect.on('click', function(){
 
 app.on('click', function(e){
   hideDropdowns(e);
+});
+
+closeSelectContact.on('click', function(){
+  cleanSelectContact();
+});
+
+addContact.on('click', function(){
+  selectContact($(this));
+});
+
+saveExpButton.on('click', function(){
+  saveRecord();
 });
 
 // OBJECTS
@@ -186,10 +201,7 @@ var getRecords = function( callback ){
     found.getProjects( function( error, list ){
 
       if( error ){ return callback( error ); }
-      list.forEach(function(i){
-        console.log('CUSTOM', i.custom);
-        i.custom = JSON.parse(i.custom);
-      });
+
       callback( null, list );
 
     });
@@ -280,6 +292,18 @@ var selectNewEvent = function(){
 
 var recoverInputsInfo = function(){
   expDescriptionInput.val(expDescription.text());
+  $('.intern-id-input').val($('.intern-id').text());
+  $('.extern-id-input').val($('.extern-id').text());
+  $('.name-input').val($('.name').text());
+  $('.exp-status .ui-select-input article').text($('.status').text());
+  if ($('.exp-status .look-mode').hasClass('closed')) {
+    $('.exp-status .ui-select-input i').addClass('closed');
+  }
+
+  recoverEvents();
+}
+
+var recoverEvents = function(){
   var events = $('.event');
   for (var i = 0; i < events.length; i++) {
     var date = events.eq(i).find('.event-time').text().split(' ');
@@ -315,16 +339,28 @@ var proyectBuilder = function(){
     "idInternal"   : 0,
     "description"  : "",
     "custom"       : {
-      "client"   : {},
+      "client"   : [],
       "asigns"   : [],
       "interest" : [],
       "folder"   : "",
       "status"   : false,
       "events"   : [],
-      "budget"   : {}
+      "budget"   : {},
+      "idExt"    : 0
                     }
   };
   return exp;
+}
+
+var contactBuilder = function(){
+  var contact = {
+    "id"        : "",
+    "title"     : "",
+    "subtitle"  : "",
+    "moreInfo"  : "",
+    "isCompany" : false
+  }
+  return contact;
 }
 
 var eventBuilder = function(){
@@ -391,9 +427,12 @@ var selectColor = function(string){
 var selectRecord = function(record){
   cleanWindow();
   var expApi = record.data('record');
+  recordActive = expApi;
+  $('.exp.active').removeClass('active');
+  record.addClass('active');
   $('.ui-window-content .name').text(expApi.name);
-  $('.ui-window-content .intern-id').text(expApi.idInternal);
-  $('.ui-window-content .extern-id').text(expApi.id || 'id aun no disponible');
+  $('.ui-window-content .intern-id').text(expApi.id);
+  $('.ui-window-content .extern-id').text(expApi.idInternal);
   if(expApi.custom.status){
     expStatus.addClass('closed');
     expStatus.find('.status').text('Cerrado');
@@ -409,9 +448,7 @@ var selectRecord = function(record){
 
 var setClient = function(expApi){
   var client = expApi.custom.client;
-  if (client) {
-
-  }else{
+  if(client.length == 0){
     setEmptyContact($('.exp-client .add'));
   }
 }
@@ -424,8 +461,8 @@ var setAsigns = function(expApi){
 }
 
 var setInterest = function(expApi){
-  var asigns = expApi.custom.asigns;
-  if(asigns.length == 0){
+  var interest = expApi.custom.interest;
+  if(interest.length == 0){
     setEmptyContact($('.exp-people .add'));
   }
 }
@@ -435,6 +472,7 @@ var setEmptyContact = function(place){
   noEntry.removeClass('wz-prototype');
   noEntry.addClass('cleanable');
   noEntry.on('click', function(){
+    editMode(true);
     selectContact(place);
   });
   place.before(noEntry);
@@ -466,16 +504,164 @@ var selectContact = function(place){
             contact.find('.info-client-selectable').text(i.org.company);
             contact.find('.company-mode').hide();
           }
+          contact.addClass('contact-selectable');
           $('.client-selectable.wz-prototype').before(contact);
           contact.data('contact', i)
+          contact.on('click', function(){
+            asignContact($(this), place);
+          });
         });
       });
     });
   });
 }
 
+var asignContact = function(contact, place){
+  place.parent().find('.no-entry').remove();
+  var contactApi = contact.data('contact');
+  var contactDom = $('.contact.wz-prototype').clone();
+  contactDom.removeClass('wz-prototype');
+
+  setAvatarCon(contactApi, contactDom);
+  if(contactApi.isCompany){
+    contactDom.find('.client-subtitle').text(contactApi.name.first+' '+contactApi.name.last);
+    contactDom.find('.client-title').text(contactApi.org.company);
+    contactDom.find('.company-mode').show();
+  }else{
+    contactDom.find('.client-title').text(contactApi.name.first+' '+contactApi.name.last);
+    contactDom.find('.client-subtitle').text(contactApi.org.company);
+    contactDom.find('.company-mode').hide();
+  }
+  var moreInfo = '';
+  var withPhone = false;
+  if(contactApi.phone.length > 0){
+    moreInfo += contactApi.phone[0].value;
+    withPhone = true;
+  }
+  if(contactApi.email.length > 0){
+    if(withPhone){
+      moreInfo += ' - '+contactApi.email[0].value;
+    }else{
+      moreInfo += contactApi.email[0].value;
+    }
+  }
+  contactDom.find('.client-moreinfo').text(moreInfo);
+
+  var newContact = contactBuilder();
+  newContact.title = contactDom.find('.client-title').text();
+  newContact.subtitle = contactDom.find('.client-subtitle').text();
+  newContact.moreInfo = moreInfo;
+  newContact.isCompany = contactApi.isCompany;
+  newContact.id = contactApi.id;
+  place.after(contactDom);
+  var type = getContactType(contactDom);
+  contactDom.addClass(type+'Dom');
+  contactDom.addClass('cleanable');
+  contactDom.data('contact', newContact);
+  contactDom.find('.remove').on('click', function(){
+    deleteContact($(this).parent());
+  })
+  cleanSelectContact();
+  console.log('Contacto asignado', recordActive);
+}
+
+// no esta borrando
+var deleteCotnactInRecord = function(type, id){
+  recordActive.custom[type].forEach(function(i){
+    if(i.id == id){ i.remove }
+  });
+  console.log('FUNCION NO TERMINADA');
+  console.log('Contacto borrado', recordActive);
+}
+
+var deleteContact = function(contact){
+  var contactApi = contact.data('contact');
+  var type = getContactType(contact);
+  contact.remove();
+  if(type == 'client' && $('.clientDom').length == 0){
+    setEmptyContact($('.exp-client .add'));
+  }else if(type == 'asigns' && $('.asignsDom').length == 0){
+    setEmptyContact($('.exp-asigns .add'));
+  }else if(type == 'interest' && $('.interestDom').length == 0){
+    setEmptyContact($('.exp-interest .add'));
+  }
+}
+
+var getContactType = function(contact){
+  var type = contact.parent();
+  if(type.hasClass('exp-client')){
+    type = 'client';
+  }else if(type.hasClass('exp-asigns')){
+    type = 'asigns';
+  }else{
+    type = 'interest';
+  }
+  return type;
+}
+
+var saveRecord = function(){
+  recordActive.idInternal = $('.intern-id-input').val();
+  recordActive.custom.idExt = $('.extern-id-input').val();
+  recordActive.name = $('.name-input').val();
+  recordActive.custom.status = $('.exp-status .look-mode').hasClass('closed');
+  recordActive.description = $('.exp-desc .edit-mode').val();
+  recordActive.custom.client = recoverClients();
+  recordActive.custom.asigns = recoverAsigns();
+  recordActive.custom.interest = recoverInterest();
+  console.log('VOY A GUARDAR ESTO', recordActive);
+  var expApi = $('.exp.active').data('record');
+  console.log(expApi);
+  expApi.modify(recordActive, function(e,o){
+    console.log(e,o);
+  });
+}
+
+var recoverClients = function(){
+  var clients = [];
+  if($('exp-client .no-entry').length == 0){
+    var clientsDom = $('.exp-client .contact');
+    for (var i = 0; i < clientsDom.length; i++) {
+      clients.push(clientsDom.eq(i).data('contact'));
+    }
+  }
+  return clients;
+}
+
+var recoverAsigns = function(){
+  var asigns = [];
+  if($('exp-asigns .no-entry').length == 0){
+    var asignsDom = $('.exp-asigns .contact');
+    for (var i = 0; i < asignsDom.length; i++) {
+      asigns.push(asignsDom.eq(i).data('contact'));
+    }
+  }
+  return asigns;
+}
+
+var recoverInterest = function(){
+  var interest = [];
+  if($('exp-people .no-entry').length == 0){
+    var interestDom = $('.exp-people .contact');
+    for (var i = 0; i < interestDom.length; i++) {
+      interest.push(interestDom.eq(i).data('contact'));
+    }
+  }
+  return interest;
+}
+
+var cancelRecord = function(){
+  editMode(false);
+  $('.exp.active').click();
+}
+
 var cleanWindow = function(){
   $('.cleanable').remove();
+}
+
+var cleanSelectContact = function(){
+  $('.select-contact-back').hide();
+  $('.select-contact-popup').hide();
+  $('.contact-selectable').remove();
 }
 
 // Program run
