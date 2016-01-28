@@ -11,6 +11,8 @@ var editState = false;
 // DOM VARS
 var app = $(this);
 var recordActive = '';
+var legal = '';
+var nRecords = 0;
 
 //Text
 var appTitle             = $('.app-title');
@@ -64,6 +66,10 @@ var tabs                 = $('.ui-window-content .ui-tab .ui-tab-element');
 var newEventSelect       = $('.top-timeline .select');
 var closeSelectContact   = $('.select-contact-popup .close-popup');
 var addContact           = $('.info-tab-section .add');
+var newEventDoc          = $('.item.event-doc');
+var newEventMet          = $('.item.event-met');
+var newEventWor          = $('.item.event-wor');
+var newEventOth          = $('.item.event-oth');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -75,6 +81,10 @@ var expDescriptionInput  = $('.exp-desc .edit-mode');
 var tabSections          = $('.tab-section');
 var eventTypeSelect      = $('.event-select-dropdown');
 var noEntryPrototype     = $('.no-entry.wz-prototype');
+var newExpButton         = $('.new-exp-button');
+var welcomePage          = $('.welcome-page');
+var newExpWelcome        = $('.welcome-page .ui-btn.big');
+
 
 // COLOR PALETTE
 var colorPalette = [
@@ -138,6 +148,10 @@ saveExpButton.on('click', function(){
   saveRecord();
 });
 
+newExpButton.on('click', function(){
+  createRecord();
+});
+
 // OBJECTS
 var Record = function( params ){};
 var Action = function( params ){};
@@ -156,6 +170,7 @@ var initLegal = function(){
     for( var i = 0; i < list.length; i++ ){
       appendRecord( list[ i ] );
     }
+    $('.record').eq(0).click();
 
   });
 }
@@ -171,6 +186,8 @@ var appendRecord = function( record ){
     newRecord.find('.highlight-area').addClass('closed');
   }
 
+  nRecords++;
+  newRecord.addClass('record');
   sidebar.append( newRecord );
   newRecord.data('record', record);
 
@@ -197,6 +214,9 @@ var getRecords = function( callback ){
     }
 
     if( !found ){ return callback( null, [] ); }
+
+    console.log('>', found);
+    legal = found;
 
     found.getProjects( function( error, list ){
 
@@ -251,6 +271,22 @@ var setInitialTexts = function(){
   selectContactText.text(lang.selectContact);
 }
 
+var createRecord = function(){
+  var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
+
+  $( '.name-exp', newRecord ).text( 'Titulo del expediente' );
+  $( '.id-exp', newRecord ).text( 'id Personalizable' );
+  $('.exp.active.active').removeClass('active');
+  newRecord.addClass('active');
+  newRecord.on('click', function(){
+    selectRecord($(this));
+  })
+
+  sidebar.append( newRecord );
+  editMode(true);
+  cleanInputs();
+}
+
 var editMode = function(mode){
   if(mode){
     $('.look-mode').hide();
@@ -264,6 +300,7 @@ var editMode = function(mode){
     $('.look-mode').show();
     $('.event').removeClass('edit');
     $('.budget-tab-section').removeClass('edit');
+    $('.exp.active').click();
     undrawPopup();
   }
 }
@@ -389,7 +426,7 @@ var budgetBuilder = function(){
 var setAvatarExp = function(expApi, expDom){
 
   var expNameWords = expApi.name.split(' ');
-  expDom.find('.avatar-letters').text( expNameWords[0][0].toUpperCase() + expNameWords[1][0].toUpperCase());
+  expDom.find('.avatar-letters').text( (expNameWords[0] || ' ')[0].toUpperCase() + (expNameWords[1] || ' ')[0].toUpperCase());
 
   var colorId = selectColor(expApi.idInternal || '');
   expDom.data('color', colorId);
@@ -447,23 +484,35 @@ var selectRecord = function(record){
 }
 
 var setClient = function(expApi){
-  var client = expApi.custom.client;
-  if(client.length == 0){
+  var client = expApi == null ? '' : expApi.custom.client;
+  if(expApi == null || client.length == 0){
     setEmptyContact($('.exp-client .add'));
+  }else{
+    client.forEach(function(i){
+      composeContact(i, $('.exp-client .add'));
+    });
   }
 }
 
 var setAsigns = function(expApi){
-  var asigns = expApi.custom.asigns;
-  if(asigns.length == 0){
+  var asigns = expApi == null ? '' : expApi.custom.asigns;
+  if(expApi == null || asigns.length == 0){
     setEmptyContact($('.exp-asigns .add'));
+  }else{
+    asigns.forEach(function(i){
+      composeContact(i, $('.exp-asigns .add'));
+    });
   }
 }
 
 var setInterest = function(expApi){
-  var interest = expApi.custom.interest;
-  if(interest.length == 0){
+  var interest = expApi == null ? '' : expApi.custom.interest;
+  if(expApi == null || interest.length == 0){
     setEmptyContact($('.exp-people .add'));
+  }else{
+    interest.forEach(function(i){
+      composeContact(i, $('.exp-people .add'));
+    });
   }
 }
 
@@ -519,6 +568,12 @@ var selectContact = function(place){
 var asignContact = function(contact, place){
   place.parent().find('.no-entry').remove();
   var contactApi = contact.data('contact');
+  composeContact(contactApi, place);
+  cleanSelectContact();
+  console.log('Contacto asignado', recordActive);
+}
+
+var composeContact = function(contactApi, place){
   var contactDom = $('.contact.wz-prototype').clone();
   contactDom.removeClass('wz-prototype');
 
@@ -546,32 +601,14 @@ var asignContact = function(contact, place){
     }
   }
   contactDom.find('.client-moreinfo').text(moreInfo);
-
-  var newContact = contactBuilder();
-  newContact.title = contactDom.find('.client-title').text();
-  newContact.subtitle = contactDom.find('.client-subtitle').text();
-  newContact.moreInfo = moreInfo;
-  newContact.isCompany = contactApi.isCompany;
-  newContact.id = contactApi.id;
   place.after(contactDom);
   var type = getContactType(contactDom);
   contactDom.addClass(type+'Dom');
   contactDom.addClass('cleanable');
-  contactDom.data('contact', newContact);
+  contactDom.data('contact', contactApi);
   contactDom.find('.remove').on('click', function(){
     deleteContact($(this).parent());
   })
-  cleanSelectContact();
-  console.log('Contacto asignado', recordActive);
-}
-
-// no esta borrando
-var deleteCotnactInRecord = function(type, id){
-  recordActive.custom[type].forEach(function(i){
-    if(i.id == id){ i.remove }
-  });
-  console.log('FUNCION NO TERMINADA');
-  console.log('Contacto borrado', recordActive);
 }
 
 var deleteContact = function(contact){
@@ -600,20 +637,35 @@ var getContactType = function(contact){
 }
 
 var saveRecord = function(){
-  recordActive.idInternal = $('.intern-id-input').val();
-  recordActive.custom.idExt = $('.extern-id-input').val();
-  recordActive.name = $('.name-input').val();
-  recordActive.custom.status = $('.exp-status .look-mode').hasClass('closed');
-  recordActive.description = $('.exp-desc .edit-mode').val();
-  recordActive.custom.client = recoverClients();
-  recordActive.custom.asigns = recoverAsigns();
-  recordActive.custom.interest = recoverInterest();
-  console.log('VOY A GUARDAR ESTO', recordActive);
   var expApi = $('.exp.active').data('record');
-  console.log(expApi);
-  expApi.modify(recordActive, function(e,o){
-    console.log(e,o);
-  });
+  if(expApi == null){
+    recordActive = proyectBuilder();
+    recordActive = refreshRecordActive(recordActive);
+    legal.createProject(recordActive, function(e, o){
+      console.log('RECORD AÑADIDO', o);
+      $('.exp.active').data('record', o);
+      editMode(false);
+    });
+  }else{
+    recordActive = refreshRecordActive(recordActive);
+    expApi.modify(recordActive, function(e,o){
+      console.log('RECORD MODIFICADO',o);
+      // cojer el record modificado q devuelva el api y asignarlo al exp active > despues en editMode(false) clikaran el contacto active
+    });
+  }
+}
+
+
+var refreshRecordActive = function(o){
+  o.idInternal = $('.extern-id-input').val();
+  o.name = $('.name-input').val();
+  o.custom.status = $('.exp-status .look-mode').hasClass('closed');
+  o.description = $('.exp-desc .edit-mode').val();
+  o.custom.client = recoverClients();
+  o.custom.asigns = recoverAsigns();
+  o.custom.interest = recoverInterest();
+  console.log('VOY A GUARDAR ESTO', o);
+  return o;
 }
 
 var recoverClients = function(){
@@ -657,6 +709,21 @@ var cancelRecord = function(){
 var cleanWindow = function(){
   $('.cleanable').remove();
 }
+
+var cleanInputs = function(){
+  $('.intern-id-input').val('');
+  $('.extern-id-input').val('');
+  $('.name-input').val('');
+  $('.exp-status .ui-select-input > article').text('Abierto');
+  $('.name-input').val('');
+  $('.exp-desc .edit-mode').val('');
+  $('.no-entry').remove();
+  cleanWindow();
+  setClient(null);
+  setAsigns(null);
+  setInterest(null);
+}
+
 
 var cleanSelectContact = function(){
   $('.select-contact-back').hide();
