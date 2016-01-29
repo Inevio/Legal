@@ -1456,6 +1456,7 @@
   color: #545f65;
   margin-left: 20px;
   margin-top: 14px;
+  width: ~'calc(100% - 20px)';
 }
 
 .pay-way-input{

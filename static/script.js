@@ -85,7 +85,6 @@ var newExpButton         = $('.new-exp-button');
 var welcomePage          = $('.welcome-page');
 var newExpWelcome        = $('.welcome-page .ui-btn.big');
 
-
 // COLOR PALETTE
 var colorPalette = [
   {name: 'blue' , light: '#a6d2fa', text:'#2a77ad' , border:'#1664a5'},
@@ -99,7 +98,6 @@ var colorPalette = [
   {name: 'grey' , light: '#97a1a9', text:'#353b43' , border:'#384a59'},
   {name: 'yellow' , light: '#fbe27d', text:'#84740b' , border:'#ffb400'},
 ];
-
 
 // MONTH NAMES
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -150,6 +148,22 @@ saveExpButton.on('click', function(){
 
 newExpButton.on('click', function(){
   createRecord();
+});
+
+newEventDoc.on('click', function(){
+  addEvent('Documentos', 'event-doc');
+});
+
+newEventMet.on('click', function(){
+  addEvent('Reunión', 'event-met');
+});
+
+newEventWor.on('click', function(){
+  addEvent('Trabajo', 'event-wor');
+});
+
+newEventOth.on('click', function(){
+  addEvent('Otros', 'event-oth');
 });
 
 // OBJECTS
@@ -281,6 +295,7 @@ var createRecord = function(){
   newRecord.on('click', function(){
     selectRecord($(this));
   })
+  nRecords++;
 
   sidebar.append( newRecord );
   editMode(true);
@@ -337,16 +352,16 @@ var recoverInputsInfo = function(){
     $('.exp-status .ui-select-input i').addClass('closed');
   }
 
-  recoverEvents();
+  recoverEventsInputs();
+  recoverBudgetInputs();
 }
 
-var recoverEvents = function(){
+var recoverEventsInputs = function(){
   var events = $('.event');
   for (var i = 0; i < events.length; i++) {
     var date = events.eq(i).find('.event-time').text().split(' ');
-    var month = monthNames.indexOf( date[1] ) +1;
-    var hour = date[3];
-    var date = date[0]+'/'+month+'/'+date[2];
+    var hour = date[1];
+    var date = date[0];
     var eventI = events.eq(i);
     eventI.find('.event-time-input > input').val(date);
     eventI.find('.event-time-select .ui-select-input .ellipsis').text(hour);
@@ -356,6 +371,16 @@ var recoverEvents = function(){
     eventI.find('.event-price.income input').val(eventI.find('.event-price.income span').text());
     eventI.find('.event-price.expenses input').val(eventI.find('.event-price.expenses span').text());
   }
+}
+
+var recoverBudgetInputs = function(){
+  $('.budget .budget-money-input').val($('.budget-money').text());
+  if ($('.budget-status').hasClass('payed')) {
+    $('.budget-status-input').addClass('active');
+  }else{
+    $('.budget-status-input').removeClass('active');
+  }
+  $('.budget .pay-way-input').val($('.pay-way'));
 }
 
 var hideDropdowns = function(e){
@@ -402,20 +427,21 @@ var contactBuilder = function(){
 
 var eventBuilder = function(){
   var event = {
-    "type"     : "",
-    "title"    : "",
-    "desc"     : "",
-    "duration" : "",
-    "income"   : 0,
-    "expenses" : 0,
-    "date"     : {}
+    "title"         : "",
+    "eventName"     : "",
+    "desc"          : "",
+    "duration"      : "",
+    "income"        : 0,
+    "expenses"      : 0,
+    "date"          : "",
+    "time"          : ""
   };
   return event;
 }
 
 var budgetBuilder = function(){
   var budget = {
-    "price"    : 0,
+    "price"    : "",
     "status"   : false,
     "payform"  : "",
     "pays"     : []
@@ -481,6 +507,8 @@ var selectRecord = function(record){
   setClient(expApi);
   setAsigns(expApi);
   setInterest(expApi);
+  setEvents(expApi);
+  setBudget(expApi);
 }
 
 var setClient = function(expApi){
@@ -525,6 +553,45 @@ var setEmptyContact = function(place){
     selectContact(place);
   });
   place.before(noEntry);
+}
+
+var setEvents = function(expApi){
+  var eventsApi = expApi.custom.events;
+  eventsApi.forEach(function(i){
+    var eventDom = $('.event.wz-prototype').clone();
+    eventDom.removeClass('wz-prototype');
+    if(i.title == 'Documentos'){ eventDom.addClass('event-doc'); }
+    if(i.title == 'Reunión'){ eventDom.addClass('event-met'); }
+    if(i.title == 'Trabajo'){ eventDom.addClass('event-wor'); }
+    if(i.title == 'Otros'){ eventDom.addClass('event-oth'); }
+    eventDom.addClass('cleanable');
+    eventDom.addClass('eventDom');
+    $('.timeline .line').after(eventDom);
+    eventDom.find('.event-title').text(i.title);
+    eventDom.find('.event-time').text(i.date+' '+i.time);
+    eventDom.find('.event-desc-title .look-mode').text(i.eventName);
+    eventDom.find('.event-desc-info').text(i.desc);
+    eventDom.find('.event-min .look-mode').text(i.duration);
+    eventDom.find('.income .look-mode').text(i.income);
+    eventDom.find('.expenses .look-mode').text(i.expenses);
+  });
+}
+
+var setBudget = function(expApi){
+  var budget = expApi.custom.budget;
+  $('.budget .budget-money').text(budget.price);
+  $('.budget-pay .pay-way').text(budget.payform);
+  var status = $('.budget-status');
+  if(budget.status){
+    status.addClass('payed');
+    status.removeClass('pendient');
+    status.find('span').text('Pagado');
+  }else{
+    status.addClass('pendient');
+    status.removeClass('payed');
+    status.find('span').text('Pendiente de pago');
+  }
+
 }
 
 var selectContact = function(place){
@@ -636,6 +703,24 @@ var getContactType = function(contact){
   return type;
 }
 
+var addEvent = function(title, eventClass){
+  var event = eventBuilder();
+  var eventDom = $('.event.wz-prototype').clone();
+  eventDom.removeClass('wz-prototype');
+  eventDom.addClass(eventClass);
+  eventDom.addClass('cleanable');
+  eventDom.addClass('eventDom');
+  $('.timeline .line').after(eventDom);
+  editMode(true);
+  eventDom.find('.event-title').text(title);
+  eventDom.find('.event-time-input input').val(getCurrentDate());
+  eventDom.find('.event-time-select .ui-select-input > .ellipsis').text(getCurrentTime());
+  $('.dropdown').hide();
+  newEventSelect.removeClass('prepared');
+  newEventSelect.removeClass('opened');
+}
+
+
 var saveRecord = function(){
   var expApi = $('.exp.active').data('record');
   if(expApi == null){
@@ -643,14 +728,21 @@ var saveRecord = function(){
     recordActive = refreshRecordActive(recordActive);
     legal.createProject(recordActive, function(e, o){
       console.log('RECORD AÑADIDO', o);
+      o.custom = JSON.parse(o.custom);
       $('.exp.active').data('record', o);
+      $('.exp.active .name-exp').text(o.name);
+      setAvatarExp(o, $('.exp.active'));
+      $('.exp.active .id-exp').text(o.idInternal);
+      if(o.custom.status){
+        $('.exp.active .highlight-area').addClass('closed');
+      }
       editMode(false);
     });
   }else{
     recordActive = refreshRecordActive(recordActive);
     expApi.modify(recordActive, function(e,o){
-      console.log('RECORD MODIFICADO',o);
-      // cojer el record modificado q devuelva el api y asignarlo al exp active > despues en editMode(false) clikaran el contacto active
+      console.log('RECORD MODIFICADO',e, o);
+      editMode(false);
     });
   }
 }
@@ -664,6 +756,8 @@ var refreshRecordActive = function(o){
   o.custom.client = recoverClients();
   o.custom.asigns = recoverAsigns();
   o.custom.interest = recoverInterest();
+  o.custom.events = recoverEvents();
+  o.custom.budget = recoverBudget();
   console.log('VOY A GUARDAR ESTO', o);
   return o;
 }
@@ -701,6 +795,35 @@ var recoverInterest = function(){
   return interest;
 }
 
+var recoverEvents = function(){
+  var eventsToApi = [];
+  var events = $('.eventDom');
+  for (var i = 0; i < events.length; i++) {
+    var event = eventBuilder();
+    event.title = events.eq(i).find('.event-title').text();
+    event.date = events.eq(i).find('.event-time-input input').val();
+    event.time = events.eq(i).find('.event-time-select .ui-select-input > .ellipsis').text();
+    event.eventName = events.eq(i).find('.event-desc-title .edit-mode').val();
+    event.desc = events.eq(i).find('.event-desc-info-input').val();
+    event.duration = events.eq(i).find('.event-min .edit-mode').val();
+    event.income = events.eq(i).find('.income .edit-mode').val();
+    event.expenses = events.eq(i).find('.expenses .edit-mode').val();
+    eventsToApi.push(event);
+  }
+  return eventsToApi;
+}
+
+var recoverBudget = function(){
+
+  var budget = budgetBuilder();
+  budget.price = $('.budget .budget-money-input').val();
+  budget.status = $('.budget .budget-status-input figure').hasClass('active');
+  budget.payform = $('.budget-pay .pay-way-input').val();
+  // NO SOPORTADO AUN
+  budget.pays = [];
+  return budget;
+}
+
 var cancelRecord = function(){
   editMode(false);
   $('.exp.active').click();
@@ -724,11 +847,45 @@ var cleanInputs = function(){
   setInterest(null);
 }
 
-
 var cleanSelectContact = function(){
   $('.select-contact-back').hide();
   $('.select-contact-popup').hide();
   $('.contact-selectable').remove();
+}
+
+var getCurrentDate = function(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1;
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {
+      dd='0'+dd
+  }
+
+  if(mm<10) {
+      mm='0'+mm
+  }
+
+  today = dd+'/'+mm+'/'+yyyy;
+  return today;
+}
+
+
+var getCurrentTime = function(){
+  var today = new Date();
+  var hh = today.getHours();
+  var mm = today.getMinutes();
+
+  if(hh<10) {
+      hh='0'+hh
+  }
+
+  if(mm<10) {
+      mm='0'+mm
+  }
+
+  return hh+':'+mm;
 }
 
 // Program run
