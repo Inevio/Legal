@@ -35,5 +35,8 @@
     "value"       : "Cantidad",
     "noBudget"    : "No tienes ningún presupuesto asignado",
     "newBudget"   : "Crear presupuesto",
-    "selectContact" : "Seleccionar persona"
+    "selectContact" : "Seleccionar persona",
+    "welcomeFirst" : "Bienvenido a Legal",
+    "welcomeSecond" : "Parece que no tienes ningún expediente añadido",
+    "addFirstRecord" : "Crea tu primer expediente"
 }

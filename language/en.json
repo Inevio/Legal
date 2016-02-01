@@ -35,5 +35,8 @@
     "value"       : "Value",
     "noBudget"    : "You have no budget",
     "newBudget"   : "Add a budget",
-    "selectContact" : "Select contact"
+    "selectContact" : "Select contact",
+    "welcomeFirst" : "Welcome Legal",
+    "welcomeSecond" : "It seems that you don't have any record",
+    "addFirstRecord" : "Add your first record"
 }

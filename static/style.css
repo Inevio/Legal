@@ -81,7 +81,7 @@
   width: 20px;
   height: 16px;
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   float: left;
   background-position: 36px;
   margin-left: 8px;
@@ -161,7 +161,7 @@
   width: 14px;
   height: 14px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   background-position: -109px 0;
   margin-top: 14px;
   margin-left: 10px;
@@ -170,6 +170,10 @@
 }
 
 .closed .avatar-status{
+  background-position: 84px 0;
+}
+
+.active .closed .avatar-status{
   background-position: 84px 0;
 }
 
@@ -199,6 +203,7 @@
   padding-left: 0;
   width: 215px;
 }
+
 
 .dark .exp .name-exp {
   color: #bdc4c6;
@@ -235,7 +240,7 @@
   width: 16px;
   height: 16px;
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   margin-left: 14px;
   margin-top: 12px;
   background-position: 16px 0;
@@ -252,18 +257,18 @@
 
 .new-exp-button.ui-btn i{
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   width: 14px;
   height: 16px;
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 8px;
-  background-position: 159px 0;
+  background-position: 187px 0;
 }
 
 .new-exp-button.ui-btn:hover i{
-  background-position: 145px 0;
+  background-position: 173px 0;
 }
 
 .new-exp-button.ui-btn span{
@@ -382,7 +387,7 @@
 
 .edit-exp-button.ui-btn i{
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   width: 16px;
   height: 16px;
   float: left;
@@ -431,12 +436,16 @@
   width: ~'calc(100% - 191px)';
 }
 
+
 .intern-id-input{
   float: left;
   margin-left: 7px;
-  width: 43px;
-  height: 30px;
+  width: 44px;
+  height: 22px;
   margin-top: 5px;
+  color: #545f65;
+  padding-top: 10px;
+  padding-left: 13px;
 }
 
 .extern-id-input{
@@ -556,7 +565,7 @@
   width: 14px;
   height: 14px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   background-position: -109px 0;
   margin-top: 14px;
   margin-right: 7px;
@@ -583,7 +592,7 @@
   width: 14px;
   height: 14px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   background-position: -109px 0;
   margin: 7px;
 }
@@ -602,7 +611,7 @@
   width: 14px;
   height: 14px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   background-position: -109px 0;
   margin-right: 7px;
   margin-left: -3px;
@@ -618,7 +627,7 @@
   width: 14px;
   height: 14px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   background-position: -123px 0;
   margin-right: 7px;
   margin-left: -3px;
@@ -652,29 +661,30 @@
   position: relative;
 }
 
+
 .contact .remove{
   width: 14px;
   height: 14px;
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   position: absolute;
   bottom: 22px;
   margin-left: -21px;
-  background-position: 131px 0;
+  background-position: 159px 0;
 }
 
 .contact .remove:hover{
-  background-position: 117px 0;
+  background-position: 145px 0;
 }
 
  .add{
   width: 14px;
   height: 14px;
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
+  background-size: 235px 16px;
   position: absolute;
   left: 87px;
-  background-position: 159px 0;
+  background-position: 187px 0;
 }
 
 .exp-people .add{
@@ -682,7 +692,7 @@
 }
 
 .add:hover{
-  background-position: 145px 0;
+  background-position: 173px 0;
 }
 
 .info-tab-section .avatar {
@@ -1507,13 +1517,13 @@
   width: 14px;
   height: 16px;
   background-image: url('@static/sprite.png');
-  background-size: 207px 16px;
-  background-position: 159px 0;
+  background-size: 235px 16px;
+  background-position: 187px 0;
   margin-left: 7px;
 }
 
 .add-payment:hover{
-  background-position: 145px 0;
+  background-position: 173px 0;
 }
 
 .payments-value{
@@ -1555,6 +1565,7 @@
   float: left;
   color: #889399;
   margin-top: 7px;
+  width: 125px;
 }
 
 .payment-value{
@@ -1584,14 +1595,14 @@
   height: 14px;
   float: right;
   background: url("@static/sprite.png") ;
-  background-size: 207px 16px;
-  background-position: 131px 0;
+  background-size: 235px 16px;
+  background-position: 159px 0;
   margin-top: 18px;
   margin-left: 7px;
 }
 
 .payment .remove:hover{
-  background-position: 117px 0;
+  background-position: 145px 0;
 }
 
 .budget-yes{
@@ -1871,11 +1882,12 @@
 }
 
 .welcome-page .ui-btn.big{
-  margin-left: ~'calc(50% - 225px/2)';
-  width: 225px;
+  margin-left: ~'calc(50% - 265px/2)';
+  width: 265px;
   margin-top: 90px;
 }
 
+
 .welcome-page .ui-btn.big span{
-  max-width: 200px;
+  max-width: 220px;
 }

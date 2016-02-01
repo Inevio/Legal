@@ -55,6 +55,9 @@ var paymentsValueText    = $('.payments-value');
 var noBudgetText         = $('.no-budget-text');
 var newBudgetButton      = $('.new-budget-button span');
 var selectContactText    = $('.select-contact-text');
+var welcomeFirst         = $('.welcome-first');
+var welcomeSecond        = $('.welcome-second');
+var welcomeButtonText    = $('.welcome-page .ellipsis');
 
 //Events
 var editExpButton        = $('.edit-exp-button');
@@ -70,6 +73,7 @@ var newEventDoc          = $('.item.event-doc');
 var newEventMet          = $('.item.event-met');
 var newEventWor          = $('.item.event-wor');
 var newEventOth          = $('.item.event-oth');
+var newPayment           = $('.add-payment');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -166,6 +170,15 @@ newEventOth.on('click', function(){
   addEvent('Otros', 'event-oth');
 });
 
+newPayment.on('click', function(){
+  addPayment();
+});
+
+newExpWelcome.on('click', function(){
+  welcomePage.hide();
+  createRecord();
+});
+
 // OBJECTS
 var Record = function( params ){};
 var Action = function( params ){};
@@ -180,6 +193,10 @@ var initLegal = function(){
     if( error ){ return; }
 
     console.log('EXPEDIENTES:', error, list);
+
+    if (list.length == 0){
+      welcomePage.show();
+    }
 
     for( var i = 0; i < list.length; i++ ){
       appendRecord( list[ i ] );
@@ -283,6 +300,9 @@ var setInitialTexts = function(){
   noBudgetText.text(lang.noBudget);
   newBudgetButton.text(lang.newBudget);
   selectContactText.text(lang.selectContact);
+  welcomeFirst.text(lang.welcomeFirst);
+  welcomeSecond.text(lang.welcomeSecond);
+  welcomeButtonText.text(lang.addFirstRecord);
 }
 
 var createRecord = function(){
@@ -344,7 +364,7 @@ var selectNewEvent = function(){
 
 var recoverInputsInfo = function(){
   expDescriptionInput.val(expDescription.text());
-  $('.intern-id-input').val($('.intern-id').text());
+  $('.intern-id-input').text($('.intern-id').text());
   $('.extern-id-input').val($('.extern-id').text());
   $('.name-input').val($('.name').text());
   $('.exp-status .ui-select-input article').text($('.status').text());
@@ -380,7 +400,14 @@ var recoverBudgetInputs = function(){
   }else{
     $('.budget-status-input').removeClass('active');
   }
-  $('.budget .pay-way-input').val($('.pay-way'));
+  $('.budget .pay-way-input').val($('.pay-way').text());
+  var payments = $('.paymentDom');
+  for (var i = 0; i < payments.length; i++) {
+    var payment = payments.eq(i);
+    payment.find('.ui-input').val(payment.find('.title').text());
+    payment.find('.payment-value-input input').val(payment.find('.payment-value').text());
+  }
+
 }
 
 var hideDropdowns = function(e){
@@ -503,7 +530,9 @@ var selectRecord = function(record){
     expStatus.removeClass('closed');
     expStatus.find('.status').text('Abierto');
   }
-  $('.ui-window-content .desc').text(expApi.description);
+  var notes = expApi.description;
+  notes = notes.replace(/\n/g, '<br>');
+  $('.ui-window-content .desc').html(notes);
   setClient(expApi);
   setAsigns(expApi);
   setInterest(expApi);
@@ -567,6 +596,7 @@ var setEvents = function(expApi){
     eventDom.addClass('cleanable');
     eventDom.addClass('eventDom');
     $('.timeline .line').after(eventDom);
+    eventDom.find('.event-desc-title input').focus();
     eventDom.find('.event-title').text(i.title);
     eventDom.find('.event-time').text(i.date+' '+i.time);
     eventDom.find('.event-desc-title .look-mode').text(i.eventName);
@@ -591,7 +621,19 @@ var setBudget = function(expApi){
     status.removeClass('payed');
     status.find('span').text('Pendiente de pago');
   }
-
+  $('.paymentDom').remove();
+  for (var i = 0; i < budget.pays.length; i++) {
+    var paymentDom = $('.payment.wz-prototype').clone();
+    paymentDom.removeClass('wz-prototype');
+    paymentDom.addClass('paymentDom');
+    $('.payment.wz-prototype').after(paymentDom);
+    paymentDom.find('.remove').on('click', function(){
+      $(this).parent().remove();
+    });
+    paymentDom.find('.title').text(budget.pays[i].title);
+    paymentDom.find('.date').text(budget.pays[i].date);
+    paymentDom.find('.payment-value').text(budget.pays[i].pay);
+  }
 }
 
 var selectContact = function(place){
@@ -704,13 +746,13 @@ var getContactType = function(contact){
 }
 
 var addEvent = function(title, eventClass){
-  var event = eventBuilder();
   var eventDom = $('.event.wz-prototype').clone();
   eventDom.removeClass('wz-prototype');
   eventDom.addClass(eventClass);
   eventDom.addClass('cleanable');
   eventDom.addClass('eventDom');
-  $('.timeline .line').after(eventDom);
+  $('.timeline .line').before(eventDom);
+  eventDom.find('.event-desc-title input').focus();
   editMode(true);
   eventDom.find('.event-title').text(title);
   eventDom.find('.event-time-input input').val(getCurrentDate());
@@ -720,6 +762,20 @@ var addEvent = function(title, eventClass){
   newEventSelect.removeClass('opened');
 }
 
+
+var addPayment = function(){
+  var paymentDom = $('.payment.wz-prototype').clone();
+  paymentDom.removeClass('wz-prototype');
+  paymentDom.addClass('paymentDom');
+  paymentDom.addClass('new');
+  paymentDom.find('.remove').on('click', function(){
+    $(this).parent().remove();
+  });
+
+  $('.payment.wz-prototype').after(paymentDom);
+  editMode(true);
+
+}
 
 var saveRecord = function(){
   var expApi = $('.exp.active').data('record');
@@ -731,6 +787,7 @@ var saveRecord = function(){
       o.custom = JSON.parse(o.custom);
       $('.exp.active').data('record', o);
       $('.exp.active .name-exp').text(o.name);
+      $('.exp.active .id-exp').text(o.idInternal );
       setAvatarExp(o, $('.exp.active'));
       $('.exp.active .id-exp').text(o.idInternal);
       if(o.custom.status){
@@ -741,7 +798,15 @@ var saveRecord = function(){
   }else{
     recordActive = refreshRecordActive(recordActive);
     expApi.modify(recordActive, function(e,o){
-      console.log('RECORD MODIFICADO',e, o);
+      console.log('RECORD MODIFICADO',e, recordActive);
+      $('.exp.active .name-exp').text(recordActive.name);
+      $('.exp.active .id-exp').text( recordActive.idInternal );
+      setAvatarExp(recordActive, $('.exp.active'));
+      if(recordActive.custom.status){
+        $('.exp.active .highlight-area').addClass('closed');
+      }else{
+        $('.exp.active .highlight-area').removeClass('closed');
+      }
       editMode(false);
     });
   }
@@ -819,9 +884,28 @@ var recoverBudget = function(){
   budget.price = $('.budget .budget-money-input').val();
   budget.status = $('.budget .budget-status-input figure').hasClass('active');
   budget.payform = $('.budget-pay .pay-way-input').val();
-  // NO SOPORTADO AUN
-  budget.pays = [];
+  budget.pays = recoverPayments();
   return budget;
+}
+
+var recoverPayments = function(){
+  var payments = $('.paymentDom');
+  var paymentsList = [];
+
+  for (var i = 0; i < payments.length; i++) {
+    var payment = {"title" : "", "date" : "", "pay" : ""};
+    payment.title = payments.eq(i).find('.edit-mode.ui-input').val();
+    if(payments.eq(i).hasClass('new')){
+      payment.date = getCurrentDate()+' '+getCurrentTime();
+      payments.eq(i).removeClass('new');
+    }else{
+      payment.date = payments.eq(i).find('.date').text();
+    }
+    payment.pay = payments.eq(i).find('.payment-value-input input').val();
+    paymentsList.push(payment);
+  }
+
+  return paymentsList;
 }
 
 var cancelRecord = function(){
