@@ -6,13 +6,13 @@ var BROWSER_IE = 1;
 var BROWSER_WEBKIT = 2;
 var BROWSER_TYPE = /webkit/i.test(navigator.userAgent) ? BROWSER_WEBKIT : (/trident/i.test(navigator.userAgent) ? BROWSER_IE : BROWSER_FIREFOX);
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-var editState = false;
 
 // DOM VARS
 var app = $(this);
 var recordActive = '';
 var legal = '';
 var nRecords = 0;
+var editStatus = false;
 
 //Text
 var appTitle             = $('.app-title');
@@ -108,7 +108,7 @@ var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'
 
 // EVENTS
 editExpButton.on('click', function(){
-  editState ? editMode(false) : editMode(true);
+  editStatus ? editMode(false) : editMode(true);
 });
 
 cancelExpButton.on('click', function(){
@@ -324,6 +324,7 @@ var createRecord = function(){
 
 var editMode = function(mode){
   if(mode){
+    editStatus = true;
     $('.look-mode').hide();
     $('.edit-mode').show();
     $('.event').addClass('edit');
@@ -331,6 +332,7 @@ var editMode = function(mode){
     recoverInputsInfo();
     drawPopup();
   }else{
+    editStatus = false;
     $('.edit-mode').hide();
     $('.look-mode').show();
     $('.event').removeClass('edit');
@@ -400,7 +402,7 @@ var recoverBudgetInputs = function(){
   }else{
     $('.budget-status-input').removeClass('active');
   }
-  $('.budget .pay-way-input').val($('.pay-way').text());
+  $('.budget-pay .pay-way-input').val($('.pay-way').text());
   var payments = $('.paymentDom');
   for (var i = 0; i < payments.length; i++) {
     var payment = payments.eq(i);
@@ -578,7 +580,9 @@ var setEmptyContact = function(place){
   noEntry.removeClass('wz-prototype');
   noEntry.addClass('cleanable');
   noEntry.on('click', function(){
-    editMode(true);
+    if(!editStatus){
+      editMode(true);
+    }
     selectContact(place);
   });
   place.before(noEntry);
@@ -595,15 +599,30 @@ var setEvents = function(expApi){
     if(i.title == 'Otros'){ eventDom.addClass('event-oth'); }
     eventDom.addClass('cleanable');
     eventDom.addClass('eventDom');
-    $('.timeline .line').after(eventDom);
+    var oldEvents = $('.eventDom');
+    if(oldEvents.length == 0){
+      $('.timeline .line').after(eventDom);
+    }else{
+      oldEvents.eq(oldEvents.length-1).after(eventDom);
+    }
     eventDom.find('.event-desc-title input').focus();
     eventDom.find('.event-title').text(i.title);
     eventDom.find('.event-time').text(i.date+' '+i.time);
     eventDom.find('.event-desc-title .look-mode').text(i.eventName);
     eventDom.find('.event-desc-info').text(i.desc);
     eventDom.find('.event-min .look-mode').text(i.duration);
-    eventDom.find('.income .look-mode').text(i.income);
-    eventDom.find('.expenses .look-mode').text(i.expenses);
+    if(i.income != ''){
+      eventDom.find('.income').show();
+      eventDom.find('.income .look-mode').text(i.income);
+    }else{
+      eventDom.find('.income').hide();
+    }
+    if(i.expenses != ''){
+      eventDom.find('.expenses').show();
+      eventDom.find('.expenses .look-mode').text(i.expenses);
+    }else{
+      eventDom.find('.expenses').hide();
+    }
   });
 }
 
@@ -751,9 +770,16 @@ var addEvent = function(title, eventClass){
   eventDom.addClass(eventClass);
   eventDom.addClass('cleanable');
   eventDom.addClass('eventDom');
-  $('.timeline .line').before(eventDom);
+  var oldEvents = $('.eventDom');
+  if(oldEvents.length == 0){
+    $('.timeline .line').after(eventDom);
+  }else{
+    oldEvents.eq(0).before(eventDom);
+  }
   eventDom.find('.event-desc-title input').focus();
-  editMode(true);
+  if(!editStatus){
+    editMode(true);
+  }
   eventDom.find('.event-title').text(title);
   eventDom.find('.event-time-input input').val(getCurrentDate());
   eventDom.find('.event-time-select .ui-select-input > .ellipsis').text(getCurrentTime());
