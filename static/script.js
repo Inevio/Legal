@@ -179,6 +179,10 @@ newExpWelcome.on('click', function(){
   createRecord();
 });
 
+deleteExpButton.on('click', function(){
+  deleteRecord();
+});
+
 // OBJECTS
 var Record = function( params ){};
 var Action = function( params ){};
@@ -323,6 +327,7 @@ var createRecord = function(){
 }
 
 var editMode = function(mode){
+  var expApi = $('.exp.active').data('record');
   if(mode){
     editStatus = true;
     $('.look-mode').hide();
@@ -331,13 +336,16 @@ var editMode = function(mode){
     $('.budget-tab-section').addClass('edit');
     recoverInputsInfo();
     drawPopup();
+    $('.event-min, .event-price').show();
   }else{
     editStatus = false;
     $('.edit-mode').hide();
     $('.look-mode').show();
     $('.event').removeClass('edit');
     $('.budget-tab-section').removeClass('edit');
-    $('.exp.active').click();
+    if(expApi != undefined){
+      $('.exp.active').click();
+    }
     undrawPopup();
   }
 }
@@ -645,6 +653,7 @@ var setBudget = function(expApi){
     var paymentDom = $('.payment.wz-prototype').clone();
     paymentDom.removeClass('wz-prototype');
     paymentDom.addClass('paymentDom');
+    paymentDom.addClass('cleanable');
     $('.payment.wz-prototype').after(paymentDom);
     paymentDom.find('.remove').on('click', function(){
       $(this).parent().remove();
@@ -935,8 +944,19 @@ var recoverPayments = function(){
 }
 
 var cancelRecord = function(){
+  var expApi = $('.exp.active').data('record');
   editMode(false);
-  $('.exp.active').click();
+  if(expApi == undefined){
+    $('.exp.active').remove();
+    var records = $('.record');
+    if(records.length == 0){
+      welcomePage.show();
+    }else{
+      records.eq(0).click();
+    }
+  }else{
+    $('.exp.active').click();
+  }
 }
 
 var cleanWindow = function(){
@@ -955,6 +975,8 @@ var cleanInputs = function(){
   setClient(null);
   setAsigns(null);
   setInterest(null);
+  $('.budget-money-input').val('');
+  $('.pay-way-input').val('');
 }
 
 var cleanSelectContact = function(){
@@ -996,6 +1018,35 @@ var getCurrentTime = function(){
   }
 
   return hh+':'+mm;
+}
+
+var deleteRecord = function(){
+  confirm('¿Seguro que desea eliminar este expediente?', function(o){
+    if(o){
+      var expApi = $('.exp.active').data('record');
+      if(expApi == undefined){
+        cancelRecord();
+        var records = $('.record');
+        if(records.length == 0){
+          welcomePage.show();
+        }else{
+          $('.record').eq(0).click();
+        }
+      }else{
+        editMode(false);
+        expApi.remove(function(e,o){
+          console.log('RECORD BORRADO',e,o);
+          $('.exp.active').remove();
+          var records = $('.record');
+          if(records.length == 0){
+            welcomePage.show();
+          }else{
+            $('.record').eq(0).click();
+          }
+        });
+      }
+    }
+  });
 }
 
 // Program run

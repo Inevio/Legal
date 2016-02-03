@@ -202,9 +202,9 @@
   font-weight: bold;
   float: left;
   padding-left: 0;
-  width: 215px;
+  margin-right: 40px;
+  width: ~'calc(100% - 129px)';
 }
-
 
 .dark .exp .name-exp {
   color: #bdc4c6;
@@ -216,8 +216,9 @@
   padding-top: 0px;
   float: left;
   padding-left: 0;
-  width: 239px;
   margin-left: 10px;
+  margin-right: 100px;
+  width: ~'calc(100% - 169px)';
 }
 
 .dark .exp .id-exp {
@@ -1424,7 +1425,6 @@
 .budget-pay{
   float: left;
   width: 236px;
-	height: 101px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -1434,6 +1434,8 @@
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
   margin-left: 28px;
   margin-top: 24px;
+  padding-bottom: 15px;
+  max-height: 161px;
 }
 
 .edit .budget-pay{
@@ -1463,7 +1465,10 @@
   color: #545f65;
   margin-left: 20px;
   margin-top: 14px;
-  width: ~'calc(100% - 20px)';
+  width: ~'calc(100% - 34px)';
+  max-height: 109px;
+  overflow: auto;
+  padding-right: 14px;
 }
 
 .pay-way-input{
