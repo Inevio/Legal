@@ -18,6 +18,7 @@
         "desktop" : {
 
             "primary" : "main",
+            "unique"  : true,
             "service" : [],
             "common" : {
 
@@ -67,6 +68,14 @@
     "permission" : {
 
         "calendar" : true,
+
+        "fs"      : {
+
+            "create" : true,
+            "modify" : true,
+            "read"   : true
+
+        },
 
         "contacts" : true,
 

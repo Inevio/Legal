@@ -74,6 +74,7 @@ var newEventMet          = $('.item.event-met');
 var newEventWor          = $('.item.event-wor');
 var newEventOth          = $('.item.event-oth');
 var newPayment           = $('.add-payment');
+var linkFolder           = $('.link-folder');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -181,6 +182,10 @@ newExpWelcome.on('click', function(){
 
 deleteExpButton.on('click', function(){
   deleteRecord();
+});
+
+linkFolder.on('click', function(){
+  wz.fs.selectPath('root', '', function(e,o){console.log(e,o)});
 });
 
 // OBJECTS
