@@ -947,6 +947,36 @@
   padding-bottom: 20px;
 }
 
+.timeline-phantom{
+  display: none;
+  width: 100%;
+  min-height: ~'calc(100% - 67px)';
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.timeline-phantom figure{
+  width: 261px;
+  height: 180px;
+  float: left;
+  background-image: url('@static/eventoFantasma.png');
+  margin-left: ~'calc(50% - 261px/2)';
+  margin-top: 70px;
+}
+
+
+.timeline-phantom span{
+  float: left;
+  font-size: 23px;
+  line-height: 40px;
+  color: #889399;
+  padding-left: 105px;
+  padding-right: 105px;
+  padding-top: 38px;
+  text-align: center;
+  width: ~'calc(100% - 210px)';
+}
+
 .timeline .line{
   height: ~'calc(100% - 26px)';
   width: 5px;
@@ -1282,11 +1312,42 @@
   margin-top: 20px;
 }
 
-.open-folder{
+.sync{
   display: none;
+}
+
+.sync figure{
+  float: left;
+  width: 132px;
+  height: 97px;
+  float: left;
+  background-image: url('https://static.inevio.com/app/223/folder-checked.png');
+  margin-left: ~'calc(50% - 132px/2)';
+  margin-top: 70px;
+}
+
+.open-folder{
   width: 270px;
   margin-left: ~'calc(50% - 272px/2)';
   margin-top: 20px;
+}
+
+.open-folder-text{
+  float: left;
+  font-size: 23px;
+  line-height: 40px;
+  color: #889399;
+  padding-left: 105px;
+  padding-right: 105px;
+  padding-top: 76px;
+  text-align: center;
+  width: ~'calc(100% - 210px)';
+}
+
+.open-folder-text i{
+  color: #545f65;
+  font-size: 23px;
+  line-height: 40px;
 }
 
 /* Budget tab */
@@ -1490,6 +1551,23 @@
   padding-bottom: 12px;
 }
 
+.no-payments{
+  float: left;
+  display: none;
+  width: 100%;
+}
+
+.no-payments span{
+  float: left;
+  font-size: 19px;
+  line-height: 40px;
+  color: #889399;
+  padding-left: 105px;
+  padding-right: 105px;
+  padding-top: 38px;
+  text-align: center;
+  width: ~'calc(100% - 210px)';
+}
 
 .payments{
   float: left;

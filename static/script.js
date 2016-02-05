@@ -13,6 +13,7 @@ var recordActive = '';
 var legal = '';
 var nRecords = 0;
 var editStatus = false;
+var recordFolder = '';
 
 //Text
 var appTitle             = $('.app-title');
@@ -75,6 +76,8 @@ var newEventWor          = $('.item.event-wor');
 var newEventOth          = $('.item.event-oth');
 var newPayment           = $('.add-payment');
 var linkFolder           = $('.link-folder');
+var newLinkFolder        = $('.new-link-folder');
+var newBudget            = $('.new-budget-button');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -185,7 +188,19 @@ deleteExpButton.on('click', function(){
 });
 
 linkFolder.on('click', function(){
-  wz.fs.selectPath('root', '', function(e,o){console.log(e,o)});
+  linkDocFolder();
+});
+
+newLinkFolder.on('click', function(){
+  linkNewDocFolder();
+});
+
+newBudget.on('click', function(){
+  $('.budget-yes').show();
+  $('.budget-no').hide();
+  if (!editStatus) {
+    editMode(true);
+  }
 });
 
 // OBJECTS
@@ -253,21 +268,42 @@ var getRecords = function( callback ){
 
     }
 
-    if( !found ){ return callback( null, [] ); }
+    if( !found ){
+      wz.project.createCategory( {"name" : 'inevioLegalApp'} , function(e,o){
+        if( error ){
+          return callback( error );
+        }
 
-    console.log('>', found);
-    legal = found;
+        wz.fs('root', function(e, root){
+          root.createDirectory('Expedientes', function(e, dir){
+            recordFolder = dir.id;
+            legal = o;
+            o.custom = {"folder" : dir.id};
+            o.modify(o, function(){
+              console.log('CATEGORIA CREADA', e, o);
+              callback(null, []);
+            });
+          });
+        });
+      });
 
-    found.getProjects( function( error, list ){
 
-      if( error ){ return callback( error ); }
+    }else{
 
-      callback( null, list );
+      recordFolder = found.custom.folder;
+      console.log('>', found);
+      legal = found;
 
-    });
+      found.getProjects( function( error, list ){
 
+        if( error ){
+          return callback( error );
+        }
+        callback( null, list );
+
+      });
+    }
   });
-
 };
 
 var setInitialTexts = function(){
@@ -496,7 +532,7 @@ var setAvatarExp = function(expApi, expDom){
   var expNameWords = expApi.name.split(' ');
   expDom.find('.avatar-letters').text( (expNameWords[0] || ' ')[0].toUpperCase() + (expNameWords[1] || ' ')[0].toUpperCase());
 
-  var colorId = selectColor(expApi.idInternal || '');
+  var colorId = expApi.id%colorPalette.length;
   expDom.data('color', colorId);
   expDom.find('.avatar').css('background-image', 'none');
   expDom.find('.avatar').css('background-color', colorPalette[colorId].light);
@@ -551,6 +587,7 @@ var selectRecord = function(record){
   setClient(expApi);
   setAsigns(expApi);
   setInterest(expApi);
+  setFolderSync(expApi);
   setEvents(expApi);
   setBudget(expApi);
 }
@@ -601,8 +638,40 @@ var setEmptyContact = function(place){
   place.before(noEntry);
 }
 
+var setFolderSync = function(expApi){
+  var folder = expApi.custom.folder;
+  if(folder != ""){
+      $('.async').hide();
+      $('.sync').show();
+
+      wz.fs(folder, function(e, o){
+        $('.sync .open-folder-text').html('Carpeta "<i>'+o.name+'</i>" asociada');
+      });
+
+      $('.sync .open-folder').off('click');
+      $('.sync .open-folder').on('click', function(){
+        wz.fs( folder, function(e,o){
+          console.log('voy abrir carpeta', o);
+          o.open();
+        });
+      });
+  }else{
+    $('.async').show();
+    $('.sync').hide();
+  }
+}
+
 var setEvents = function(expApi){
   var eventsApi = expApi.custom.events;
+  if(eventsApi.length == 0){
+    $('.line').hide();
+    $('.timeline-phantom').show();
+    $('.timeline').hide();
+  }else{
+    $('.line').show();
+    $('.timeline-phantom').hide();
+    $('.timeline').show();
+  }
   eventsApi.forEach(function(i){
     var eventDom = $('.event.wz-prototype').clone();
     eventDom.removeClass('wz-prototype');
@@ -641,6 +710,14 @@ var setEvents = function(expApi){
 
 var setBudget = function(expApi){
   var budget = expApi.custom.budget;
+
+  if(budget.price == ''){
+    $('.budget-yes').hide();
+    $('.budget-no').show();
+  }else{
+    $('.budget-yes').show();
+    $('.budget-no').hide();
+  }
   $('.budget .budget-money').text(budget.price);
   $('.budget-pay .pay-way').text(budget.payform);
   var status = $('.budget-status');
@@ -654,6 +731,11 @@ var setBudget = function(expApi){
     status.find('span').text('Pendiente de pago');
   }
   $('.paymentDom').remove();
+  if(budget.pays.length == 0){
+    $('.no-payments').show();
+  }else{
+    $('.no-payments').hide();
+  }
   for (var i = 0; i < budget.pays.length; i++) {
     var paymentDom = $('.payment.wz-prototype').clone();
     paymentDom.removeClass('wz-prototype');
@@ -779,6 +861,9 @@ var getContactType = function(contact){
 }
 
 var addEvent = function(title, eventClass){
+  $('.line').show();
+  $('.timeline-phantom').hide();
+  $('.timeline').show();
   var eventDom = $('.event.wz-prototype').clone();
   eventDom.removeClass('wz-prototype');
   eventDom.addClass(eventClass);
@@ -804,12 +889,17 @@ var addEvent = function(title, eventClass){
 
 
 var addPayment = function(){
+  $('.no-payments').hide();
   var paymentDom = $('.payment.wz-prototype').clone();
   paymentDom.removeClass('wz-prototype');
   paymentDom.addClass('paymentDom');
   paymentDom.addClass('new');
   paymentDom.find('.remove').on('click', function(){
     $(this).parent().remove();
+    var payments = $('.paymentDom');
+    if(payments.length == 0){
+      $('.no-payments').show();
+    }
   });
 
   $('.payment.wz-prototype').after(paymentDom);
@@ -863,6 +953,7 @@ var refreshRecordActive = function(o){
   o.custom.interest = recoverInterest();
   o.custom.events = recoverEvents();
   o.custom.budget = recoverBudget();
+  o.custom.folder = ($('.exp.active').data('folder') || '');
   console.log('VOY A GUARDAR ESTO', o);
   return o;
 }
@@ -1051,6 +1142,30 @@ var deleteRecord = function(){
         });
       }
     }
+  });
+}
+
+var linkDocFolder = function(){
+  wz.fs.selectPath('root', '', function(e,o){
+    if(!editStatus){
+      editMode(true);
+    }
+    $('.exp.active').data('folder', o);
+    saveRecord();
+  });
+}
+
+var linkNewDocFolder = function(){
+  prompt('Escribe el nombre que quieres para la nueva carpeta', function(name){
+    wz.fs(recordFolder, function(e, o){
+      o.createDirectory(name, function(e, o){
+        if(!editStatus){
+          editMode(true);
+        }
+        $('.exp.active').data('folder', o.id);
+        saveRecord();
+      });
+    });
   });
 }
 
