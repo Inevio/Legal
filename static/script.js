@@ -1060,9 +1060,10 @@ var cleanWindow = function(){
 }
 
 var cleanInputs = function(){
-  $('.intern-id-input').val('');
+  $('.intern-id-input').text('');
   $('.extern-id-input').val('');
   $('.name-input').val('');
+  $('.exp-status .ui-select-input > i').removeClass('closed');
   $('.exp-status .ui-select-input > article').text('Abierto');
   $('.name-input').val('');
   $('.exp-desc .edit-mode').val('');
@@ -1073,6 +1074,9 @@ var cleanInputs = function(){
   setInterest(null);
   $('.budget-money-input').val('');
   $('.pay-way-input').val('');
+  $('.async').show();
+  $('.sync').hide();
+
 }
 
 var cleanSelectContact = function(){

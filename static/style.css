@@ -171,7 +171,7 @@
 }
 
 .closed .avatar-status{
-  background-position: 84px 0;
+  background-position: 112px 0;
 }
 
 .active .closed .avatar-status{
@@ -1065,13 +1065,22 @@
 	border: solid 2px #60b25e;
 }
 
+.delete-event{
+  float: left;
+  display: none;
+}
+
+.delete-event i{
+
+}
+
 .event-desc-title{
   float: left;
   height: 41px;
   border-bottom: 1px solid rgba(204, 211, 213, 0.5);
   margin-left: 10px;
   margin-right: 10px;
-  width: ~'calc(100% - 20px)';
+  width: ~'calc(100% - 93px)';
 }
 
 .event-desc-title span{
