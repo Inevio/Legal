@@ -14,6 +14,7 @@ var legal = '';
 var nRecords = 0;
 var editStatus = false;
 var recordFolder = '';
+var creating = false;
 
 //Text
 var appTitle             = $('.app-title');
@@ -203,6 +204,46 @@ newBudget.on('click', function(){
   }
 });
 
+wz.project.on('projectCreated', function(o){
+  console.log('CONCURRENCIA!! Expediente creado', o);
+  if (!creating) {
+    appendRecord(o);
+  }
+  creating = false;
+});
+
+wz.project.on('projectModified', function(o){
+  console.log('CONCURRENCIA!! Expediente modificado', o);
+  var found = searchRecord(o.id);
+  if(found){
+    found.data('record', o);
+    var currentRecord = $('.exp.active').data('record');
+    if (editStatus && o.id == currentRecord.id ) {
+      alert('El contacto que estaba editando ha sido modificado por otro usuario');
+      cancelRecord();
+    }else if(o.id == currentRecord.id){
+      $('.exp.active').click();
+    }
+  }
+});
+
+
+wz.project.on('projectRemoved', function(o){
+  console.log('CONCURRENCIA!! Expediente borrado', o);
+  var found = searchRecord(o);
+  if (found) {
+    var currentRecord = $('.exp.active').data('record');
+    found.remove();
+    if (editStatus && o == currentRecord.id ) {
+      alert('El contacto que estaba editando ha sido eliminado por otro usuario');
+      editMode(false);
+      $('.record').eq(0).click();
+    }else if(o == currentRecord.id){
+      $('.record').eq(0).click();
+    }
+  }
+});
+
 // OBJECTS
 var Record = function( params ){};
 var Action = function( params ){};
@@ -357,6 +398,7 @@ var createRecord = function(){
   $( '.id-exp', newRecord ).text( 'id Personalizable' );
   $('.exp.active.active').removeClass('active');
   newRecord.addClass('active');
+  newRecord.addClass('record');
   newRecord.on('click', function(){
     selectRecord($(this));
   })
@@ -377,6 +419,7 @@ var editMode = function(mode){
     $('.budget-tab-section').addClass('edit');
     recoverInputsInfo();
     drawPopup();
+    desyncFolder(expApi);
     $('.event-min, .event-price').show();
   }else{
     editStatus = false;
@@ -388,6 +431,22 @@ var editMode = function(mode){
       $('.exp.active').click();
     }
     undrawPopup();
+  }
+}
+
+var desyncFolder = function(expApi){
+  if (expApi != undefined && expApi.custom.folder != "") {
+    $('.open-folder').removeClass('gray');
+    $('.open-folder').addClass('cancel');
+    $('.open-folder span').text('Desasociar carpeta');
+    $('.open-folder').off('click');
+    $('.open-folder').on('click', function(){
+      if(!editStatus){
+        editMode(true);
+      }
+      $('.exp.active').data('folder', null);
+      saveRecord();
+    });
   }
 }
 
@@ -649,6 +708,9 @@ var setFolderSync = function(expApi){
       });
 
       $('.sync .open-folder').off('click');
+      $('.sync .open-folder').removeClass('cancel');
+      $('.sync .open-folder').addClass('gray');
+      $('.sync .open-folder span').text('Abrir carpeta');
       $('.sync .open-folder').on('click', function(){
         wz.fs( folder, function(e,o){
           console.log('voy abrir carpeta', o);
@@ -692,7 +754,9 @@ var setEvents = function(expApi){
     eventDom.find('.event-time').text(i.date+' '+i.time);
     eventDom.find('.event-desc-title .look-mode').text(i.eventName);
     eventDom.find('.event-desc-info').text(i.desc);
-    eventDom.find('.event-min .look-mode').text(i.duration);
+    eventDom.find('.delete-event').on('click', function(){
+      eventDom.remove();
+    });
     if(i.income != ''){
       eventDom.find('.income').show();
       eventDom.find('.income .look-mode').text(i.income);
@@ -704,6 +768,12 @@ var setEvents = function(expApi){
       eventDom.find('.expenses .look-mode').text(i.expenses);
     }else{
       eventDom.find('.expenses').hide();
+    }
+    if(i.duration != ''){
+      eventDom.find('.event-min').show();
+      eventDom.find('.event-min .look-mode').text(i.duration);
+    }else{
+      eventDom.find('.event-min').hide();
     }
   });
 }
@@ -875,6 +945,9 @@ var addEvent = function(title, eventClass){
   }else{
     oldEvents.eq(0).before(eventDom);
   }
+  eventDom.find('.delete-event').on('click', function(){
+    eventDom.remove();
+  });
   eventDom.find('.event-desc-title input').focus();
   if(!editStatus){
     editMode(true);
@@ -903,13 +976,27 @@ var addPayment = function(){
   });
 
   $('.payment.wz-prototype').after(paymentDom);
-  editMode(true);
+  if(!editStatus){
+    editMode(true);
+  }
+}
 
+var searchRecord = function(id){
+  var found = null;
+  var records = $('.record');
+  for (var i = 0; i < records.length; i++) {
+    var expApi = records.eq(i).data('record');
+    if(expApi.id == id){
+      found = records.eq(i);
+    }
+  }
+  return found;
 }
 
 var saveRecord = function(){
   var expApi = $('.exp.active').data('record');
   if(expApi == null){
+    creating = true;
     recordActive = proyectBuilder();
     recordActive = refreshRecordActive(recordActive);
     legal.createProject(recordActive, function(e, o){
@@ -941,7 +1028,6 @@ var saveRecord = function(){
     });
   }
 }
-
 
 var refreshRecordActive = function(o){
   o.idInternal = $('.extern-id-input').val();
@@ -999,7 +1085,7 @@ var recoverEvents = function(){
     event.title = events.eq(i).find('.event-title').text();
     event.date = events.eq(i).find('.event-time-input input').val();
     event.time = events.eq(i).find('.event-time-select .ui-select-input > .ellipsis').text();
-    event.eventName = events.eq(i).find('.event-desc-title .edit-mode').val();
+    event.eventName = events.eq(i).find('.event-desc-title .event-title-input').val();
     event.desc = events.eq(i).find('.event-desc-info-input').val();
     event.duration = events.eq(i).find('.event-min .edit-mode').val();
     event.income = events.eq(i).find('.income .edit-mode').val();

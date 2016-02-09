@@ -178,8 +178,9 @@
   background-position: 84px 0;
 }
 
+
 .active .avatar-status{
-  background-position: 70px 0;
+  background-position: 98px 0;
 }
 
 .exp i{
@@ -1066,12 +1067,32 @@
 }
 
 .delete-event{
-  float: left;
-  display: none;
+  float: right;
+  padding-top: 15px;
+  padding-bottom: 14px;
+  width: 73px;
 }
 
 .delete-event i{
+  width: 10px;
+  height: 10px;
+  background: url('@static/cancel.png');
+  background-size: 10px 10px;
+  float: left;
+  margin-top: 1px;
+}
 
+.event-desc-title .delete-event span{
+  font-size: 13px;
+  font-weight: bold;
+  color: #e85c5c;
+  float: left;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-left: 10px;
+  text-align: right;
+  width: 40px;
 }
 
 .event-desc-title{
@@ -1080,7 +1101,7 @@
   border-bottom: 1px solid rgba(204, 211, 213, 0.5);
   margin-left: 10px;
   margin-right: 10px;
-  width: ~'calc(100% - 93px)';
+  width: ~'calc(100% - 20px)';
 }
 
 .event-desc-title span{
@@ -1247,7 +1268,7 @@
   color: #545f65;
   padding-left: 10px;
   padding-right: 10px;
-  width: ~'calc(100% - 20px)';
+  width: ~'calc(100% - 95px)';
   padding-top: 15px;
 }
 
@@ -1647,6 +1668,7 @@
   float: left;
   color: #545f65;
   margin-top: 9px;
+  width: 300px;
 }
 
 .payment-info .date{
