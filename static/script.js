@@ -251,6 +251,12 @@ var Action = function( params ){};
 // APP functionality
 var initLegal = function(){
 
+  /*
+  wz.app.openApp(212, 'paco' ,function(e,o){
+    console.log(e,o);
+  });
+  */
+
   setInitialTexts();
 
   getRecords( function( error, list ){
@@ -275,9 +281,20 @@ var appendRecord = function( record ){
 
   var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
 
-  $( '.name-exp', newRecord ).text( record.name );
+  if (record.name != '') {
+    $( '.name-exp', newRecord ).text( record.name );
+  }else{
+    $( '.name-exp', newRecord ).text( 'Expediente sin nombre' );
+  }
+
+
   setAvatarExp(record, newRecord);
-  $( '.id-exp', newRecord ).text( record.idInternal );
+  if (record.custom.client.length > 0) {
+    var clientName = record.custom.client[0].name.first + ' ' + record.custom.client[0].name.last;
+    $( '.id-exp', newRecord ).text( record.id + ' - ' + clientName );
+  }else{
+    $( '.id-exp', newRecord ).text( record.id );
+  }
   if(record.custom.status){
     newRecord.find('.highlight-area').addClass('closed');
   }
@@ -393,8 +410,8 @@ var setInitialTexts = function(){
 
 var createRecord = function(){
   var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
-
-  $( '.name-exp', newRecord ).text( 'Titulo del expediente' );
+  $('.info-tab').click();
+  $( '.name-exp', newRecord ).text( 'Expediente sin nombre' );
   $( '.id-exp', newRecord ).text( 'id Personalizable' );
   $('.exp.active.active').removeClass('active');
   newRecord.addClass('active');
@@ -495,7 +512,7 @@ var recoverEventsInputs = function(){
     var eventI = events.eq(i);
     eventI.find('.event-time-input > input').val(date);
     eventI.find('.event-time-select .ui-select-input .ellipsis').text(hour);
-    eventI.find('.event-desc-title input').val(eventI.find('.event-desc-title span').text())
+    eventI.find('.event-desc-title input').val(eventI.find('.event-desc-title > span').text())
     eventI.find('.event-desc-info-input').val(eventI.find('.event-desc-info').text())
     eventI.find('.event-min input').val(eventI.find('.event-min span').text());
     eventI.find('.event-price.income input').val(eventI.find('.event-price.income span').text());
@@ -625,30 +642,43 @@ var selectColor = function(string){
 }
 
 var selectRecord = function(record){
-  cleanWindow();
-  var expApi = record.data('record');
-  recordActive = expApi;
-  $('.exp.active').removeClass('active');
-  record.addClass('active');
-  $('.ui-window-content .name').text(expApi.name);
-  $('.ui-window-content .intern-id').text(expApi.id);
-  $('.ui-window-content .extern-id').text(expApi.idInternal);
-  if(expApi.custom.status){
-    expStatus.addClass('closed');
-    expStatus.find('.status').text('Cerrado');
+  if (editStatus) {
+    alert('Esta editando un expediente, por favor, guarde o cancele los cambios antes de cambiar de expediente.');
   }else{
-    expStatus.removeClass('closed');
-    expStatus.find('.status').text('Abierto');
+    cleanWindow();
+    var expApi = record.data('record');
+    recordActive = expApi;
+    $('.exp.active').removeClass('active');
+    record.addClass('active');
+    if (expApi.name != '') {
+      $('.ui-window-content .name').text(expApi.name);
+    }else{
+      $('.ui-window-content .name').text('Expediente sin nombre');
+    }
+    $('.ui-window-content .intern-id').text(expApi.id);
+    $('.ui-window-content .extern-id').text(expApi.idInternal);
+    if(expApi.custom.status){
+      expStatus.addClass('closed');
+      expStatus.find('.status').text('Cerrado');
+    }else{
+      expStatus.removeClass('closed');
+      expStatus.find('.status').text('Abierto');
+    }
+    var notes;
+    if(expApi.description != ''){
+      notes = expApi.description;
+    }else{
+      notes = 'No hay descripcion del caso...';
+    }
+    notes = notes.replace(/\n/g, '<br>');
+    $('.ui-window-content .desc').html(notes);
+    setClient(expApi);
+    setAsigns(expApi);
+    setInterest(expApi);
+    setFolderSync(expApi);
+    setEvents(expApi);
+    setBudget(expApi);
   }
-  var notes = expApi.description;
-  notes = notes.replace(/\n/g, '<br>');
-  $('.ui-window-content .desc').html(notes);
-  setClient(expApi);
-  setAsigns(expApi);
-  setInterest(expApi);
-  setFolderSync(expApi);
-  setEvents(expApi);
-  setBudget(expApi);
 }
 
 var setClient = function(expApi){
@@ -704,18 +734,27 @@ var setFolderSync = function(expApi){
       $('.sync').show();
 
       wz.fs(folder, function(e, o){
-        $('.sync .open-folder-text').html('Carpeta "<i>'+o.name+'</i>" asociada');
-      });
-
-      $('.sync .open-folder').off('click');
-      $('.sync .open-folder').removeClass('cancel');
-      $('.sync .open-folder').addClass('gray');
-      $('.sync .open-folder span').text('Abrir carpeta');
-      $('.sync .open-folder').on('click', function(){
-        wz.fs( folder, function(e,o){
-          console.log('voy abrir carpeta', o);
-          o.open();
-        });
+        if(e){
+          $('.async').show();
+          $('.sync').hide();
+        }else{
+          $('.sync .open-folder-text').html('Carpeta "<i>'+o.name+'</i>" asociada');
+          $('.sync .open-folder').off('click');
+          $('.sync .open-folder').removeClass('cancel');
+          $('.sync .open-folder').addClass('gray');
+          $('.sync .open-folder span').text('Abrir carpeta');
+          $('.sync .open-folder').on('click', function(){
+            wz.fs( folder, function(e,o){
+              if(e){
+                $('.async').show();
+                $('.sync').hide();
+              }else{
+                console.log('voy abrir carpeta', o);
+                o.open();
+              }
+            });
+          });
+        }
       });
   }else{
     $('.async').show();
@@ -948,10 +987,10 @@ var addEvent = function(title, eventClass){
   eventDom.find('.delete-event').on('click', function(){
     eventDom.remove();
   });
-  eventDom.find('.event-desc-title input').focus();
   if(!editStatus){
     editMode(true);
   }
+  eventDom.find('.event-desc-title input').focus();
   eventDom.find('.event-title').text(title);
   eventDom.find('.event-time-input input').val(getCurrentDate());
   eventDom.find('.event-time-select .ui-select-input > .ellipsis').text(getCurrentTime());
@@ -1003,10 +1042,18 @@ var saveRecord = function(){
       console.log('RECORD AÑADIDO', o);
       o.custom = JSON.parse(o.custom);
       $('.exp.active').data('record', o);
-      $('.exp.active .name-exp').text(o.name);
-      $('.exp.active .id-exp').text(o.idInternal );
+      if (o.name != '') {
+        $('.exp.active .name-exp').text(o.name);
+      }else{
+        $('.exp.active .name-exp').text('Expediente sin nombre');
+      }
+      if (o.custom.client.length > 0) {
+        var clientName = o.custom.client[0].name.first + ' ' + o.custom.client[0].name.last;
+        $('.exp.active .id-exp').text(o.id + ' - ' + clientName);
+      }else{
+        $('.exp.active .id-exp').text(o.id);
+      }
       setAvatarExp(o, $('.exp.active'));
-      $('.exp.active .id-exp').text(o.idInternal);
       if(o.custom.status){
         $('.exp.active .highlight-area').addClass('closed');
       }
@@ -1016,8 +1063,12 @@ var saveRecord = function(){
     recordActive = refreshRecordActive(recordActive);
     expApi.modify(recordActive, function(e,o){
       console.log('RECORD MODIFICADO',e, recordActive);
-      $('.exp.active .name-exp').text(recordActive.name);
-      $('.exp.active .id-exp').text( recordActive.idInternal );
+      if (recordActive.name != '') {
+        $('.exp.active .name-exp').text(recordActive.name);
+      }else{
+        $('.exp.active .name-exp').text('Expediente sin nombre');
+      }
+      $('.exp.active .id-exp').text( recordActive.id );
       setAvatarExp(recordActive, $('.exp.active'));
       if(recordActive.custom.status){
         $('.exp.active .highlight-area').addClass('closed');
@@ -1031,7 +1082,12 @@ var saveRecord = function(){
 
 var refreshRecordActive = function(o){
   o.idInternal = $('.extern-id-input').val();
-  o.name = $('.name-input').val();
+  var expName = $('.name-input').val();
+  if(expName == 'Expediente sin nombre'){
+    o.name = "";
+  }else{
+    o.name = $('.name-input').val();
+  }
   o.custom.status = $('.exp-status .look-mode').hasClass('closed');
   o.description = $('.exp-desc .edit-mode').val();
   o.custom.client = recoverClients();
@@ -1246,7 +1302,11 @@ var linkDocFolder = function(){
 }
 
 var linkNewDocFolder = function(){
-  prompt('Escribe el nombre que quieres para la nueva carpeta', function(name){
+  var name = $('.exp.active').data('record');
+  if(name == undefined || name.name == ''){
+    alert('Antes de asociar una carpeta al expediente, el expediente debe tener un nombre.');
+  }else{
+    name = name.name;
     wz.fs(recordFolder, function(e, o){
       o.createDirectory(name, function(e, o){
         if(!editStatus){
@@ -1256,7 +1316,7 @@ var linkNewDocFolder = function(){
         saveRecord();
       });
     });
-  });
+  }
 }
 
 // Program run

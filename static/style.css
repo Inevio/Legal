@@ -97,12 +97,10 @@
 }
 
 .ui-view .exp-list{
-  border-top: 1px solid #ccd3d5;
   float: left;
   width: 310px;
   height: ~'calc(100% - 43px)';
 }
-
 
 .exp {
   height: 64px;
@@ -261,17 +259,13 @@
 .new-exp-button.ui-btn i{
   background: url("@static/sprite.png") ;
   background-size: 235px 16px;
-  width: 14px;
+  width: 16px;
   height: 16px;
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 8px;
-  background-position: 187px 0;
-}
-
-.new-exp-button.ui-btn:hover i{
-  background-position: 173px 0;
+  background-position: 203px 0;
 }
 
 .new-exp-button.ui-btn span{
@@ -307,9 +301,9 @@
 
 .exp-info {
   float: left;
-  height: 78px;
+  height: 65px;
   width: 100%;
-  background-color: #f7f8fa;
+  background-color: #fff;
   border-bottom: 1px solid #ccd3d5;
 }
 
@@ -323,10 +317,10 @@
 }
 
 .exp-info .name {
-  margin-left: 11px;
-  margin-top: 13px;
+  margin-left: 18px;
+  margin-top: 11px;
   float: left;
-  width: ~'calc(100% - 160px)';
+  width: ~'calc(100% - 167px)';
   font-size: 19px;
   color: #545f65;
   font-weight: bold;
@@ -334,9 +328,9 @@
 
 .exp-info .exp-ids{
   float: left;
-  margin-left: 11px;
+  margin-left: 18px;
   margin-top: 10px;
-  width: ~'calc(100% - 160px)';
+  width: ~'calc(100% - 167px)';
 }
 
 .exp-info .exp-ids span{
@@ -382,7 +376,7 @@
 .edit-exp-button.ui-btn {
   float: right;
   right: 7px;
-  margin-top: -7px;
+  margin-top: -14px;
   margin-right: 7px;
   width: 140px;
   height: 32px;
@@ -529,18 +523,23 @@
   width: 100%;
 }
 
-.legal .ui-tab .ui-tab-element.active{
-  border-top: none;
+.legal .ui-tab.close .ui-tab-element.active{
+  border-top: 1px solid transparent;
   border-bottom: 2px solid #fff;
+  background-color: #fff;
 }
 
 .legal .ui-tab .ui-tab-element.active:first-child{
-  border-left: none;
+  border-left: 1px solid transparent;
+}
+
+.ui-tab .ui-tab-element:hover {
+  border-top: 1px solid transparent;
 }
 
 .info-tab-section{
   width: 100%;
-  height: ~'calc(100% - 110px)';
+  height: ~'calc(100% - 98px)';
   float: left;
 }
 
@@ -1558,7 +1557,6 @@
   margin-top: 14px;
   width: ~'calc(100% - 34px)';
   max-height: 109px;
-  overflow: auto;
   padding-right: 14px;
 }
 
