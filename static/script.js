@@ -79,6 +79,7 @@ var newPayment           = $('.add-payment');
 var linkFolder           = $('.link-folder');
 var newLinkFolder        = $('.new-link-folder');
 var newBudget            = $('.new-budget-button');
+var openContacts         = $('.open-contacts');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -244,18 +245,39 @@ wz.project.on('projectRemoved', function(o){
   }
 });
 
+openContacts.on('click', function(){
+  wz.app.openApp(212, function(o){
+    console.log('ME HA LLEGADO EL CONTACTO!', o);
+    var place =  $('.select-contact-popup').data('place');
+    var contact = $('.client-selectable.wz-prototype').clone();
+    contact.removeClass('wz-prototype');
+    contact.addClass('cleanable');
+    setAvatarCon(o, contact);
+    if(o.isCompany){
+      contact.find('.info-client-selectable').text(o.name.first+' '+o.name.last);
+      contact.find('.name-client-selectable').text(o.org.company);
+      contact.find('.company-mode').show();
+    }else{
+      contact.find('.name-client-selectable').text(o.name.first+' '+o.name.last);
+      contact.find('.info-client-selectable').text(o.org.company);
+      contact.find('.company-mode').hide();
+    }
+    contact.addClass('contact-selectable');
+    $('.client-selectable.wz-prototype').before(contact);
+    contact.data('contact', o)
+    contact.on('click', function(){
+      asignContact($(this), place);
+    });
+    contact.click();
+  });
+});
+
 // OBJECTS
 var Record = function( params ){};
 var Action = function( params ){};
 
 // APP functionality
 var initLegal = function(){
-
-  /*
-  wz.app.openApp(212, 'paco' ,function(e,o){
-    console.log(e,o);
-  });
-  */
 
   setInitialTexts();
 
@@ -861,6 +883,7 @@ var setBudget = function(expApi){
 }
 
 var selectContact = function(place){
+  $('.select-contact-popup').data('place', place);
   $('.select-contact-back').show();
   $('.select-contact-popup').show();
   wz.contacts.getAccounts(function(err, list){
@@ -1068,7 +1091,12 @@ var saveRecord = function(){
       }else{
         $('.exp.active .name-exp').text('Expediente sin nombre');
       }
-      $('.exp.active .id-exp').text( recordActive.id );
+      if (recordActive.custom.client.length > 0) {
+        var clientName = recordActive.custom.client[0].name.first + ' ' + recordActive.custom.client[0].name.last;
+        $('.exp.active .id-exp').text(recordActive.id + ' - ' + clientName);
+      }else{
+        $('.exp.active .id-exp').text(recordActive.id);
+      }
       setAvatarExp(recordActive, $('.exp.active'));
       if(recordActive.custom.status){
         $('.exp.active .highlight-area').addClass('closed');
