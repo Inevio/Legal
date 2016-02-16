@@ -291,8 +291,10 @@ var initLegal = function(){
       welcomePage.show();
     }
 
-    for( var i = 0; i < list.length; i++ ){
-      appendRecord( list[ i ] );
+    var sortList = list.sort(function(a,b){return a.name.localeCompare( b.name );});
+
+    for( var i = 0; i < sortList.length; i++ ){
+      appendRecord( sortList[ i ] );
     }
     $('.record').eq(0).click();
 
@@ -323,9 +325,8 @@ var appendRecord = function( record ){
 
   nRecords++;
   newRecord.addClass('record');
-  sidebar.append( newRecord );
+  $('.exp-list').append(newRecord);
   newRecord.data('record', record);
-
   newRecord.on('click', function(){
     selectRecord($(this));
   })
@@ -933,38 +934,57 @@ var composeContact = function(contactApi, place){
   var contactDom = $('.contact.wz-prototype').clone();
   contactDom.removeClass('wz-prototype');
 
-  setAvatarCon(contactApi, contactDom);
-  if(contactApi.isCompany){
-    contactDom.find('.client-subtitle').text(contactApi.name.first+' '+contactApi.name.last);
-    contactDom.find('.client-title').text(contactApi.org.company);
-    contactDom.find('.company-mode').show();
-  }else{
-    contactDom.find('.client-title').text(contactApi.name.first+' '+contactApi.name.last);
-    contactDom.find('.client-subtitle').text(contactApi.org.company);
-    contactDom.find('.company-mode').hide();
-  }
-  var moreInfo = '';
-  var withPhone = false;
-  if(contactApi.phone.length > 0){
-    moreInfo += contactApi.phone[0].value;
-    withPhone = true;
-  }
-  if(contactApi.email.length > 0){
-    if(withPhone){
-      moreInfo += ' - '+contactApi.email[0].value;
-    }else{
-      moreInfo += contactApi.email[0].value;
+  wz.contacts.getAccounts(function(err, list){
+    list[0].getGroups(function(e, o){
+      o[0].getContacts(function(e, o){
+
+        var contact = searchContact(contactApi, o);
+
+        setAvatarCon(contact, contactDom);
+        if(contact.isCompany){
+          contactDom.find('.client-subtitle').text(contact.name.first+' '+contact.name.last);
+          contactDom.find('.client-title').text(contact.org.company);
+          contactDom.find('.company-mode').show();
+        }else{
+          contactDom.find('.client-title').text(contact.name.first+' '+contact.name.last);
+          contactDom.find('.client-subtitle').text(contact.org.company);
+          contactDom.find('.company-mode').hide();
+        }
+        var moreInfo = '';
+        var withPhone = false;
+        if(contact.phone.length > 0){
+          moreInfo += contact.phone[0].value;
+          withPhone = true;
+        }
+        if(contact.email.length > 0){
+          if(withPhone){
+            moreInfo += ' - '+contact.email[0].value;
+          }else{
+            moreInfo += contact.email[0].value;
+          }
+        }
+        contactDom.find('.client-moreinfo').text(moreInfo);
+        place.after(contactDom);
+        var type = getContactType(contactDom);
+        contactDom.addClass(type+'Dom');
+        contactDom.addClass('cleanable');
+        contactDom.data('contact', contact);
+        contactDom.find('.remove').on('click', function(){
+          deleteContact($(this).parent());
+        })
+      });
+    });
+  });
+}
+
+var searchContact = function(contact, list){
+  var con = contact;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].id == contact.id) {
+      con = list[i];
     }
   }
-  contactDom.find('.client-moreinfo').text(moreInfo);
-  place.after(contactDom);
-  var type = getContactType(contactDom);
-  contactDom.addClass(type+'Dom');
-  contactDom.addClass('cleanable');
-  contactDom.data('contact', contactApi);
-  contactDom.find('.remove').on('click', function(){
-    deleteContact($(this).parent());
-  })
+  return con;
 }
 
 var deleteContact = function(contact){
@@ -1081,6 +1101,7 @@ var saveRecord = function(){
         $('.exp.active .highlight-area').addClass('closed');
       }
       editMode(false);
+      orderRecord($('.exp.active'));
     });
   }else{
     recordActive = refreshRecordActive(recordActive);
@@ -1104,6 +1125,7 @@ var saveRecord = function(){
         $('.exp.active .highlight-area').removeClass('closed');
       }
       editMode(false);
+      orderRecord($('.exp.active'));
     });
   }
 }
@@ -1116,7 +1138,7 @@ var refreshRecordActive = function(o){
   }else{
     o.name = $('.name-input').val();
   }
-  o.custom.status = $('.exp-status .look-mode').hasClass('closed');
+  o.custom.status = $('.ui-select-input > i').hasClass('closed');
   o.description = $('.exp-desc .edit-mode').val();
   o.custom.client = recoverClients();
   o.custom.asigns = recoverAsigns();
@@ -1346,6 +1368,22 @@ var linkNewDocFolder = function(){
     });
   }
 }
+
+var orderRecord = function(record){
+  var list = $('.record');
+  if (list.length == 0) {
+    $('.exp-list').append(record);
+  }else{
+    for (var i = 0; i < list.length; i++) {
+      var x = record.find('.name-exp').text().localeCompare(list.eq(i).find('.name-exp').text());
+      if(x == -1){
+        list.eq(i).before(record);
+        return;
+      }
+    }
+  }
+}
+
 
 // Program run
 initLegal();

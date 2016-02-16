@@ -203,6 +203,7 @@
   padding-left: 0;
   margin-right: 40px;
   width: ~'calc(100% - 129px)';
+  cursor: default;
 }
 
 .dark .exp .name-exp {
@@ -216,8 +217,9 @@
   float: left;
   padding-left: 0;
   margin-left: 10px;
-  margin-right: 100px;
-  width: ~'calc(100% - 169px)';
+  margin-right: 10px;
+  width: ~'calc(100% - 79px)';
+  cursor: default;
 }
 
 .dark .exp .id-exp {
@@ -1352,16 +1354,17 @@
 }
 
 .new-link-folder{
-  width: 200px;
-  margin-left: ~'calc(50% - 196px/2)';
+  width: 203px;
+  margin-left: ~'calc(50% - 203px/2)';
   margin-top: 48px;
 }
 
 .link-folder{
-  width: 272px;
-  margin-left: ~'calc(50% - 272px/2)';
+  width: 278px;
+  margin-left: ~'calc(50% - 278px/2)';
   margin-top: 28px;
 }
+
 
 .sync{
   display: none;
