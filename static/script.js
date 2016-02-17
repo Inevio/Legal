@@ -461,6 +461,7 @@ var editMode = function(mode){
     drawPopup();
     desyncFolder(expApi);
     $('.event-min, .event-price').show();
+    $('.name-input').focus();
   }else{
     editStatus = false;
     $('.edit-mode').hide();
