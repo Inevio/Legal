@@ -15,6 +15,8 @@ var nRecords = 0;
 var editStatus = false;
 var recordFolder = '';
 var creating = false;
+var contactList;
+var modifing = false;
 
 //Text
 var appTitle             = $('.app-title');
@@ -214,9 +216,9 @@ wz.project.on('projectCreated', function(o){
 });
 
 wz.project.on('projectModified', function(o){
-  console.log('CONCURRENCIA!! Expediente modificado', o);
   var found = searchRecord(o.id);
-  if(found){
+  if(found && !modifing){
+    console.log('CONCURRENCIA!! Expediente modificado', o);
     found.data('record', o);
     var currentRecord = $('.exp.active').data('record');
     if (editStatus && o.id == currentRecord.id ) {
@@ -226,6 +228,7 @@ wz.project.on('projectModified', function(o){
       $('.exp.active').click();
     }
   }
+  modifing = false;
 });
 
 
@@ -281,23 +284,30 @@ var initLegal = function(){
 
   setInitialTexts();
 
-  getRecords( function( error, list ){
+  wz.contacts.getAccounts(function(err, l){
+    l[0].getGroups(function(e, o){
+      o[0].getContacts(function(e, o){
+        contactList = o;
+        getRecords( function( error, list ){
 
-    if( error ){ return; }
+          if( error ){ return; }
 
-    console.log('EXPEDIENTES:', error, list);
+          console.log('EXPEDIENTES:', error, list);
 
-    if (list.length == 0){
-      welcomePage.show();
-    }
+          if (list.length == 0){
+            welcomePage.show();
+          }
 
-    var sortList = list.sort(function(a,b){return a.name.localeCompare( b.name );});
+          var sortList = list.sort(function(a,b){return a.name.localeCompare( b.name );});
 
-    for( var i = 0; i < sortList.length; i++ ){
-      appendRecord( sortList[ i ] );
-    }
-    $('.record').eq(0).click();
+          for( var i = 0; i < sortList.length; i++ ){
+            appendRecord( sortList[ i ] );
+          }
+          $('.record').eq(0).click();
 
+        });
+      });
+    });
   });
 }
 
@@ -327,6 +337,7 @@ var appendRecord = function( record ){
   newRecord.addClass('record');
   $('.exp-list').append(newRecord);
   newRecord.data('record', record);
+  newRecord.off('click');
   newRecord.on('click', function(){
     selectRecord($(this));
   })
@@ -439,6 +450,7 @@ var createRecord = function(){
   $('.exp.active.active').removeClass('active');
   newRecord.addClass('active');
   newRecord.addClass('record');
+  newRecord.off('click');
   newRecord.on('click', function(){
     selectRecord($(this));
   })
@@ -710,9 +722,9 @@ var setClient = function(expApi){
   if(expApi == null || client.length == 0){
     setEmptyContact($('.exp-client .add'));
   }else{
-    client.forEach(function(i){
-      composeContact(i, $('.exp-client .add'));
-    });
+    for (var i = 0; i < client.length; i++) {
+      composeContact(client[i], $('.exp-client .add'));
+    }
   }
 }
 
@@ -721,9 +733,9 @@ var setAsigns = function(expApi){
   if(expApi == null || asigns.length == 0){
     setEmptyContact($('.exp-asigns .add'));
   }else{
-    asigns.forEach(function(i){
-      composeContact(i, $('.exp-asigns .add'));
-    });
+    for (var i = 0; i < asigns.length; i++) {
+      composeContact(asigns[i], $('.exp-asigns .add'));
+    }
   }
 }
 
@@ -732,9 +744,9 @@ var setInterest = function(expApi){
   if(expApi == null || interest.length == 0){
     setEmptyContact($('.exp-people .add'));
   }else{
-    interest.forEach(function(i){
-      composeContact(i, $('.exp-people .add'));
-    });
+    for (var i = 0; i < interest.length; i++) {
+      composeContact(interest[i], $('.exp-people .add'));
+    }
   }
 }
 
@@ -931,51 +943,45 @@ var asignContact = function(contact, place){
   console.log('Contacto asignado', recordActive);
 }
 
+
 var composeContact = function(contactApi, place){
   var contactDom = $('.contact.wz-prototype').clone();
   contactDom.removeClass('wz-prototype');
 
-  wz.contacts.getAccounts(function(err, list){
-    list[0].getGroups(function(e, o){
-      o[0].getContacts(function(e, o){
+  var contact = searchContact(contactApi, contactList);
 
-        var contact = searchContact(contactApi, o);
-
-        setAvatarCon(contact, contactDom);
-        if(contact.isCompany){
-          contactDom.find('.client-subtitle').text(contact.name.first+' '+contact.name.last);
-          contactDom.find('.client-title').text(contact.org.company);
-          contactDom.find('.company-mode').show();
-        }else{
-          contactDom.find('.client-title').text(contact.name.first+' '+contact.name.last);
-          contactDom.find('.client-subtitle').text(contact.org.company);
-          contactDom.find('.company-mode').hide();
-        }
-        var moreInfo = '';
-        var withPhone = false;
-        if(contact.phone.length > 0){
-          moreInfo += contact.phone[0].value;
-          withPhone = true;
-        }
-        if(contact.email.length > 0){
-          if(withPhone){
-            moreInfo += ' - '+contact.email[0].value;
-          }else{
-            moreInfo += contact.email[0].value;
-          }
-        }
-        contactDom.find('.client-moreinfo').text(moreInfo);
-        place.after(contactDom);
-        var type = getContactType(contactDom);
-        contactDom.addClass(type+'Dom');
-        contactDom.addClass('cleanable');
-        contactDom.data('contact', contact);
-        contactDom.find('.remove').on('click', function(){
-          deleteContact($(this).parent());
-        })
-      });
-    });
-  });
+  setAvatarCon(contact, contactDom);
+  if(contact.isCompany){
+    contactDom.find('.client-subtitle').text(contact.name.first+' '+contact.name.last);
+    contactDom.find('.client-title').text(contact.org.company);
+    contactDom.find('.company-mode').show();
+  }else{
+    contactDom.find('.client-title').text(contact.name.first+' '+contact.name.last);
+    contactDom.find('.client-subtitle').text(contact.org.company);
+    contactDom.find('.company-mode').hide();
+  }
+  var moreInfo = '';
+  var withPhone = false;
+  if(contact.phone.length > 0){
+    moreInfo += contact.phone[0].value;
+    withPhone = true;
+  }
+  if(contact.email.length > 0){
+    if(withPhone){
+      moreInfo += ' - '+contact.email[0].value;
+    }else{
+      moreInfo += contact.email[0].value;
+    }
+  }
+  contactDom.find('.client-moreinfo').text(moreInfo);
+  place.after(contactDom);
+  var type = getContactType(contactDom);
+  contactDom.addClass(type+'Dom');
+  contactDom.addClass('cleanable');
+  contactDom.data('contact', contact);
+  contactDom.find('.remove').on('click', function(){
+    deleteContact($(this).parent());
+  })
 }
 
 var searchContact = function(contact, list){
@@ -1107,6 +1113,7 @@ var saveRecord = function(){
   }else{
     recordActive = refreshRecordActive(recordActive);
     expApi.modify(recordActive, function(e,o){
+      modifing = true;
       console.log('RECORD MODIFICADO',e, recordActive);
       if (recordActive.name != '') {
         $('.exp.active .name-exp').text(recordActive.name);
