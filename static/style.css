@@ -44,7 +44,7 @@
 .legal .ui-input-search{
   border: none;
   height: 40px;
-  width: 225px;
+  width: 100%;
   float: left;
 }
 
@@ -99,7 +99,7 @@
 .ui-view .exp-list{
   float: left;
   width: 310px;
-  height: ~'calc(100% - 43px)';
+  height: ~'calc(100% - 81px)';
 }
 
 .exp {

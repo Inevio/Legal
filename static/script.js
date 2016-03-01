@@ -17,6 +17,7 @@ var recordFolder = '';
 var creating = false;
 var contactList;
 var modifing = false;
+var recordList = [];
 
 //Text
 var appTitle             = $('.app-title');
@@ -82,6 +83,8 @@ var linkFolder           = $('.link-folder');
 var newLinkFolder        = $('.new-link-folder');
 var newBudget            = $('.new-budget-button');
 var openContacts         = $('.open-contacts');
+var recordSearchInput    = $('.search-filters input');
+var recordSearchDelete   = $('.search-filters .delete-content');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -197,6 +200,14 @@ linkFolder.on('click', function(){
 
 newLinkFolder.on('click', function(){
   linkNewDocFolder();
+});
+
+recordSearchInput.on('input', function(){
+  refreshRecords($(this).val());
+});
+
+recordSearchDelete.on('click', function(){
+  refreshRecords('');
 });
 
 newBudget.on('click', function(){
@@ -336,11 +347,15 @@ var appendRecord = function( record ){
   nRecords++;
   newRecord.addClass('record');
   $('.exp-list').append(newRecord);
+  recordList.push(newRecord);
   newRecord.data('record', record);
   newRecord.off('click');
   newRecord.on('click', function(){
     selectRecord($(this));
   })
+
+  newRecord.data('folder', record.custom.folder);
+
 
 };
 
@@ -526,10 +541,24 @@ var selectNewEvent = function(){
 }
 
 var recoverInputsInfo = function(){
-  expDescriptionInput.val(expDescription.text());
   $('.intern-id-input').text($('.intern-id').text());
   $('.extern-id-input').val($('.extern-id').text());
-  $('.name-input').val($('.name').text());
+
+  var name = $('.name').text();
+  if (name == "Expediente sin nombre") {
+    $('.name-input').val('');
+  }else{
+    $('.name-input').val(name);
+  }
+
+  var desc = expDescription.text();
+  if (desc == "No hay descripción del caso...") {
+    expDescriptionInput.val('');
+  }else{
+    expDescriptionInput.val(desc);
+  }
+
+
   $('.exp-status .ui-select-input article').text($('.status').text());
   if ($('.exp-status .look-mode').hasClass('closed')) {
     $('.exp-status .ui-select-input i').addClass('closed');
@@ -704,7 +733,7 @@ var selectRecord = function(record){
     if(expApi.description != ''){
       notes = expApi.description;
     }else{
-      notes = 'No hay descripcion del caso...';
+      notes = 'No hay descripción del caso...';
     }
     notes = notes.replace(/\n/g, '<br>');
     $('.ui-window-content .desc').html(notes);
@@ -1090,6 +1119,9 @@ var saveRecord = function(){
     recordActive = refreshRecordActive(recordActive);
     legal.createProject(recordActive, function(e, o){
       console.log('RECORD AÑADIDO', o);
+      recordList.push($('.exp.active'));
+      refreshRecords('');
+      recordSearchInput.val('')
       o.custom = JSON.parse(o.custom);
       $('.exp.active').data('record', o);
       if (o.name != '') {
@@ -1336,6 +1368,10 @@ var deleteRecord = function(){
         editMode(false);
         expApi.remove(function(e,o){
           console.log('RECORD BORRADO',e,o);
+          var index = recordList.indexOf(expApi);
+          if (index > -1) {
+            recordList.splice(index, 1);
+          }
           $('.exp.active').remove();
           var records = $('.record');
           if(records.length == 0){
@@ -1390,6 +1426,22 @@ var orderRecord = function(record){
       }
     }
   }
+}
+
+var refreshRecords = function(filter){
+  var filterRecords = [];
+  $.each(recordList, function(i, record){
+    if(
+      record.find('.name-exp').text().toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
+      record.find('.id-exp').text().toLowerCase().indexOf(filter.toLowerCase()) > -1
+    ){
+      filterRecords.push(record);
+    }
+  });
+  $('.record').hide();
+  $.each(filterRecords, function(i, record){
+    record.show();
+  });
 }
 
 
