@@ -913,15 +913,7 @@ var setBudget = function(expApi){
   for (var i = 0; i < budget.pays.length; i++) {
     var paymentDom = $('.payment.wz-prototype').clone();
     paymentDom.removeClass('wz-prototype');
-    paymentDom.addClass('paymentDom');
-    paymentDom.addClass('cleanable');
-    $('.payment.wz-prototype').after(paymentDom);
-    paymentDom.find('.remove').on('click', function(){
-      $(this).parent().remove();
-    });
-    paymentDom.find('.title').text(budget.pays[i].title);
-    paymentDom.find('.date').text(budget.pays[i].date);
-    paymentDom.find('.payment-value').text(budget.pays[i].pay);
+    orderPayments(paymentDom, budget.pays[i]);
   }
 }
 
@@ -1422,6 +1414,33 @@ var orderRecord = function(record){
       var x = record.find('.name-exp').text().localeCompare(list.eq(i).find('.name-exp').text());
       if(x == -1){
         list.eq(i).before(record);
+        return;
+      }
+    }
+  }
+}
+
+var orderPayments = function(payment, pays){
+  var list = $('.paymentDom');
+  payment.addClass('paymentDom');
+  payment.addClass('cleanable');
+  payment.find('.title').text(pays.title);
+  payment.find('.date').text(pays.date);
+  payment.find('.payment-value').text(pays.pay);
+
+  if (list.length == 0) {
+    $('.payment-list').append(payment);
+    payment.find('.remove').on('click', function(){
+      $(this).parent().remove();
+    });
+  }else{
+    for (var i = 0; i < list.length; i++) {
+      var x = payment.find('.payment-info .title').text().localeCompare(list.eq(i).find('.payment-info .title').text());
+      if(x == -1){
+        list.eq(i).before(payment);
+        payment.find('.remove').on('click', function(){
+          $(this).parent().remove();
+        });
         return;
       }
     }
