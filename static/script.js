@@ -1436,6 +1436,7 @@ var orderPayments = function(payment, pays){
   }else{
     for (var i = 0; i < list.length; i++) {
       var x = payment.find('.payment-info .title').text().localeCompare(list.eq(i).find('.payment-info .title').text());
+      console.log('Comparo', payment.find('.payment-info .title').text(), 'con', list.eq(i).find('.payment-info .title').text(), 'resultado:', x);
       if(x == -1){
         list.eq(i).before(payment);
         payment.find('.remove').on('click', function(){
@@ -1444,6 +1445,7 @@ var orderPayments = function(payment, pays){
         return;
       }
     }
+    list.eq(list.length - 1).after(payment);
   }
 }
 
