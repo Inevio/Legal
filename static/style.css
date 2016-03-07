@@ -1873,8 +1873,6 @@
   background-size: 40px 10px;
 }
 
-
-
 .client-selectable {
   float: right;
   height: 64px;
@@ -1962,10 +1960,14 @@
   display: none;
 }
 
+.select-contact-popup .search-filters {
+  width: 100%;
+}
+
 .client-selectable-list{
   float: left;
   width: 100%;
-  height: ~'calc(100% - 100px)';
+  height: ~'calc(100% - 140px)';
 }
 
 .open-contacts {

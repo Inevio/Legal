@@ -18,6 +18,7 @@ var creating = false;
 var contactList;
 var modifing = false;
 var recordList = [];
+var contactListOrder = [];
 
 //Text
 var appTitle             = $('.app-title');
@@ -83,8 +84,10 @@ var linkFolder           = $('.link-folder');
 var newLinkFolder        = $('.new-link-folder');
 var newBudget            = $('.new-budget-button');
 var openContacts         = $('.open-contacts');
-var recordSearchInput    = $('.search-filters input');
-var recordSearchDelete   = $('.search-filters .delete-content');
+var recordSearchInput    = $('.rec.search-filters input');
+var recordSearchDelete   = $('.rec.search-filters .delete-content');
+var contactSearchInput   = $('.cont.search-filters input');
+var contactSearchDelete  = $('.cont.search-filters .delete-content');
 
 //Others
 var editPopup            = $('.edit-mode-popup');
@@ -208,6 +211,14 @@ recordSearchInput.on('input', function(){
 
 recordSearchDelete.on('click', function(){
   refreshRecords('');
+});
+
+contactSearchInput.on('input', function(){
+  refreshContacts($(this).val());
+});
+
+contactSearchDelete.on('click', function(){
+  refreshContacts('');
 });
 
 newBudget.on('click', function(){
@@ -930,6 +941,7 @@ var selectContact = function(place){
         }
         list = list.sort(function(a,b){return a.name.first.localeCompare( b.name.first );});
         console.log('lista de contactos', list);
+        contactListOrder = [];
         list.forEach(function(i){
           var contact = $('.client-selectable.wz-prototype').clone();
           contact.removeClass('wz-prototype');
@@ -945,6 +957,7 @@ var selectContact = function(place){
             contact.find('.company-mode').hide();
           }
           contact.addClass('contact-selectable');
+          contactListOrder.push(contact);
           $('.client-selectable.wz-prototype').before(contact);
           contact.data('contact', i)
           contact.on('click', function(){
@@ -1465,6 +1478,20 @@ var refreshRecords = function(filter){
   });
 }
 
+var refreshContacts = function(filter){
+  var filterContacts = [];
+  $.each(contactListOrder, function(i, contact){
+    if(
+      contact.find('.name-client-selectable').text().toLowerCase().indexOf(filter.toLowerCase()) > -1
+    ){
+      filterContacts.push(contact);
+    }
+  });
+  $('.contact-selectable').hide();
+  $.each(filterContacts, function(i, contact){
+    contact.show();
+  });
+}
 
 // Program run
 initLegal();
