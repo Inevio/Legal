@@ -337,20 +337,27 @@ var appendRecord = function( record ){
 
   var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
 
-  if (record.name != '') {
-    $( '.name-exp', newRecord ).text( record.name );
+  if (record.custom.client.length > 0) {
+    var clientName = '';
+    if(record.custom.client[0].isCompany){
+      clientName = record.custom.client[0].org.company;
+    }else{
+      clientName = record.custom.client[0].name.first + ' ' + record.custom.client[0].name.last;
+    }
+
+    $( '.name-exp', newRecord ).text( record.idInternal + ' - ' + clientName );
   }else{
-    $( '.name-exp', newRecord ).text( 'Expediente sin nombre' );
+    $( '.name-exp', newRecord ).text( record.idInternal + ' - ' + 'Expediente sin cliente' );
   }
 
 
   setAvatarExp(record, newRecord);
-  if (record.custom.client.length > 0) {
-    var clientName = record.custom.client[0].name.first + ' ' + record.custom.client[0].name.last;
-    $( '.id-exp', newRecord ).text( record.id + ' - ' + clientName );
+  if (record.name != '') {
+    $( '.id-exp', newRecord ).text( record.id + ' - ' + record.name);
   }else{
     $( '.id-exp', newRecord ).text( record.id );
   }
+
   if(record.custom.status){
     newRecord.find('.highlight-area').addClass('closed');
   }
@@ -471,7 +478,7 @@ var setInitialTexts = function(){
 var createRecord = function(){
   var newRecord = sidebarExpPrototype.clone().removeClass('wz-prototype');
   $('.info-tab').click();
-  $( '.name-exp', newRecord ).text( 'Expediente sin nombre' );
+  $( '.name-exp', newRecord ).text( 'Expediente sin cliente' );
   $( '.id-exp', newRecord ).text( 'id Personalizable' );
   $('.exp.active.active').removeClass('active');
   newRecord.addClass('active');
@@ -1129,17 +1136,25 @@ var saveRecord = function(){
       recordSearchInput.val('')
       o.custom = JSON.parse(o.custom);
       $('.exp.active').data('record', o);
-      if (o.name != '') {
-        $('.exp.active .name-exp').text(o.name);
-      }else{
-        $('.exp.active .name-exp').text('Expediente sin nombre');
-      }
+
       if (o.custom.client.length > 0) {
-        var clientName = o.custom.client[0].name.first + ' ' + o.custom.client[0].name.last;
-        $('.exp.active .id-exp').text(o.id + ' - ' + clientName);
+        var clientName = '';
+        if(o.custom.client[0].isCompany){
+          clientName = o.custom.client[0].org.company;
+        }else{
+          clientName = o.custom.client[0].name.first + ' ' + o.custom.client[0].name.last;
+        }
+        $( '.exp.active .name-exp' ).text( o.idInternal + ' - ' + clientName );
       }else{
-        $('.exp.active .id-exp').text(o.id);
+        $( '.exp.active .name-exp' ).text( o.idInternal + ' - ' + 'Expediente sin cliente' );
       }
+
+      if (o.name != '') {
+        $( '.exp.active .name-exp' ).text( o.id + ' - ' + o.name);
+      }else{
+        $( '.exp.active .name-exp' ).text( o.id );
+      }
+
       setAvatarExp(o, $('.exp.active'));
       if(o.custom.status){
         $('.exp.active .highlight-area').addClass('closed');
@@ -1152,17 +1167,26 @@ var saveRecord = function(){
     expApi.modify(recordActive, function(e,o){
       modifing = true;
       console.log('RECORD MODIFICADO',e, recordActive);
-      if (recordActive.name != '') {
-        $('.exp.active .name-exp').text(recordActive.name);
-      }else{
-        $('.exp.active .name-exp').text('Expediente sin nombre');
-      }
+
       if (recordActive.custom.client.length > 0) {
-        var clientName = recordActive.custom.client[0].name.first + ' ' + recordActive.custom.client[0].name.last;
-        $('.exp.active .id-exp').text(recordActive.id + ' - ' + clientName);
+        var clientName = '';
+        if(recordActive.custom.client[0].isCompany){
+          clientName = recordActive.custom.client[0].org.company;
+        }else{
+          clientName = recordActive.custom.client[0].name.first + ' ' + recordActive.custom.client[0].name.last;
+        }
+        $( '.exp.active .name-exp' ).text( recordActive.idInternal + ' - ' + clientName );
       }else{
-        $('.exp.active .id-exp').text(recordActive.id);
+        $( '.exp.active .name-exp' ).text( recordActive.idInternal + ' - ' + 'Expediente sin cliente' );
       }
+
+
+      if (recordActive.name != '') {
+        $( '.exp.active .name-exp' ).text( recordActive.id + ' - ' + recordActive.name);
+      }else{
+        $( '.exp.active .name-exp' ).text( recordActive.id );
+      }
+
       setAvatarExp(recordActive, $('.exp.active'));
       if(recordActive.custom.status){
         $('.exp.active .highlight-area').addClass('closed');
