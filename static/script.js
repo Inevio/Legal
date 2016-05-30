@@ -1,3 +1,4 @@
+// LEGAL 1.0.1
 'use strict'
 
 // CONSTANTS
