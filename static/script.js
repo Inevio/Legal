@@ -818,6 +818,7 @@ var setEmptyContact = function(place){
 
 var setFolderSync = function(expApi){
   var folder = expApi.custom.folder;
+
   if(folder != ""){
       $('.async').hide();
       $('.sync').show();
@@ -1432,11 +1433,11 @@ var deleteRecord = function(){
 }
 
 var linkDocFolder = function(){
-  wz.fs.selectPath('root', '', function(e,o){
+  wz.fs.selectSource( { mode: 'directory' } , function(e,o){
     if(!editStatus){
       editMode(true);
     }
-    $('.exp.active').data('folder', o);
+    $('.exp.active').data('folder', o[0]);
     saveRecord();
   });
 }
