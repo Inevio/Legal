@@ -1,3 +1,31 @@
+/* COLORS */
+@colorMain: #7ebe30;
+
+@grayHorbito: #51575f;
+@grayHorbitoHover: #474d54;
+@grayHorbitoActive: #42464d;
+@grayHorbitoDisabled: #c3c9cc;
+
+@greenHorbito: #60b25e;
+@greenHorbitoHover: #4ea34b;
+@greenHorbitoActive: #3d903b;
+@greenHorbitoDisabled: #c3c9cc;
+
+@blueHorbito: #0071f6;
+@blueHorbitoHover: #006ae6;
+@blueHorbitoActive: #0062d6;
+@blueHorbitoDisabled: #c3c9cc;
+
+@redHorbito: #ff2153;
+@redHorbitoHover: #f81d4e;
+@redHorbitoActive: #e51846;
+@redHorbitoDisabled: #c3c9cc;
+
+@darkHorbito: #252525;
+@gray1: #717171;
+@gray2: #9a9aa2;
+@lightGray: #f9f9fe;
+
 /* General */
 *{
   font-family: 'Lato';
@@ -38,27 +66,17 @@
 .search-filters{
   float: left;
   width: 310px;
-  height: 40px;
+  height: 43px;
 }
 
 .legal .ui-input-search{
-  border: none;
-  height: 40px;
-  width: 100%;
-  float: left;
+  width: 290px;
+  margin: 3px 9px;
 }
 
-.legal .ui-input-search:active{
-  border: none;
-}
-
-.legal .ui-input-search input{
-  width: ~'calc(100% - 58px)';
-  margin-top: 12px;
-}
-
-.legal .ui-input-search.active input{
-  width: ~'calc(100% - 78px)';
+.select-contact-popup .ui-input-search{
+  width: 290px;
+  margin: 3px 12px;
 }
 
 .filters-out{
@@ -96,10 +114,11 @@
   margin-left: 8px;
 }
 
+
 .ui-view .exp-list{
   float: left;
   width: 310px;
-  height: ~'calc(100% - 81px)';
+  height: ~'calc(100% - 93px)';
 }
 
 .exp {
@@ -122,7 +141,7 @@
 }
 
 .exp:hover .highlight-area{
-  background-color: #d9eadb;
+  background-color: #f7f8fa;
 }
 
 .dark .exp:hover .highlight-area{
@@ -130,7 +149,7 @@
 }
 
 .exp.active .highlight-area{
-  background-color: #60b25e;
+  background-color: @blueHorbito;
 }
 
 .exp .avatar {
@@ -259,30 +278,27 @@
 }
 
 .new-exp-button.ui-btn i{
-  background: url("@static/sprite.png") ;
-  background-size: 235px 16px;
+  background: url("@static/plus-white.png") ;
+  background-size: 16px 16px;
   width: 16px;
   height: 16px;
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 8px;
-  background-position: 203px 0;
 }
 
 .new-exp-button.ui-btn span{
-  font-size: 13px;
+  font-size: 12px;
   float: left;
   margin-top: 8px;
   margin-left: 7px;
-  color: #545f65;
   max-width: 105px;
 }
 
 /* window */
 .ui-view .legal .ui-window-content{
   width: ~'calc(100% - 311px)';
-  height: ~'calc(100% - 41px)';
   position: relative;
 }
 
@@ -401,8 +417,8 @@
 }
 
 .edit-exp-button.ui-btn i{
-  background: url("@static/sprite.png") ;
-  background-size: 235px 16px;
+  background: url("@static/edit.png") ;
+  background-size: 16px 16px;
   width: 16px;
   height: 16px;
   float: left;
@@ -411,16 +427,11 @@
   margin-left: 8px;
 }
 
-.edit-exp-button.ui-btn:hover i{
-  background-position: -16px 0;
-}
-
 .edit-exp-button.ui-btn span{
   font-size: 13px;
   float: left;
   margin-top: 8px;
   margin-left: 7px;
-  color: #545f65;
   max-width: 105px;
 }
 
@@ -520,7 +531,7 @@
     100%{ height: 0;}
 }
 
-.edit-mode.delete-exp-button.ui-btn.cancel {
+.edit-mode.delete-exp-button.ui-btn.red {
     margin-top: 7px;
     margin-left: 7px;
 }
@@ -530,7 +541,7 @@
     margin-top: 7px;
 }
 
-.right.edit-mode.cancel-exp-button.ui-btn.gray {
+.right.edit-mode.cancel-exp-button.ui-btn.cancel {
     margin-top: 7px;
     margin-right: 5px;
 }
@@ -806,7 +817,7 @@
 
 .timeline-tab-section{
   display: none;
-  height: ~'calc(100% - 97px)';
+  height: ~'calc(100% - 107px)';
   width: 100%;
   float: left;
   background: rgba(255,255,255,1);
@@ -1331,7 +1342,7 @@
 /* document tab */
 .doc-tab-section{
   width: 100%;
-  height: ~'calc(100% - 97px)';
+  height: ~'calc(100% - 107px)';
   float: left;
 }
 
@@ -1407,7 +1418,7 @@
 /* Budget tab */
 .budget-tab-section{
   width: 100%;
-  height: ~'calc(100% - 97px)';
+  height: ~'calc(100% - 107px)';
   float: left;
 }
 
@@ -1763,13 +1774,14 @@
   margin-bottom: 40px;
 }
 
+
 .no-budget-text{
   float: left;
   font-size: 19px;
   color: #889399;
   width: 100%;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .new-budget-button{
@@ -1881,7 +1893,7 @@
 }
 
 .client-selectable:hover .highlight-area{
-  background-color: #d9eadb;
+  background-color: #fff;
 }
 
 .client-selectable .highlight-area {
